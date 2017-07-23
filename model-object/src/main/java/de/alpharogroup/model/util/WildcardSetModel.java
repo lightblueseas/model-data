@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.alpharogroup.model.api.Model;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -29,33 +30,12 @@ import de.alpharogroup.model.api.Model;
  * @param <T>
  *            type of object inside set
  */
+@NoArgsConstructor
 public class WildcardSetModel<T> extends GenericCollectionModel<Set<T>>
 {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Creates empty model
-	 */
-	public WildcardSetModel()
-	{
-	}
-
-	/**
-	 * Creates model that will contain <code>set</code>.
-	 *
-	 * @param set the set
-	 */
-	public WildcardSetModel(final Set<T> set)
-	{
-		setObject(set);
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	protected Set<T> newSerializableCollectionOf(final Set<T> object)
-	{
-		return new HashSet<>(object);
-	}
 
 	/**
 	 * Factory method for models that contain sets. This factory method will automatically rebuild a
@@ -70,5 +50,27 @@ public class WildcardSetModel<T> extends GenericCollectionModel<Set<T>>
 	public static <C> Model<Set<C>> ofSet(final Set<C> set)
 	{
 		return new WildcardSetModel<>(set);
+	}
+
+	/**
+	 * Creates model that will contain <code>set</code>.
+	 *
+	 * @param set
+	 *            the set
+	 */
+	public WildcardSetModel(final Set<T> set)
+	{
+		super(set);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	protected Set<T> newSerializableCollectionOf(final Set<T> object)
+	{
+		if (object != null)
+		{
+			return new HashSet<>(object);
+		}
+		return null;
 	}
 }

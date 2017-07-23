@@ -19,6 +19,9 @@ package de.alpharogroup.model.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import de.alpharogroup.model.api.Model;
+import lombok.NoArgsConstructor;
+
 
 /**
  * Based on <code>Model</code> but for sets of serializable objects.
@@ -27,32 +30,47 @@ import java.util.Set;
  * @param <T>
  *            type of object inside set
  */
+@NoArgsConstructor
 public class SetModel<T> extends GenericCollectionModel<Set<T>>
 {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Creates empty model
+	 * Factory method for models that contain sets. This factory method will automatically rebuild a
+	 * nonserializable <code>set</code> into a serializable one.
+	 *
+	 * @param <C>
+	 *            model type
+	 * @param set
+	 *            The Set, which may or may not be Serializable
+	 * @return A Model object wrapping the Set
 	 */
-	public SetModel()
+	public static <C> Model<Set<C>> ofSet(final Set<C> set)
 	{
+		return new SetModel<>(set);
 	}
+
 
 	/**
 	 * Creates model that will contain <code>set</code>.
 	 *
-	 * @param set the set
+	 * @param set
+	 *            the set
 	 */
 	public SetModel(final Set<T> set)
 	{
-		setObject(set);
+		super(set);
 	}
-
 
 	/** {@inheritDoc} */
 	@Override
 	protected Set<T> newSerializableCollectionOf(final Set<T> object)
 	{
-		return new HashSet<>(object);
+		if (object != null)
+		{
+			return new HashSet<>(object);
+		}
+		return null;
 	}
+
 }

@@ -14,7 +14,9 @@ The source code comes under the liberal Apache License V2.0, making model-data g
 
 ## Maven Central
 
-model-data [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-data/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-data)
+model-api [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-api)
+
+model-object [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-object/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-object)
 
 ## javadoc
 
@@ -34,7 +36,7 @@ You can first define the version properties:
 	<properties>
 		...
 		<!-- MODEL-DATA version -->
-		<model-data.version>1.1.0</model-data.version>
+		<model-data.version>1.2.0</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		...
