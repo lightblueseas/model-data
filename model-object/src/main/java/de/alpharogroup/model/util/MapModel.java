@@ -25,11 +25,12 @@ public class MapModel<K, V> extends GenericCollectionModel<Map<K, V>>
 	/**
 	 * Creates model that will contain <code>map</code>.
 	 *
-	 * @param map the map
+	 * @param map
+	 *            the map
 	 */
 	public MapModel(final Map<K, V> map)
 	{
-		setObject(map);
+		super(map);
 	}
 
 	/**
@@ -38,7 +39,11 @@ public class MapModel<K, V> extends GenericCollectionModel<Map<K, V>>
 	@Override
 	protected Map<K, V> newSerializableCollectionOf(final Map<K, V> object)
 	{
-		return new HashMap<>(object);
+		if (object != null)
+		{
+			return new HashMap<>(object);
+		}
+		return null;
 	}
 
 	/**

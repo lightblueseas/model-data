@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import de.alpharogroup.model.api.Model;
-
+import lombok.NoArgsConstructor;
 
 /**
  * Based on <code>Model</code> but for any collections of serializable objects.
@@ -29,32 +29,33 @@ import de.alpharogroup.model.api.Model;
  * @param <T>
  *            type of object inside collection
  */
+@NoArgsConstructor
 public class WildcardCollectionModel<T> extends GenericCollectionModel<Collection<T>>
 {
-	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Creates empty model
-	 */
-	public WildcardCollectionModel()
-	{
-	}
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Creates model that will contain <code>collection</code>.
 	 *
-	 * @param collection the collection
+	 * @param collection
+	 *            the collection
 	 */
 	public WildcardCollectionModel(final Collection<T> collection)
 	{
-		setObject(collection);
+		super(collection);
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	protected Collection<T> newSerializableCollectionOf(final Collection<T> object)
 	{
-		return new ArrayList<>(object);
+		if (object != null)
+		{
+			return new ArrayList<>(object);
+		}
+		return null;
 	}
 
 	/**

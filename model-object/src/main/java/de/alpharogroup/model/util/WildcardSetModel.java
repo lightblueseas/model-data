@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.alpharogroup.model.api.Model;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -29,32 +30,33 @@ import de.alpharogroup.model.api.Model;
  * @param <T>
  *            type of object inside set
  */
+@NoArgsConstructor
 public class WildcardSetModel<T> extends GenericCollectionModel<Set<T>>
 {
-	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Creates empty model
-	 */
-	public WildcardSetModel()
-	{
-	}
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Creates model that will contain <code>set</code>.
 	 *
-	 * @param set the set
+	 * @param set
+	 *            the set
 	 */
 	public WildcardSetModel(final Set<T> set)
 	{
-		setObject(set);
+		super(set);
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	protected Set<T> newSerializableCollectionOf(final Set<T> object)
 	{
-		return new HashSet<>(object);
+		if (object != null)
+		{
+			return new HashSet<>(object);
+		}
+		return null;
 	}
 
 	/**

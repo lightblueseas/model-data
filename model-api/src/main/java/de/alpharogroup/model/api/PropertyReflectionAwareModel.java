@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * The interface {@link PropertyReflectionAwareModel} provides reflection information about the model
- * object property.
+ * The interface {@link PropertyReflectionAwareModel} provides reflection information about the
+ * model object property.
  *
  * @param <T>
  *            the generic type of the model object

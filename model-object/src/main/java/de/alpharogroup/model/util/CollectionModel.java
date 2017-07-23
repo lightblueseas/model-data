@@ -19,6 +19,9 @@ package de.alpharogroup.model.util;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import de.alpharogroup.model.api.Model;
+import lombok.NoArgsConstructor;
+
 
 /**
  * Based on <code>Model</code> but for any collections of serializable objects.
@@ -27,32 +30,45 @@ import java.util.Collection;
  * @param <T>
  *            type of object inside collection
  */
+@NoArgsConstructor
 public class CollectionModel<T> extends GenericCollectionModel<Collection<T>>
 {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Creates empty model
-	 */
-	public CollectionModel()
-	{
-	}
-
-	/**
 	 * Creates model that will contain <code>collection</code>.
 	 *
-	 * @param collection the collection
+	 * @param collection
+	 *            the collection
 	 */
 	public CollectionModel(final Collection<T> collection)
 	{
-		setObject(collection);
+		super(collection);
 	}
-
 
 	/** {@inheritDoc} */
 	@Override
 	protected Collection<T> newSerializableCollectionOf(final Collection<T> object)
 	{
-		return new ArrayList<>(object);
+		if (object != null)
+		{
+			return new ArrayList<>(object);
+		}
+		return null;
+	}
+
+	/**
+	 * Factory method for models that contain collections. This factory method will automatically
+	 * rebuild a nonserializable <code>collection</code> into a serializable {@link ArrayList}.
+	 *
+	 * @param <C>
+	 *            model type
+	 * @param collection
+	 *            The Collection, which may or may not be Serializable
+	 * @return A Model object wrapping the Set
+	 */
+	public static <C> Model<Collection<C>> of(final Collection<C> collection)
+	{
+		return new CollectionModel<>(collection);
 	}
 }

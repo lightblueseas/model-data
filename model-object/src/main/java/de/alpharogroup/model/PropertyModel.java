@@ -1,26 +1,8 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package de.alpharogroup.model;
 
-
 /**
- * A PropertyModel is used to dynamically access a model using a "property expression".
- * <div>
- * For example, take the following bean:
+ * A PropertyModel is used to dynamically access a model using a "property expression". <div> For
+ * example, take the following bean:
  *
  * <pre>
  * public class Person
@@ -49,23 +31,17 @@ package de.alpharogroup.model;
  * </pre>
  *
  * Where 'myLabel' is the name of the component, and 'name' is the property expression to get the
- * name property.
- * </div>
- * <div>
- * In the same fashion, we can create form components that work dynamically on the given model
- * object. For instance, we could create a text field that updates the name property of a person
- * like this:
+ * name property. </div> <div> In the same fashion, we can create form components that work
+ * dynamically on the given model object. For instance, we could create a text field that updates
+ * the name property of a person like this:
  *
  * <pre>
  *     add(new TextField(&quot;myTextField&quot;, new PropertyModel(person, &quot;name&quot;));
  * </pre>
  *
- * </div>
- * <div>
- * <strong>Note that the property resolver by default provides access to private members and
- * methods. If guaranteeing encapsulation of the target objects is a big concern, you should
- * consider using an alternative implementation.</strong>
- * </div>
+ * </div> <div> <strong>Note that the property resolver by default provides access to private
+ * members and methods. If guaranteeing encapsulation of the target objects is a big concern, you
+ * should consider using an alternative implementation.</strong> </div>
  *
  * @see LoadableDetachableModel
  *
@@ -78,6 +54,8 @@ package de.alpharogroup.model;
  */
 public class PropertyModel<T> extends AbstractPropertyModel<T>
 {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** Property expression for property access. */
@@ -99,7 +77,7 @@ public class PropertyModel<T> extends AbstractPropertyModel<T>
 	}
 
 	/**
-	 * @see java.lang.Object#toString()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString()
@@ -110,7 +88,7 @@ public class PropertyModel<T> extends AbstractPropertyModel<T>
 	}
 
 	/**
-	 * @see AbstractPropertyModel#propertyExpression()
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected String propertyExpression()
@@ -133,4 +111,5 @@ public class PropertyModel<T> extends AbstractPropertyModel<T>
 	{
 		return new PropertyModel<>(parent, property);
 	}
+
 }

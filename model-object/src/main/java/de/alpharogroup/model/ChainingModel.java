@@ -1,23 +1,4 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package de.alpharogroup.model;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.alpharogroup.model.api.Attachable;
 import de.alpharogroup.model.api.ChainableModel;
@@ -25,14 +6,13 @@ import de.alpharogroup.model.api.Detachable;
 import de.alpharogroup.model.api.Model;
 
 /**
- * Default implementation of ChainingModel
+ * The class {@link ChainingModel} is the default implementation of {@link ChainableModel}
+ * interface.
  *
  * @param <T>
- *            The Model object type
+ *            the generic type of the model object
  *
  * @see AbstractPropertyModel
- *
- * @since 6.0.0
  */
 public class ChainingModel<T> implements ChainableModel<T>
 {
@@ -40,14 +20,18 @@ public class ChainingModel<T> implements ChainableModel<T>
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	protected static final Logger LOG = LoggerFactory.getLogger(ChainingModel.class);
-
 	/** Any model object (which may or may not implement Model) */
 	private Object target;
 
-	public ChainingModel(final Object modelObject)
+	/**
+	 * Instantiates a new {@link ChainingModel}.
+	 *
+	 * @param target
+	 *            the target object
+	 */
+	public ChainingModel(final Object target)
 	{
-		target = modelObject;
+		this.target = target;
 	}
 
 	/**
@@ -63,6 +47,9 @@ public class ChainingModel<T> implements ChainableModel<T>
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void attach()
 	{
@@ -72,6 +59,9 @@ public class ChainingModel<T> implements ChainableModel<T>
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public void setObject(final T object)
@@ -86,6 +76,9 @@ public class ChainingModel<T> implements ChainableModel<T>
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public T getObject()
@@ -97,6 +90,9 @@ public class ChainingModel<T> implements ChainableModel<T>
 		return (T)target;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Model<?> getChainedModel()
 	{
@@ -107,6 +103,9 @@ public class ChainingModel<T> implements ChainableModel<T>
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setChainedModel(final Model<?> model)
 	{
@@ -124,7 +123,8 @@ public class ChainingModel<T> implements ChainableModel<T>
 	/**
 	 * Sets a new target - object or model.
 	 *
-	 * @param modelObject the model object
+	 * @param modelObject
+	 *            the model object
 	 * @return this object
 	 */
 	protected final ChainingModel<T> setTarget(final Object modelObject)
@@ -133,6 +133,9 @@ public class ChainingModel<T> implements ChainableModel<T>
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString()
 	{
@@ -141,4 +144,5 @@ public class ChainingModel<T> implements ChainableModel<T>
 		sb.append(":nestedModel=[").append(target).append(']');
 		return sb.toString();
 	}
+
 }

@@ -19,6 +19,8 @@ package de.alpharogroup.model.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.alpharogroup.model.api.Model;
+import lombok.NoArgsConstructor;
 
 /**
  * Based on <code>Model</code> but for lists of serializable objects.
@@ -27,25 +29,20 @@ import java.util.List;
  * @param <T>
  *            type of object inside list
  */
+@NoArgsConstructor
 public class ListModel<T> extends GenericCollectionModel<List<T>>
 {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Creates empty model
-	 */
-	public ListModel()
-	{
-	}
-
-	/**
 	 * Creates model that will contain <code>list</code>.
 	 *
-	 * @param list the list
+	 * @param list
+	 *            the list
 	 */
 	public ListModel(final List<T> list)
 	{
-		setObject(list);
+		super(list);
 	}
 
 
@@ -53,13 +50,26 @@ public class ListModel<T> extends GenericCollectionModel<List<T>>
 	@Override
 	protected List<T> newSerializableCollectionOf(final List<T> object)
 	{
-		if (object == null)
-		{
-			return null;
-		}
-		else
+		if (object != null)
 		{
 			return new ArrayList<>(object);
 		}
+		return null;
+	}
+
+
+	/**
+	 * Factory method for models that contain list. This factory method will automatically rebuild a
+	 * nonserializable <code>list</code> into a serializable {@link ArrayList}.
+	 *
+	 * @param <C>
+	 *            model type
+	 * @param list
+	 *            The list, which may or may not be Serializable
+	 * @return A Model object wrapping the Set
+	 */
+	public static <C> Model<List<C>> of(final List<C> list)
+	{
+		return new ListModel<>(list);
 	}
 }

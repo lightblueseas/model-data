@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.alpharogroup.model.api.Model;
+import lombok.NoArgsConstructor;
 
 /**
  * Based on <code>Model</code> but for lists of serializable objects.
@@ -28,25 +29,22 @@ import de.alpharogroup.model.api.Model;
  * @param <T>
  *            type of object inside list
  */
+@NoArgsConstructor
 public class WildcardListModel<T> extends GenericCollectionModel<List<T>>
 {
-	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Creates empty model
-	 */
-	public WildcardListModel()
-	{
-	}
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Creates model that will contain <code>list</code>.
 	 *
-	 * @param list the list
+	 * @param list
+	 *            the list
 	 */
 	public WildcardListModel(final List<T> list)
 	{
-		setObject(list);
+		super(list);
 	}
 
 	/** {@inheritDoc} */
@@ -70,7 +68,7 @@ public class WildcardListModel<T> extends GenericCollectionModel<List<T>>
 	 *            The List, which may or may not be Serializable
 	 * @return A Model object wrapping the List
 	 */
-	public static <C> Model<List<C>> ofList(final List<C> list)
+	public static <C> Model<List<C>> of(final List<C> list)
 	{
 		return new WildcardListModel<>(list);
 	}
