@@ -36,7 +36,7 @@ You can first define the version properties:
 	<properties>
 		...
 		<!-- MODEL-DATA version -->
-		<model-data.version>1.1.0</model-data.version>
+		<model-data.version>1.2.0</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		...
