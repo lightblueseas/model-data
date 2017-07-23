@@ -38,6 +38,21 @@ public class WildcardSetModel<T> extends GenericCollectionModel<Set<T>>
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Factory method for models that contain sets. This factory method will automatically rebuild a
+	 * nonserializable <code>set</code> into a serializable one.
+	 *
+	 * @param <C>
+	 *            model type
+	 * @param set
+	 *            The Set, which may or may not be Serializable
+	 * @return A Model object wrapping the Set
+	 */
+	public static <C> Model<Set<C>> ofSet(final Set<C> set)
+	{
+		return new WildcardSetModel<>(set);
+	}
+
+	/**
 	 * Creates model that will contain <code>set</code>.
 	 *
 	 * @param set
@@ -57,20 +72,5 @@ public class WildcardSetModel<T> extends GenericCollectionModel<Set<T>>
 			return new HashSet<>(object);
 		}
 		return null;
-	}
-
-	/**
-	 * Factory method for models that contain sets. This factory method will automatically rebuild a
-	 * nonserializable <code>set</code> into a serializable one.
-	 *
-	 * @param <C>
-	 *            model type
-	 * @param set
-	 *            The Set, which may or may not be Serializable
-	 * @return A Model object wrapping the Set
-	 */
-	public static <C> Model<Set<C>> ofSet(final Set<C> set)
-	{
-		return new WildcardSetModel<>(set);
 	}
 }

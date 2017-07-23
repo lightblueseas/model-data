@@ -37,6 +37,21 @@ public class WildcardListModel<T> extends GenericCollectionModel<List<T>>
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Factory method for models that contain lists. This factory method will automatically rebuild
+	 * a nonserializable <code>list</code> into a serializable one.
+	 *
+	 * @param <C>
+	 *            model type
+	 * @param list
+	 *            The List, which may or may not be Serializable
+	 * @return A Model object wrapping the List
+	 */
+	public static <C> Model<List<C>> of(final List<C> list)
+	{
+		return new WildcardListModel<>(list);
+	}
+
+	/**
 	 * Creates model that will contain <code>list</code>.
 	 *
 	 * @param list
@@ -56,20 +71,5 @@ public class WildcardListModel<T> extends GenericCollectionModel<List<T>>
 			return null;
 		}
 		return new ArrayList<>(object);
-	}
-
-	/**
-	 * Factory method for models that contain lists. This factory method will automatically rebuild
-	 * a nonserializable <code>list</code> into a serializable one.
-	 *
-	 * @param <C>
-	 *            model type
-	 * @param list
-	 *            The List, which may or may not be Serializable
-	 * @return A Model object wrapping the List
-	 */
-	public static <C> Model<List<C>> of(final List<C> list)
-	{
-		return new WildcardListModel<>(list);
 	}
 }

@@ -35,19 +35,6 @@ public class ChainingModel<T> implements ChainableModel<T>
 	}
 
 	/**
-	 * Unsets this property model's instance variables and detaches the model.
-	 */
-	@Override
-	public void detach()
-	{
-		// Detach nested object if it's a detachable
-		if (target instanceof Detachable)
-		{
-			((Detachable)target).detach();
-		}
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -60,34 +47,16 @@ public class ChainingModel<T> implements ChainableModel<T>
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Unsets this property model's instance variables and detaches the model.
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public void setObject(final T object)
+	public void detach()
 	{
-		if (target instanceof Model)
+		// Detach nested object if it's a detachable
+		if (target instanceof Detachable)
 		{
-			((Model<T>)target).setObject(object);
+			((Detachable)target).detach();
 		}
-		else
-		{
-			target = object;
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public T getObject()
-	{
-		if (target instanceof Model)
-		{
-			return ((Model<T>)target).getObject();
-		}
-		return (T)target;
 	}
 
 	/**
@@ -107,9 +76,14 @@ public class ChainingModel<T> implements ChainableModel<T>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setChainedModel(final Model<?> model)
+	@SuppressWarnings("unchecked")
+	public T getObject()
 	{
-		target = model;
+		if (target instanceof Model)
+		{
+			return ((Model<T>)target).getObject();
+		}
+		return (T)target;
 	}
 
 	/**
@@ -118,6 +92,32 @@ public class ChainingModel<T> implements ChainableModel<T>
 	protected final Object getTarget()
 	{
 		return target;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setChainedModel(final Model<?> model)
+	{
+		target = model;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public void setObject(final T object)
+	{
+		if (target instanceof Model)
+		{
+			((Model<T>)target).setObject(object);
+		}
+		else
+		{
+			target = object;
+		}
 	}
 
 	/**

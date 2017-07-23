@@ -17,29 +17,16 @@ public class BaseModel<T> extends GenericModel<T>
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Instantiates a new base model.
-	 *
-	 * @param object
-	 *            the object
-	 */
-	public BaseModel(T object)
-	{
-		super(object);
-	}
-
-	/**
 	 * Factory methods for Model which uses type inference to make code shorter. Equivalent to
-	 * <code>new BaseModel&lt;TypeOfObject&gt;(object)</code>.
+	 * <code>new BaseModel&lt;TypeOfObject&gt;()</code>.
 	 *
 	 * @param <T>
 	 *            the generic type
-	 * @param object
-	 *            the object
 	 * @return Model that contains <code>object</code>
 	 */
-	public static <T> Model<T> of(final T object)
+	public static <T> Model<T> of()
 	{
-		return new BaseModel<>(object);
+		return new BaseModel<>();
 	}
 
 	/**
@@ -59,15 +46,28 @@ public class BaseModel<T> extends GenericModel<T>
 
 	/**
 	 * Factory methods for Model which uses type inference to make code shorter. Equivalent to
-	 * <code>new BaseModel&lt;TypeOfObject&gt;()</code>.
+	 * <code>new BaseModel&lt;TypeOfObject&gt;(object)</code>.
 	 *
 	 * @param <T>
 	 *            the generic type
+	 * @param object
+	 *            the object
 	 * @return Model that contains <code>object</code>
 	 */
-	public static <T> Model<T> of()
+	public static <T> Model<T> of(final T object)
 	{
-		return new BaseModel<>();
+		return new BaseModel<>(object);
+	}
+
+	/**
+	 * Instantiates a new base model.
+	 *
+	 * @param object
+	 *            the object
+	 */
+	public BaseModel(T object)
+	{
+		super(object);
 	}
 
 

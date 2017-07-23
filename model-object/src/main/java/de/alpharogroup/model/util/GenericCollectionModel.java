@@ -35,6 +35,15 @@ public abstract class GenericCollectionModel<T> extends GenericModel<T>
 	}
 
 	/**
+	 * Creates a serializable version of the object. The object is usually a collection.
+	 *
+	 * @param object
+	 *            the object
+	 * @return serializable version of <code>object</code>
+	 */
+	protected abstract T newSerializableCollectionOf(T object);
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -46,14 +55,5 @@ public abstract class GenericCollectionModel<T> extends GenericModel<T>
 		}
 		super.setObject(object);
 	}
-
-	/**
-	 * Creates a serializable version of the object. The object is usually a collection.
-	 *
-	 * @param object
-	 *            the object
-	 * @return serializable version of <code>object</code>
-	 */
-	protected abstract T newSerializableCollectionOf(T object);
 
 }

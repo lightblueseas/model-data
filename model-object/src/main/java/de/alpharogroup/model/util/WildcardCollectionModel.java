@@ -37,6 +37,21 @@ public class WildcardCollectionModel<T> extends GenericCollectionModel<Collectio
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Factory method for models that contain collections. This factory method will automatically
+	 * rebuild a nonserializable <code>collection</code> into a serializable {@link ArrayList}.
+	 *
+	 * @param <C>
+	 *            model type
+	 * @param collection
+	 *            The Collection, which may or may not be Serializable
+	 * @return A Model object wrapping the Set
+	 */
+	public static <C> Model<Collection<C>> of(final Collection<C> collection)
+	{
+		return new WildcardCollectionModel<>(collection);
+	}
+
+	/**
 	 * Creates model that will contain <code>collection</code>.
 	 *
 	 * @param collection
@@ -56,20 +71,5 @@ public class WildcardCollectionModel<T> extends GenericCollectionModel<Collectio
 			return new ArrayList<>(object);
 		}
 		return null;
-	}
-
-	/**
-	 * Factory method for models that contain collections. This factory method will automatically
-	 * rebuild a nonserializable <code>collection</code> into a serializable {@link ArrayList}.
-	 *
-	 * @param <C>
-	 *            model type
-	 * @param collection
-	 *            The Collection, which may or may not be Serializable
-	 * @return A Model object wrapping the Set
-	 */
-	public static <C> Model<Collection<C>> of(final Collection<C> collection)
-	{
-		return new WildcardCollectionModel<>(collection);
 	}
 }

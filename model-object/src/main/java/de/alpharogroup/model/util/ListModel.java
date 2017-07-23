@@ -35,6 +35,22 @@ public class ListModel<T> extends GenericCollectionModel<List<T>>
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Factory method for models that contain list. This factory method will automatically rebuild a
+	 * nonserializable <code>list</code> into a serializable {@link ArrayList}.
+	 *
+	 * @param <C>
+	 *            model type
+	 * @param list
+	 *            The list, which may or may not be Serializable
+	 * @return A Model object wrapping the Set
+	 */
+	public static <C> Model<List<C>> of(final List<C> list)
+	{
+		return new ListModel<>(list);
+	}
+
+
+	/**
 	 * Creates model that will contain <code>list</code>.
 	 *
 	 * @param list
@@ -55,21 +71,5 @@ public class ListModel<T> extends GenericCollectionModel<List<T>>
 			return new ArrayList<>(object);
 		}
 		return null;
-	}
-
-
-	/**
-	 * Factory method for models that contain list. This factory method will automatically rebuild a
-	 * nonserializable <code>list</code> into a serializable {@link ArrayList}.
-	 *
-	 * @param <C>
-	 *            model type
-	 * @param list
-	 *            The list, which may or may not be Serializable
-	 * @return A Model object wrapping the Set
-	 */
-	public static <C> Model<List<C>> of(final List<C> list)
-	{
-		return new ListModel<>(list);
 	}
 }

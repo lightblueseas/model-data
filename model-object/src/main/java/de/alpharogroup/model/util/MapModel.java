@@ -23,6 +23,23 @@ public class MapModel<K, V> extends GenericCollectionModel<Map<K, V>>
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Factory method for models that contain maps. This factory method will automatically rebuild a
+	 * nonserializable <code>map</code> into a serializable one.
+	 *
+	 * @param <K>
+	 *            key type in map
+	 * @param <V>
+	 *            value type in map
+	 * @param map
+	 *            The Map, which may or may not be Serializable
+	 * @return A Model object wrapping the Map
+	 */
+	public static <K, V> Model<Map<K, V>> ofMap(final Map<K, V> map)
+	{
+		return new MapModel<>(map);
+	}
+
+	/**
 	 * Creates model that will contain <code>map</code>.
 	 *
 	 * @param map
@@ -44,22 +61,5 @@ public class MapModel<K, V> extends GenericCollectionModel<Map<K, V>>
 			return new HashMap<>(object);
 		}
 		return null;
-	}
-
-	/**
-	 * Factory method for models that contain maps. This factory method will automatically rebuild a
-	 * nonserializable <code>map</code> into a serializable one.
-	 *
-	 * @param <K>
-	 *            key type in map
-	 * @param <V>
-	 *            value type in map
-	 * @param map
-	 *            The Map, which may or may not be Serializable
-	 * @return A Model object wrapping the Map
-	 */
-	public static <K, V> Model<Map<K, V>> ofMap(final Map<K, V> map)
-	{
-		return new MapModel<>(map);
 	}
 }

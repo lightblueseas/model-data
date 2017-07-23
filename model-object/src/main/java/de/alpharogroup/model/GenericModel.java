@@ -39,54 +39,20 @@ public abstract class GenericModel<T> implements Model<T>, ObjectClassAware<T>
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Backing object. */
-	private T object;
-
 	/**
-	 * Instantiates a new {@link GenericModel}.
+	 * Factory method for models that contain collections. This factory method will automatically
+	 * rebuild a nonserializable <code>collection</code> into a serializable {@link ArrayList}.
 	 *
-	 * @param object
-	 *            the object
+	 * @param <C>
+	 *            model type
+	 * @param collection
+	 *            The Collection, which may or may not be Serializable
+	 * @return A Model object wrapping the Set
 	 */
-	public GenericModel(T object)
+	public static <C> Model<Collection<C>> ofCollection(final Collection<C> collection)
 	{
-		setObject(object);
+		return new WildcardCollectionModel<>(collection);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void detach()
-	{
-		if (object instanceof Detachable)
-		{
-			((Detachable)object).detach();
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public Class<T> getObjectClass()
-	{
-		return object != null ? (Class<T>)object.getClass() : null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void attach()
-	{
-		if (object instanceof Attachable)
-		{
-			((Attachable)object).attach();
-		}
-	}
-
 
 	/**
 	 * Factory method for models that contain lists. This factory method will automatically rebuild
@@ -135,19 +101,53 @@ public abstract class GenericModel<T> implements Model<T>, ObjectClassAware<T>
 		return WildcardSetModel.ofSet(set);
 	}
 
+	/** Backing object. */
+	private T object;
+
+
 	/**
-	 * Factory method for models that contain collections. This factory method will automatically
-	 * rebuild a nonserializable <code>collection</code> into a serializable {@link ArrayList}.
+	 * Instantiates a new {@link GenericModel}.
 	 *
-	 * @param <C>
-	 *            model type
-	 * @param collection
-	 *            The Collection, which may or may not be Serializable
-	 * @return A Model object wrapping the Set
+	 * @param object
+	 *            the object
 	 */
-	public static <C> Model<Collection<C>> ofCollection(final Collection<C> collection)
+	public GenericModel(T object)
 	{
-		return new WildcardCollectionModel<>(collection);
+		setObject(object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void attach()
+	{
+		if (object instanceof Attachable)
+		{
+			((Attachable)object).attach();
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void detach()
+	{
+		if (object instanceof Detachable)
+		{
+			((Detachable)object).detach();
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Class<T> getObjectClass()
+	{
+		return object != null ? (Class<T>)object.getClass() : null;
 	}
 
 }

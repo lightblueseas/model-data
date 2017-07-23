@@ -42,6 +42,24 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 	}
 
 	/**
+	 * @return The innermost model or the object if the target is not a model
+	 */
+	public final Object getInnermostModelOrObject()
+	{
+		Object object = getTarget();
+		while (object instanceof Model)
+		{
+			final Object tmp = ((Model<?>)object).getObject();
+			if (tmp == object)
+			{
+				break;
+			}
+			object = tmp;
+		}
+		return object;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -75,59 +93,6 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * Gets the property expression for this model
-	 *
-	 * @return The property expression
-	 */
-	public final String getPropertyExpression()
-	{
-		return propertyExpression();
-	}
-
-	/**
-	 * Applies the property expression on the model object using the given object argument.
-	 *
-	 * @param object
-	 *            The object that will be used when setting a value on the model object
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public void setObject(final T object)
-	{
-		final String expression = propertyExpression();
-		if (StringUtils.isEmpty(expression))
-		{
-			// TODO check, really do this?
-			// why not just set the target to the object?
-			final Object target = getTarget();
-			if (target instanceof Model)
-			{
-				((Model<T>)target).setObject(object);
-			}
-			else
-			{
-				setTarget(object);
-			}
-		}
-		else
-		{
-			final Object target = getInnermostModelOrObject();
-
-			if (target != null)
-			{
-				try
-				{
-					PropertyUtils.setProperty(target, expression, object);
-				}
-				catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
-				{
-					throw new RuntimeException(e);
-				}
-			}
-		}
 	}
 
 	/**
@@ -177,6 +142,16 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 
 		}
 		return null;
+	}
+
+	/**
+	 * Gets the property expression for this model
+	 *
+	 * @return The property expression
+	 */
+	public final String getPropertyExpression()
+	{
+		return propertyExpression();
 	}
 
 	@Override
@@ -262,20 +237,45 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 	protected abstract String propertyExpression();
 
 	/**
-	 * @return The innermost model or the object if the target is not a model
+	 * Applies the property expression on the model object using the given object argument.
+	 *
+	 * @param object
+	 *            The object that will be used when setting a value on the model object
 	 */
-	public final Object getInnermostModelOrObject()
+	@Override
+	@SuppressWarnings("unchecked")
+	public void setObject(final T object)
 	{
-		Object object = getTarget();
-		while (object instanceof Model)
+		final String expression = propertyExpression();
+		if (StringUtils.isEmpty(expression))
 		{
-			final Object tmp = ((Model<?>)object).getObject();
-			if (tmp == object)
+			// TODO check, really do this?
+			// why not just set the target to the object?
+			final Object target = getTarget();
+			if (target instanceof Model)
 			{
-				break;
+				((Model<T>)target).setObject(object);
 			}
-			object = tmp;
+			else
+			{
+				setTarget(object);
+			}
 		}
-		return object;
+		else
+		{
+			final Object target = getInnermostModelOrObject();
+
+			if (target != null)
+			{
+				try
+				{
+					PropertyUtils.setProperty(target, expression, object);
+				}
+				catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
+				{
+					throw new RuntimeException(e);
+				}
+			}
+		}
 	}
 }

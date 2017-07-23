@@ -24,29 +24,16 @@ public class SerializableModel<T extends Serializable> extends GenericModel<T>
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Instantiates a new {@link SerializableModel}.
-	 *
-	 * @param object
-	 *            the object
-	 */
-	public SerializableModel(T object)
-	{
-		super(object);
-	}
-
-	/**
 	 * Factory methods for Model which uses type inference to make code shorter. Equivalent to
-	 * <code>new Model&lt;TypeOfObject&gt;(object)</code>.
+	 * <code>new SerializableModel&lt;TypeOfObject&gt;()</code>.
 	 *
 	 * @param <T>
 	 *            the generic type
-	 * @param object
-	 *            the object
 	 * @return Model that contains <code>object</code>
 	 */
-	public static <T extends Serializable> Model<T> of(final T object)
+	public static <T extends Serializable> Model<T> of()
 	{
-		return new SerializableModel<>(object);
+		return new SerializableModel<>();
 	}
 
 	/**
@@ -66,15 +53,28 @@ public class SerializableModel<T extends Serializable> extends GenericModel<T>
 
 	/**
 	 * Factory methods for Model which uses type inference to make code shorter. Equivalent to
-	 * <code>new SerializableModel&lt;TypeOfObject&gt;()</code>.
+	 * <code>new Model&lt;TypeOfObject&gt;(object)</code>.
 	 *
 	 * @param <T>
 	 *            the generic type
+	 * @param object
+	 *            the object
 	 * @return Model that contains <code>object</code>
 	 */
-	public static <T extends Serializable> Model<T> of()
+	public static <T extends Serializable> Model<T> of(final T object)
 	{
-		return new SerializableModel<>();
+		return new SerializableModel<>(object);
+	}
+
+	/**
+	 * Instantiates a new {@link SerializableModel}.
+	 *
+	 * @param object
+	 *            the object
+	 */
+	public SerializableModel(T object)
+	{
+		super(object);
 	}
 
 	/**

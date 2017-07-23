@@ -36,29 +36,6 @@ public class SetModel<T> extends GenericCollectionModel<Set<T>>
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Creates model that will contain <code>set</code>.
-	 *
-	 * @param set
-	 *            the set
-	 */
-	public SetModel(final Set<T> set)
-	{
-		super(set);
-	}
-
-
-	/** {@inheritDoc} */
-	@Override
-	protected Set<T> newSerializableCollectionOf(final Set<T> object)
-	{
-		if (object != null)
-		{
-			return new HashSet<>(object);
-		}
-		return null;
-	}
-
-	/**
 	 * Factory method for models that contain sets. This factory method will automatically rebuild a
 	 * nonserializable <code>set</code> into a serializable one.
 	 *
@@ -71,6 +48,29 @@ public class SetModel<T> extends GenericCollectionModel<Set<T>>
 	public static <C> Model<Set<C>> ofSet(final Set<C> set)
 	{
 		return new SetModel<>(set);
+	}
+
+
+	/**
+	 * Creates model that will contain <code>set</code>.
+	 *
+	 * @param set
+	 *            the set
+	 */
+	public SetModel(final Set<T> set)
+	{
+		super(set);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	protected Set<T> newSerializableCollectionOf(final Set<T> object)
+	{
+		if (object != null)
+		{
+			return new HashSet<>(object);
+		}
+		return null;
 	}
 
 }

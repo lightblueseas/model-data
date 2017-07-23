@@ -58,6 +58,22 @@ public class PropertyModel<T> extends AbstractPropertyModel<T>
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Type-infering factory method.
+	 *
+	 * @param <Z>
+	 *            the generic type
+	 * @param parent
+	 *            object that contains the property
+	 * @param property
+	 *            property path
+	 * @return {@link PropertyModel} instance
+	 */
+	public static <Z> PropertyModel<Z> of(final Object parent, final String property)
+	{
+		return new PropertyModel<>(parent, property);
+	}
+
 	/** Property expression for property access. */
 	private final String expression;
 
@@ -80,36 +96,20 @@ public class PropertyModel<T> extends AbstractPropertyModel<T>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString()
-	{
-		final StringBuilder sb = new StringBuilder(super.toString());
-		sb.append(":expression=[").append(expression).append("]");
-		return sb.toString();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	protected String propertyExpression()
 	{
 		return expression;
 	}
 
 	/**
-	 * Type-infering factory method.
-	 *
-	 * @param <Z>
-	 *            the generic type
-	 * @param parent
-	 *            object that contains the property
-	 * @param property
-	 *            property path
-	 * @return {@link PropertyModel} instance
+	 * {@inheritDoc}
 	 */
-	public static <Z> PropertyModel<Z> of(final Object parent, final String property)
+	@Override
+	public String toString()
 	{
-		return new PropertyModel<>(parent, property);
+		final StringBuilder sb = new StringBuilder(super.toString());
+		sb.append(":expression=[").append(expression).append("]");
+		return sb.toString();
 	}
 
 }

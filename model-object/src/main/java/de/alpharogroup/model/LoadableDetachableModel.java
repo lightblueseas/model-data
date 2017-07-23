@@ -104,18 +104,6 @@ public abstract class LoadableDetachableModel<T> implements Model<T>
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString()
-	{
-		final StringBuilder sb = new StringBuilder(super.toString());
-		sb.append(":attached=").append(attached).append(":tempModelObject=[")
-			.append(this.transientModelObject).append("]");
-		return sb.toString();
-	}
-
-	/**
 	 * Loads and returns the (temporary) model object.
 	 *
 	 * @return the (temporary) model object
@@ -138,7 +126,6 @@ public abstract class LoadableDetachableModel<T> implements Model<T>
 	{
 	}
 
-
 	/**
 	 * Manually loads the model with the specified object. Subsequent calls to {@link #getObject()}
 	 * will return {@code object} until {@link #detach()} is called.
@@ -151,6 +138,19 @@ public abstract class LoadableDetachableModel<T> implements Model<T>
 	{
 		attached = true;
 		transientModelObject = object;
+	}
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString()
+	{
+		final StringBuilder sb = new StringBuilder(super.toString());
+		sb.append(":attached=").append(attached).append(":tempModelObject=[")
+			.append(this.transientModelObject).append("]");
+		return sb.toString();
 	}
 
 }
