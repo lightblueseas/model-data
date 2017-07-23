@@ -67,8 +67,6 @@ package de.alpharogroup.model;
  * consider using an alternative implementation.</strong>
  * </div>
  *
- * @see IModel
- * @see Model
  * @see LoadableDetachableModel
  *
  * @author Chris Turner
