@@ -18,7 +18,9 @@ model-data [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de
 
 ## javadoc
 
-model-data [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/model-data.svg)](http://www.javadoc.io/doc/de.alpharogroup/model-data)
+model-api [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/model-api.svg)](http://www.javadoc.io/doc/de.alpharogroup/model-api)
+
+model-object [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/model-object.svg)](http://www.javadoc.io/doc/de.alpharogroup/model-object)
 
 ## Maven dependency
 
