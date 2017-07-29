@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.azeckoski.reflectutils.ReflectUtils;
 
 import de.alpharogroup.model.api.Model;
 import de.alpharogroup.model.api.ObjectClassAware;
@@ -72,6 +73,36 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 			return getProperty(expression, target);
 		}
 		return null;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	private T getProperty(final String expression, final Object target) {
+		try {
+			// return (T)PropertyResolver.getValue(expression, target);
+
+			return (T) PropertyUtils.getProperty(target, expression);
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		try {
+
+			return (T) PropertyUtils.getNestedProperty(target, expression);
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Field field;
+		try {
+			field = target.getClass().getField(expression);
+			return (T) field.get(target);
+
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return (T) ReflectUtils.getInstance().getFieldValue(target, expression);
 	}
 
 	@SuppressWarnings("unchecked")
