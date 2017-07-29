@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import de.alpharogroup.model.api.Model;
 import de.alpharogroup.model.api.ObjectClassAware;
 import de.alpharogroup.model.api.PropertyReflectionAwareModel;
+import de.alpharogroup.model.property.PropertyResolver;
 
 /**
  * The class {@link AbstractPropertyModel} serves as a base class for different kinds of property
@@ -81,16 +82,7 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 		final Object target = getInnermostModelOrObject();
 		if (target != null)
 		{
-			try
-			{
-				// return (T)PropertyResolver.getValue(expression, target);
-				return (T)PropertyUtils.getProperty(target, expression);
-			}
-			catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			return getProperty(expression, target);
 		}
 		return null;
 	}
@@ -122,7 +114,7 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 				// ignore.
 			}
 		}
-		// TODO see if this can be done with beanutils
+
 		else if (getTarget() instanceof ObjectClassAware)
 		{
 			try
@@ -142,6 +134,14 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 
 		}
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	private T getProperty(final String expression, final Object target)
+	{
+		T property = null;
+		property = (T)PropertyResolver.getValue(expression, target);
+		return property;
 	}
 
 	/**
@@ -249,8 +249,6 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 		final String expression = propertyExpression();
 		if (StringUtils.isEmpty(expression))
 		{
-			// TODO check, really do this?
-			// why not just set the target to the object?
 			final Object target = getTarget();
 			if (target instanceof Model)
 			{

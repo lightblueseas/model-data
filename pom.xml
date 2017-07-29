@@ -11,16 +11,17 @@
 
 	<artifactId>model-data</artifactId>
 	<packaging>pom</packaging>
-	<version>1.2.0</version>
+	<version>1.3.0</version>
 
 	<modules>
 		<module>model-api</module>
 		<module>model-object</module>
+		<module>model-type-safe</module>
 	</modules>
 
 	<properties>
 		<!-- MODEL-DATA version -->
-		<model-data.version>1.2.0</model-data.version>
+		<model-data.version>1.3.0</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		<!-- EXT LIBRARIES versions -->
@@ -32,6 +33,10 @@
 		<jdk-serializable-functional.version>1.8.1</jdk-serializable-functional.version>
 		<commons-lang3.version>3.5</commons-lang3.version>
 		<commons-beanutils.version>1.9.3</commons-beanutils.version>
+		<!-- TYPE-SAFE-MODEL LIBRARIES versions -->
+		<objenesis.version>2.6</objenesis.version>
+		<cglib.version>3.2.4</cglib.version>
+		<asm-util.version>5.0.3</asm-util.version>
 	</properties>
 
 	<dependencyManagement>
@@ -60,6 +65,31 @@
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 				<version>${commons-lang3.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.objenesis</groupId>
+				<artifactId>objenesis</artifactId>
+				<version>${objenesis.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>${cglib.version}</version>
+				<exclusions>
+					<!-- excluded as for wicket-cdi -->
+					<exclusion>
+						<groupId>org.ow2.asm</groupId>
+						<artifactId>asm</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm-util</artifactId>
+				<version>${asm-util.version}</version>
 			</dependency>
 
 			<dependency>

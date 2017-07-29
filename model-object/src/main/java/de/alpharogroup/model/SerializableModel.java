@@ -87,13 +87,6 @@ public class SerializableModel<T extends Serializable> extends GenericModel<T>
 	@Override
 	public void setObject(final T object)
 	{
-		if (object != null)
-		{
-			if (!(object instanceof Serializable))
-			{
-				throw new RuntimeException("Model object must be Serializable");
-			}
-		}
 		super.setObject(object);
 	}
 
