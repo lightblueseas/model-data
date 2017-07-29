@@ -16,6 +16,7 @@
 	<modules>
 		<module>model-api</module>
 		<module>model-object</module>
+		<module>model-type-safe</module>
 	</modules>
 
 	<properties>
