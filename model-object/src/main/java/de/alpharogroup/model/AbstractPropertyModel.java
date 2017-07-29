@@ -15,15 +15,18 @@ import de.alpharogroup.model.api.PropertyReflectionAwareModel;
 import de.alpharogroup.model.property.PropertyResolver;
 
 /**
- * The class {@link AbstractPropertyModel} serves as a base class for different
- * kinds of property models. By default, this class uses {@link PropertyUtils}
- * to resolve expressions on the target model object.
+ * The class {@link AbstractPropertyModel} serves as a base class for different kinds of property
+ * models. By default, this class uses {@link PropertyUtils} to resolve expressions on the target
+ * model object.
  *
  * @param <T>
  *            the generic type
  */
 public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
-		implements ObjectClassAware<T>, PropertyReflectionAwareModel<T> {
+	implements
+		ObjectClassAware<T>,
+		PropertyReflectionAwareModel<T>
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -34,18 +37,22 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 	 * @param modelObject
 	 *            The nested model object
 	 */
-	public AbstractPropertyModel(final Object modelObject) {
+	public AbstractPropertyModel(final Object modelObject)
+	{
 		super(modelObject);
 	}
 
 	/**
 	 * @return The innermost model or the object if the target is not a model
 	 */
-	public final Object getInnermostModelOrObject() {
+	public final Object getInnermostModelOrObject()
+	{
 		Object object = getTarget();
-		while (object instanceof Model) {
-			final Object tmp = ((Model<?>) object).getObject();
-			if (tmp == object) {
+		while (object instanceof Model)
+		{
+			final Object tmp = ((Model<?>)object).getObject();
+			if (tmp == object)
+			{
 				break;
 			}
 			object = tmp;
@@ -58,27 +65,26 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public T getObject() {
+	public T getObject()
+	{
 		final String expression = propertyExpression();
-		if (StringUtils.isEmpty(expression)) {
+		if (StringUtils.isEmpty(expression))
+		{
 			// Return a meaningful value for an empty property expression
-			return (T) getInnermostModelOrObject();
-		} else if (expression.startsWith(".")) {
-			throw new IllegalArgumentException("Property expressions cannot start with a '.' character");
+			return (T)getInnermostModelOrObject();
+		}
+		else if (expression.startsWith("."))
+		{
+			throw new IllegalArgumentException(
+				"Property expressions cannot start with a '.' character");
 		}
 
 		final Object target = getInnermostModelOrObject();
-		if (target != null) {
+		if (target != null)
+		{
 			return getProperty(expression, target);
 		}
 		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	private T getProperty(final String expression, final Object target) {
-		T property = null;
-		property = (T)PropertyResolver.getValue(expression, target);
-		return property;
 	}
 
 	/**
@@ -86,31 +92,43 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public Class<T> getObjectClass() {
+	public Class<T> getObjectClass()
+	{
 		final String expression = propertyExpression();
 		final Object target = getInnermostModelOrObject();
 
-		if (StringUtils.isEmpty(expression)) {
+		if (StringUtils.isEmpty(expression))
+		{
 			// Return a meaningful value for an empty property expression
-			return (Class<T>) (target != null ? target.getClass() : null);
+			return (Class<T>)(target != null ? target.getClass() : null);
 		}
 
-		if (target != null) {
-			try {
-				return (Class<T>) PropertyUtils.getPropertyType(target, expression);
-			} catch (final Exception e) {
+		if (target != null)
+		{
+			try
+			{
+				return (Class<T>)PropertyUtils.getPropertyType(target, expression);
+			}
+			catch (final Exception e)
+			{
 				// ignore.
 			}
 		}
 
-		else if (getTarget() instanceof ObjectClassAware) {
-			try {
-				final Class<?> targetClass = ((ObjectClassAware<?>) getTarget()).getObjectClass();
-				if (targetClass != null) {
-					final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(expression, targetClass);
-					return (Class<T>) propertyDescriptor.getPropertyType();
+		else if (getTarget() instanceof ObjectClassAware)
+		{
+			try
+			{
+				final Class<?> targetClass = ((ObjectClassAware<?>)getTarget()).getObjectClass();
+				if (targetClass != null)
+				{
+					final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(expression,
+						targetClass);
+					return (Class<T>)propertyDescriptor.getPropertyType();
 				}
-			} catch (final IntrospectionException e) {
+			}
+			catch (final IntrospectionException e)
+			{
 				// ignore.
 			}
 
@@ -118,24 +136,39 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	private T getProperty(final String expression, final Object target)
+	{
+		T property = null;
+		property = (T)PropertyResolver.getValue(expression, target);
+		return property;
+	}
+
 	/**
 	 * Gets the property expression for this model
 	 *
 	 * @return The property expression
 	 */
-	public final String getPropertyExpression() {
+	public final String getPropertyExpression()
+	{
 		return propertyExpression();
 	}
 
 	@Override
-	public Field getPropertyField() {
+	public Field getPropertyField()
+	{
 		final String expression = propertyExpression();
-		if (StringUtils.isEmpty(expression) == false) {
+		if (StringUtils.isEmpty(expression) == false)
+		{
 			final Object target = getInnermostModelOrObject();
-			if (target != null) {
-				try {
+			if (target != null)
+			{
+				try
+				{
 					return target.getClass().getDeclaredField(expression);
-				} catch (final Exception ignore) {
+				}
+				catch (final Exception ignore)
+				{
 					// ignore.
 				}
 			}
@@ -147,16 +180,23 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Method getPropertyGetter() {
+	public Method getPropertyGetter()
+	{
 		final String expression = propertyExpression();
-		if (StringUtils.isEmpty(expression) == false) {
+		if (StringUtils.isEmpty(expression) == false)
+		{
 			final Object target = getInnermostModelOrObject();
-			if (target != null) {
-				try {
+			if (target != null)
+			{
+				try
+				{
 					final Class<?> targetClass = target.getClass();
-					final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(expression, targetClass);
+					final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(expression,
+						targetClass);
 					return propertyDescriptor.getReadMethod();
-				} catch (final Exception ignore) {
+				}
+				catch (final Exception ignore)
+				{
 				}
 			}
 		}
@@ -167,17 +207,24 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Method getPropertySetter() {
+	public Method getPropertySetter()
+	{
 		final String expression = propertyExpression();
-		if (StringUtils.isEmpty(expression) == false) {
+		if (StringUtils.isEmpty(expression) == false)
+		{
 			final Object target = getInnermostModelOrObject();
-			if (target != null) {
-				try {
+			if (target != null)
+			{
+				try
+				{
 
 					final Class<?> targetClass = target.getClass();
-					final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(expression, targetClass);
+					final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(expression,
+						targetClass);
 					return propertyDescriptor.getWriteMethod();
-				} catch (final Exception ignore) {
+				}
+				catch (final Exception ignore)
+				{
 				}
 			}
 		}
@@ -190,31 +237,40 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 	protected abstract String propertyExpression();
 
 	/**
-	 * Applies the property expression on the model object using the given
-	 * object argument.
+	 * Applies the property expression on the model object using the given object argument.
 	 *
 	 * @param object
-	 *            The object that will be used when setting a value on the model
-	 *            object
+	 *            The object that will be used when setting a value on the model object
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public void setObject(final T object) {
+	public void setObject(final T object)
+	{
 		final String expression = propertyExpression();
-		if (StringUtils.isEmpty(expression)) {
+		if (StringUtils.isEmpty(expression))
+		{
 			final Object target = getTarget();
-			if (target instanceof Model) {
-				((Model<T>) target).setObject(object);
-			} else {
+			if (target instanceof Model)
+			{
+				((Model<T>)target).setObject(object);
+			}
+			else
+			{
 				setTarget(object);
 			}
-		} else {
+		}
+		else
+		{
 			final Object target = getInnermostModelOrObject();
 
-			if (target != null) {
-				try {
+			if (target != null)
+			{
+				try
+				{
 					PropertyUtils.setProperty(target, expression, object);
-				} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+				}
+				catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
+				{
 					throw new RuntimeException(e);
 				}
 			}

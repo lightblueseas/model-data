@@ -12,16 +12,6 @@
 
 	<dependencies>
 
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>model-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>model-object</artifactId>
-		</dependency>
-
 	</dependencies>
 
 </project>

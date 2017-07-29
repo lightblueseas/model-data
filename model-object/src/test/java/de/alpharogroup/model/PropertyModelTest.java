@@ -17,7 +17,7 @@ public class PropertyModelTest
 		PropertyModel<String> model = new PropertyModel<>(employee, "person.name");
 		model.setObject("foo");
 		AssertJUnit.assertEquals(employee.getPerson().getName(), model.getObject());
-		
+
 		Model<Employee> employeeModel = BaseModel.of(employee);
 		model = new PropertyModel<>(employeeModel, "person.name");
 		model.setObject("foo");

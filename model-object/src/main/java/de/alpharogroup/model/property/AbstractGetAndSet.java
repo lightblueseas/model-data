@@ -5,15 +5,18 @@ import java.lang.reflect.Method;
 
 import de.alpharogroup.model.api.GetAndSet;
 
-public abstract class AbstractGetAndSet implements GetAndSet {
+public abstract class AbstractGetAndSet implements GetAndSet
+{
 	protected static final String GET = "get";
 	protected static final String IS = "is";
 	protected static final String SET = "set";
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field getField() {
+	public Field getField()
+	{
 		return null;
 	}
 
@@ -21,7 +24,8 @@ public abstract class AbstractGetAndSet implements GetAndSet {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Method getGetter() {
+	public Method getGetter()
+	{
 		return null;
 	}
 
@@ -29,7 +33,8 @@ public abstract class AbstractGetAndSet implements GetAndSet {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Method getSetter() {
+	public Method getSetter()
+	{
 		return null;
 	}
 
@@ -37,7 +42,8 @@ public abstract class AbstractGetAndSet implements GetAndSet {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Class<?> getTargetClass() {
+	public Class<?> getTargetClass()
+	{
 		return null;
 	}
 }

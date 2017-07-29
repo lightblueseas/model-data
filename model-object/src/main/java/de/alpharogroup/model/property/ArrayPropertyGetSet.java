@@ -7,129 +7,132 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public final class ArrayPropertyGetSet extends AbstractGetAndSet
+{
+	private final static Method findSetter(final Method getMethod, final Class<?> clz)
 	{
-		final private Integer index;
-		final private Method getMethod;
-		private Method setMethod;
-
-		ArrayPropertyGetSet(final Method method, final int index)
+		String name = getMethod.getName();
+		name = SET + name.substring(3);
+		try
 		{
-			this.index = index;
-			getMethod = method;
-			getMethod.setAccessible(true);
+			return clz.getMethod(name, new Class[] { int.class, getMethod.getReturnType() });
+		}
+		catch (Exception e)
+		{
+			log.debug("Can't find setter method corresponding to " + getMethod);
+		}
+		return null;
+	}
+	final private Integer index;
+	final private Method getMethod;
+
+	private Method setMethod;
+
+	ArrayPropertyGetSet(final Method method, final int index)
+	{
+		this.index = index;
+		getMethod = method;
+		getMethod.setAccessible(true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Class<?> getTargetClass()
+	{
+		return getMethod.getReturnType();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object getValue(Object object)
+	{
+		Object ret = null;
+		try
+		{
+			ret = getMethod.invoke(object, index);
+		}
+		catch (InvocationTargetException ex)
+		{
+			throw new RuntimeException(
+				"Error calling index property method: " + getMethod + " on object: " + object,
+				ex.getCause());
+		}
+		catch (Exception ex)
+		{
+			throw new RuntimeException(
+				"Error calling index property method: " + getMethod + " on object: " + object, ex);
+		}
+		return ret;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object newValue(Object object)
+	{
+		if (setMethod == null)
+		{
+			setMethod = findSetter(getMethod, object.getClass());
 		}
 
-		private final static Method findSetter(final Method getMethod, final Class<?> clz)
+		if (setMethod == null)
 		{
-			String name = getMethod.getName();
-			name = SET + name.substring(3);
-			try
-			{
-				return clz.getMethod(name, new Class[] { int.class, getMethod.getReturnType() });
-			}
-			catch (Exception e)
-			{
-				log.debug("Can't find setter method corresponding to " + getMethod);
-			}
+			log.warn("Null setMethod");
 			return null;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Object getValue(Object object)
+		Class<?> clz = getMethod.getReturnType();
+		Object value = null;
+		try
 		{
-			Object ret = null;
+			value = clz.newInstance();
+			setMethod.invoke(object, index, value);
+		}
+		catch (Exception e)
+		{
+			log.warn("Cannot set new value " + value + " at index " + index, e);
+		}
+		return value;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setValue(final Object object, final Object value)
+	{
+		if (setMethod == null)
+		{
+			setMethod = findSetter(getMethod, object.getClass());
+		}
+		if (setMethod != null)
+		{
+			setMethod.setAccessible(true);
 			try
 			{
-				ret = getMethod.invoke(object, index);
+				setMethod.invoke(object, index, value);
 			}
 			catch (InvocationTargetException ex)
 			{
-				throw new RuntimeException("Error calling index property method: " +
-					getMethod + " on object: " + object, ex.getCause());
+				throw new RuntimeException(
+					"Error index property calling method: " + setMethod + " on object: " + object,
+					ex.getCause());
 			}
 			catch (Exception ex)
 			{
-				throw new RuntimeException("Error calling index property method: " +
-					getMethod + " on object: " + object, ex);
-			}
-			return ret;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setValue(final Object object, final Object value)
-		{
-			if (setMethod == null)
-			{
-				setMethod = findSetter(getMethod, object.getClass());
-			}
-			if (setMethod != null)
-			{
-				setMethod.setAccessible(true);
-				try
-				{
-					setMethod.invoke(object, index, value);
-				}
-				catch (InvocationTargetException ex)
-				{
-					throw new RuntimeException("Error index property calling method: " +
-						setMethod + " on object: " + object, ex.getCause());
-				}
-				catch (Exception ex)
-				{
-					throw new RuntimeException("Error index property calling method: " +
-						setMethod + " on object: " + object, ex);
-				}
-			}
-			else
-			{
-				throw new RuntimeException("No set method defined for value: " + value +
-					" on object: " + object);
+				throw new RuntimeException(
+					"Error index property calling method: " + setMethod + " on object: " + object,
+					ex);
 			}
 		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Class<?> getTargetClass()
+		else
 		{
-			return getMethod.getReturnType();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Object newValue(Object object)
-		{
-			if (setMethod == null)
-			{
-				setMethod = findSetter(getMethod, object.getClass());
-			}
-
-			if (setMethod == null)
-			{
-				log.warn("Null setMethod");
-				return null;
-			}
-
-			Class<?> clz = getMethod.getReturnType();
-			Object value = null;
-			try
-			{
-				value = clz.newInstance();
-				setMethod.invoke(object, index, value);
-			}
-			catch (Exception e)
-			{
-				log.warn("Cannot set new value " + value + " at index " + index, e);
-			}
-			return value;
+			throw new RuntimeException(
+				"No set method defined for value: " + value + " on object: " + object);
 		}
 	}
+}

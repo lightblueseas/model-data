@@ -1,10 +1,9 @@
 package de.alpharogroup.model.typesafe;
 
-import de.alpharogroup.model.PropertyModel;
-
 /**
- * The class {@link TypeSafeModel} for create type safe {@link PropertyModel}'s.
+ * The class {@link TypeSafeModel} for create type safe PropertyModel's.
  */
-public class TypeSafeModel {
+public class TypeSafeModel
+{
 
 }

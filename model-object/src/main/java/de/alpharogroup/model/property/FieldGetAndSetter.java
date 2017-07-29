@@ -6,90 +6,91 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class FieldGetAndSetter extends AbstractGetAndSet
+{
+	private final Field field;
+
+	/**
+	 * Construct.
+	 *
+	 * @param field
+	 *            the field
+	 */
+	public FieldGetAndSetter(final Field field)
 	{
-		private final Field field;
+		super();
+		this.field = field;
+		this.field.setAccessible(true);
+	}
 
-		/**
-		 * Construct.
-		 *
-		 * @param field
-		 */
-		public FieldGetAndSetter(final Field field)
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Field getField()
+	{
+		return field;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Class<?> getTargetClass()
+	{
+		return field.getType();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object getValue(final Object object)
+	{
+		try
 		{
-			super();
-			this.field = field;
-			this.field.setAccessible(true);
+			return field.get(object);
 		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Object getValue(final Object object)
+		catch (final Exception ex)
 		{
-			try
-			{
-				return field.get(object);
-			}
-			catch (Exception ex)
-			{
-				throw new RuntimeException("Error getting field value of field " + field +
-					" from object " + object, ex);
-			}
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Object newValue(final Object object)
-		{
-			Class<?> clz = field.getType();
-			Object value = null;
-			try
-			{
-				value = clz.newInstance();
-				field.set(object, value);
-			}
-			catch (Exception e)
-			{
-				log.warn("Cannot set field " + field + " to " + value, e);
-			}
-			return value;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setValue(final Object object, Object value)
-		{
-			try
-			{
-				field.set(object, value);
-			}
-			catch (Exception ex)
-			{
-				throw new RuntimeException("Error setting field value of field " + field +
-					" on object " + object + ", value " + value, ex);
-			}
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Class<?> getTargetClass()
-		{
-			return field.getType();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Field getField()
-		{
-			return field;
+			throw new RuntimeException(
+				"Error getting field value of field " + field + " from object " + object, ex);
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object newValue(final Object object)
+	{
+		final Class<?> clz = field.getType();
+		Object value = null;
+		try
+		{
+			value = clz.newInstance();
+			field.set(object, value);
+		}
+		catch (final Exception e)
+		{
+			log.warn("Cannot set field " + field + " to " + value, e);
+		}
+		return value;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setValue(final Object object, Object value)
+	{
+		try
+		{
+			field.set(object, value);
+		}
+		catch (final Exception ex)
+		{
+			throw new RuntimeException("Error setting field value of field " + field + " on object "
+				+ object + ", value " + value, ex);
+		}
+	}
+}
