@@ -21,7 +21,7 @@
 
 	<properties>
 		<!-- MODEL-DATA version -->
-		<model-data.version>1.3.0</model-data.version>
+		<model-data.version>1.4.0-SNAPSHOT</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		<!-- EXT LIBRARIES versions -->
