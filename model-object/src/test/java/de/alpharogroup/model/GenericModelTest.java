@@ -13,10 +13,12 @@ public class GenericModelTest
 	@Test
 	public void testSetInnerProperty()
 	{
-		final Employee employee = Employee.builder().person(Person.builder().build()).build();
+		final Employee employee = Employee.builder().person(Person.builder().name("bar").build()).build();
 		final PropertyModel<String> model = new PropertyModel<>(employee, "person.name");
 		model.setObject("foo");
-		AssertJUnit.assertEquals(employee.getPerson().getName(), model.getObject());
+		String expected = employee.getPerson().getName();
+		String actual = model.getObject();
+		AssertJUnit.assertEquals(expected, actual);
 	}
 
 }
