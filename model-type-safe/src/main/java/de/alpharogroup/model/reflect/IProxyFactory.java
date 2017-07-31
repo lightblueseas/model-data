@@ -21,14 +21,15 @@ import java.lang.reflect.Method;
 /**
  * A factory of proxies.
  */
-public interface IProxyFactory {
+public interface IProxyFactory
+{
 
 	/**
 	 * Callback to a method invocation on a proxy.
 	 */
-	public static interface Callback {
-		public Object on(Object obj, Method method, Object[] args)
-				throws Throwable;
+	public static interface Callback
+	{
+		public Object on(Object obj, Method method, Object[] args) throws Throwable;
 	}
 
 	/**
@@ -49,8 +50,7 @@ public interface IProxyFactory {
 	 *            callback for invocations
 	 * @return proxy instance
 	 */
-	public Object createInstance(final Class<?> proxyClass,
-			final Callback callback);
+	public Object createInstance(final Class<?> proxyClass, final Callback callback);
 
 	/**
 	 * Get the callback for the given proxy.

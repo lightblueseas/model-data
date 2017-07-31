@@ -65,14 +65,23 @@ public final class Reflection
 					Type variableType = variableType(parmeterizedType, typeVariable);
 					if (variableType != null)
 					{
-						if (variableType instanceof TypeVariable<?>) {
-							if (declaringType instanceof BacktrackingParameterizedType) {
-								type = resultType(((BacktrackingParameterizedType)declaringType).declaringType, variableType);
-							} else {
-								log.debug("typeVariable {} resolves to typeVariable {}", typeVariable, variableType);
+						if (variableType instanceof TypeVariable<?>)
+						{
+							if (declaringType instanceof BacktrackingParameterizedType)
+							{
+								type = resultType(
+									((BacktrackingParameterizedType)declaringType).declaringType,
+									variableType);
+							}
+							else
+							{
+								log.debug("typeVariable {} resolves to typeVariable {}",
+									typeVariable, variableType);
 								type = null;
 							}
-						} else {
+						}
+						else
+						{
 							type = variableType;
 						}
 						break;
@@ -99,7 +108,9 @@ public final class Reflection
 					break;
 				}
 			}
-		} else if (type instanceof ParameterizedType) {
+		}
+		else if (type instanceof ParameterizedType)
+		{
 			type = new BacktrackingParameterizedType(declaringType, (ParameterizedType)type);
 		}
 
@@ -162,8 +173,8 @@ public final class Reflection
 		}
 		else
 		{
-			throw new IllegalArgumentException(String.format(
-				"%s is not a class or parameterizedType", type));
+			throw new IllegalArgumentException(
+				String.format("%s is not a class or parameterizedType", type));
 		}
 
 		return clazz;
@@ -184,15 +195,14 @@ public final class Reflection
 		{
 			Class<?> returnType = method.getReturnType();
 
-			if (name.startsWith("get") && name.length() > 3 &&
-				Character.isUpperCase(name.charAt(3)) && returnType != Void.TYPE)
+			if (name.startsWith("get") && name.length() > 3 && Character.isUpperCase(name.charAt(3))
+				&& returnType != Void.TYPE)
 			{
 				return true;
 			}
 
-			if (name.startsWith("is") && name.length() > 2 &&
-				Character.isUpperCase(name.charAt(2)) &&
-				(returnType == Boolean.TYPE || returnType == Boolean.class))
+			if (name.startsWith("is") && name.length() > 2 && Character.isUpperCase(name.charAt(2))
+				&& (returnType == Boolean.TYPE || returnType == Boolean.class))
 			{
 				return true;
 			}
@@ -225,7 +235,8 @@ public final class Reflection
 	/**
 	 * Allows backtracking of type variables.
 	 */
-	private static class BacktrackingParameterizedType implements ParameterizedType {
+	private static class BacktrackingParameterizedType implements ParameterizedType
+	{
 
 		private Type declaringType;
 

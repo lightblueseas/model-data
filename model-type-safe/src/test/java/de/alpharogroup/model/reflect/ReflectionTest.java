@@ -28,47 +28,51 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import de.alpharogroup.model.reflect.Reflection;
-
 /**
  * Test for {@link Reflection}.
  *
  * @author svenmeier
  */
-public class ReflectionTest {
+public class ReflectionTest
+{
 
 	@Test
-	public void variableType() throws Exception {
+	public void variableType() throws Exception
+	{
 		Method method = Foo.class.getMethod("put", Object.class, Object.class);
 
-		assertEquals(String.class, Reflection.variableType(
-				(ParameterizedType) Foo.class.getGenericSuperclass(),
-				(TypeVariable<?>) method.getGenericParameterTypes()[0]));
+		assertEquals(String.class,
+			Reflection.variableType((ParameterizedType)Foo.class.getGenericSuperclass(),
+				(TypeVariable<?>)method.getGenericParameterTypes()[0]));
 
-		assertEquals(Integer.class, Reflection.variableType(
-				(ParameterizedType) Foo.class.getGenericSuperclass(),
-				(TypeVariable<?>) method.getGenericParameterTypes()[1]));
+		assertEquals(Integer.class,
+			Reflection.variableType((ParameterizedType)Foo.class.getGenericSuperclass(),
+				(TypeVariable<?>)method.getGenericParameterTypes()[1]));
 	}
 
 	@Test
-	public void classForType() throws Exception {
+	public void classForType() throws Exception
+	{
 
-		assertEquals(HashMap.class, Reflection.getClass(new Foo().getClass()
-				.getGenericSuperclass()));
+		assertEquals(HashMap.class,
+			Reflection.getClass(new Foo().getClass().getGenericSuperclass()));
 
 		Method method = Foo.class.getMethod("put", Object.class, Object.class);
 
-		try {
-			Reflection.getClass(method
-					.getGenericParameterTypes()[0]);
+		try
+		{
+			Reflection.getClass(method.getGenericParameterTypes()[0]);
 
 			fail();
-		} catch (IllegalArgumentException expected) {
+		}
+		catch (IllegalArgumentException expected)
+		{
 		}
 	}
 
 	@Test
-	public void getters() throws Exception {
+	public void getters() throws Exception
+	{
 		assertTrue(Reflection.isGetter(Foo.class.getMethod("getProperty")));
 		assertFalse(Reflection.isGetter(Foo.class.getMethod("getNonProperty", String.class)));
 		assertFalse(Reflection.isGetter(Foo.class.getMethod("getnonProperty")));
@@ -78,33 +82,41 @@ public class ReflectionTest {
 		assertTrue(Reflection.isGetter(Foo.class.getMethod("isProperty")));
 	}
 
-	public static class Foo extends HashMap<String, Integer> {
+	public static class Foo extends HashMap<String, Integer>
+	{
 		private static final long serialVersionUID = 1L;
 
-		public String getProperty() {
+		public String getProperty()
+		{
 			return null;
 		}
 
-		public String getNonProperty(String arg) {
+		public String getNonProperty(String arg)
+		{
 			return null;
 		}
 
-		public String getnonProperty() {
+		public String getnonProperty()
+		{
 			return null;
 		}
 
-		public String isNonProperty() {
+		public String isNonProperty()
+		{
 			return null;
 		}
 
-		public String nonProperty() {
+		public String nonProperty()
+		{
 			return null;
 		}
 
-		public void getNonProperty() {
+		public void getNonProperty()
+		{
 		}
 
-		public boolean isProperty() {
+		public boolean isProperty()
+		{
 			return true;
 		}
 	}

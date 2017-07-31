@@ -20,39 +20,42 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import de.alpharogroup.model.reflect.CachingProxyFactory;
-import de.alpharogroup.model.reflect.IProxyFactory;
-
 /**
  * Test for {@link CachingProxyFactory}.
  *
  * @author svenmeier
  */
-public class CachingProxyFactoryTest {
+public class CachingProxyFactoryTest
+{
 
 	@Test
-	public void test() throws Exception {
+	public void test() throws Exception
+	{
 		final int[] count = new int[1];
 
-		IProxyFactory factory = new CachingProxyFactory(new IProxyFactory() {
+		IProxyFactory factory = new CachingProxyFactory(new IProxyFactory()
+		{
 
-					@Override
-					public Callback getCallback(Object proxy) {
-						return null;
-					}
+			@Override
+			public Callback getCallback(Object proxy)
+			{
+				return null;
+			}
 
-					@Override
-					public Object createInstance(Class<?> proxyClass, Callback callback) {
-						return null;
-					}
+			@Override
+			public Object createInstance(Class<?> proxyClass, Callback callback)
+			{
+				return null;
+			}
 
-					@Override
-					public Class<?> createClass(Class<?> clazz) {
-						count[0]++;
+			@Override
+			public Class<?> createClass(Class<?> clazz)
+			{
+				count[0]++;
 
-						return clazz;
-					}
-				});
+				return clazz;
+			}
+		});
 
 		factory.createClass(String.class);
 		factory.createClass(String.class);

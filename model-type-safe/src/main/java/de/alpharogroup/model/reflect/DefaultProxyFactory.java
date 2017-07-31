@@ -21,6 +21,9 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 import java.util.List;
 
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
+
 import net.sf.cglib.core.DefaultNamingPolicy;
 import net.sf.cglib.core.NamingPolicy;
 import net.sf.cglib.proxy.Enhancer;
@@ -28,18 +31,18 @@ import net.sf.cglib.proxy.Factory;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
-
 /**
- * Default factory of proxies, utilizing {@code cglib} for dynamic class
- * creation and {@code objenesis} for constructor-less instance creation.
+ * Default factory of proxies, utilizing {@code cglib} for dynamic class creation and
+ * {@code objenesis} for constructor-less instance creation.
  */
-public final class DefaultProxyFactory implements IProxyFactory {
+public final class DefaultProxyFactory implements IProxyFactory
+{
 
-	private final NamingPolicy NAMING_POLICY = new DefaultNamingPolicy() {
+	private final NamingPolicy NAMING_POLICY = new DefaultNamingPolicy()
+	{
 		@Override
-		protected String getTag() {
+		protected String getTag()
+		{
 			return "LAZY";
 		};
 	};
@@ -47,35 +50,46 @@ public final class DefaultProxyFactory implements IProxyFactory {
 	private final Objenesis objenesis = new ObjenesisStd();
 
 	@Override
-	public Class<?> createClass(Class<?> clazz) {
+	public Class<?> createClass(Class<?> clazz)
+	{
 		Class<?>[] interfaces;
 
-		if (clazz.isInterface()) {
+		if (clazz.isInterface())
+		{
 			interfaces = new Class[1];
 			interfaces[0] = clazz;
 			clazz = Object.class;
-		} else if (Proxy.isProxyClass(clazz)) {
+		}
+		else if (Proxy.isProxyClass(clazz))
+		{
 			interfaces = clazz.getInterfaces();
 			clazz = Object.class;
-		} else if (Factory.class.isAssignableFrom(clazz)) {
+		}
+		else if (Factory.class.isAssignableFrom(clazz))
+		{
 			interfaces = null;
 			clazz = clazz.getSuperclass();
-		} else {
+		}
+		else
+		{
 			interfaces = null;
 		}
 
-		if (Modifier.isFinal(clazz.getModifiers())) {
+		if (Modifier.isFinal(clazz.getModifiers()))
+		{
 			// cannot proxy final classes
 			return null;
 		}
 
-		Enhancer enhancer = new Enhancer() {
+		Enhancer enhancer = new Enhancer()
+		{
 			/**
 			 * Prevent filtering of private constructors in super implementation.
 			 */
 			@Override
 			@SuppressWarnings("rawtypes")
-			protected void filterConstructors(Class sc, List constructors) {
+			protected void filterConstructors(Class sc, List constructors)
+			{
 			}
 		};
 		enhancer.setUseFactory(true);
@@ -88,36 +102,40 @@ public final class DefaultProxyFactory implements IProxyFactory {
 	}
 
 	@Override
-	public Object createInstance(final Class<?> proxyClass,
-			final Callback callback) {
-		Factory proxy = (Factory) objenesis.newInstance(proxyClass);
+	public Object createInstance(final Class<?> proxyClass, final Callback callback)
+	{
+		Factory proxy = (Factory)objenesis.newInstance(proxyClass);
 		proxy.setCallback(0, new MethodInterceptorImplementation(callback));
 		return proxy;
 	}
 
 	@Override
-	public Callback getCallback(Object proxy) {
-		if (proxy instanceof Factory) {
-			MethodInterceptorImplementation interceptor = (MethodInterceptorImplementation) ((Factory) proxy)
-					.getCallback(0);
+	public Callback getCallback(Object proxy)
+	{
+		if (proxy instanceof Factory)
+		{
+			MethodInterceptorImplementation interceptor = (MethodInterceptorImplementation)((Factory)proxy)
+				.getCallback(0);
 
 			return interceptor.callback;
 		}
 		return null;
 	}
 
-	private final class MethodInterceptorImplementation implements
-			MethodInterceptor {
+	private final class MethodInterceptorImplementation implements MethodInterceptor
+	{
 
 		public final Callback callback;
 
-		private MethodInterceptorImplementation(Callback callback) {
+		private MethodInterceptorImplementation(Callback callback)
+		{
 			this.callback = callback;
 		}
 
 		@Override
-		public Object intercept(Object obj, Method method, Object[] args,
-				MethodProxy proxy) throws Throwable {
+		public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy)
+			throws Throwable
+		{
 			return callback.on(obj, method, args);
 		}
 	}

@@ -25,20 +25,28 @@ import java.util.Map;
  *
  * @author svenmeier
  */
-public class DefaultMethodResolver implements IMethodResolver {
+public class DefaultMethodResolver implements IMethodResolver
+{
 
 	/**
 	 * Inverse operation of {@link #getId(Method)}.
 	 */
 	@Override
-	public Method getMethod(Class<?> owner, Serializable id) {
+	public Method getMethod(Class<?> owner, Serializable id)
+	{
 		Class<?> candidate = owner;
-		while (candidate != null) {
-			for (Method method : candidate.getDeclaredMethods()) {
-				if (id.equals(getId(method))) {
-					try {
+		while (candidate != null)
+		{
+			for (Method method : candidate.getDeclaredMethods())
+			{
+				if (id.equals(getId(method)))
+				{
+					try
+					{
 						method.setAccessible(true);
-					} catch (SecurityException accessNotAllowed) {
+					}
+					catch (SecurityException accessNotAllowed)
+					{
 					}
 					return method;
 				}
@@ -46,30 +54,34 @@ public class DefaultMethodResolver implements IMethodResolver {
 
 			candidate = candidate.getSuperclass();
 		}
-		throw new IllegalArgumentException(String.format(
-				"unknown method %s#%s", owner.getName(), id));
+		throw new IllegalArgumentException(
+			String.format("unknown method %s#%s", owner.getName(), id));
 	}
 
 	/**
-	 * Generates an identifier for the given method consisting of the method
-	 * name and the first character of each parameter type.
+	 * Generates an identifier for the given method consisting of the method name and the first
+	 * character of each parameter type.
 	 * <p>
 	 * <em>Java Bean</em> getters are abbreviated to the name of the property.
 	 */
 	@Override
-	public Serializable getId(Method method) {
+	public Serializable getId(Method method)
+	{
 		String name = method.getName();
 
 		StringBuilder id = new StringBuilder();
 
-		if (Reflection.isGetter(method)) {
-			if (name.startsWith("get")) {
+		if (Reflection.isGetter(method))
+		{
+			if (name.startsWith("get"))
+			{
 				id.append(Character.toLowerCase(name.charAt(3)));
 				id.append(name.substring(4));
 
 				return id.toString();
 			}
-			if (name.startsWith("is")) {
+			if (name.startsWith("is"))
+			{
 
 				id.append(Character.toLowerCase(name.charAt(2)));
 				id.append(name.substring(3));
@@ -82,15 +94,19 @@ public class DefaultMethodResolver implements IMethodResolver {
 
 		id.append(method.getName());
 		id.append("(");
-		for (int p = 0; p < parameters.length; p++) {
-			if (p > 0) {
+		for (int p = 0; p < parameters.length; p++)
+		{
+			if (p > 0)
+			{
 				id.append(",");
 			}
-			if (parameters[p].isArray()) {
+			if (parameters[p].isArray())
+			{
 				id.append("[");
 			}
 			String simpleName = parameters[p].getSimpleName();
-			if (!simpleName.isEmpty()) {
+			if (!simpleName.isEmpty())
+			{
 				id.append(simpleName.charAt(0));
 			}
 		}
@@ -102,42 +118,52 @@ public class DefaultMethodResolver implements IMethodResolver {
 	/**
 	 * Resolves the setter by <em>Java Beans</em> convention.
 	 * <p>
-	 * Setters are allowed to have arbitrary parameters, given that they match
-	 * the arguments of the getter plus one additional argument matching the
-	 * getter's return type.
+	 * Setters are allowed to have arbitrary parameters, given that they match the arguments of the
+	 * getter plus one additional argument matching the getter's return type.
 	 */
 	@Override
-	public Method getSetter(Method getter) {
+	public Method getSetter(Method getter)
+	{
 		String name = getter.getName();
 		Class<?>[] getterParameters = getter.getParameterTypes();
 
-		if (name.equals("get")
-				&& Map.class.isAssignableFrom(getter.getDeclaringClass())) {
+		if (name.equals("get") && Map.class.isAssignableFrom(getter.getDeclaringClass()))
+		{
 			name = "put";
-		} else if (name.startsWith("get")) {
+		}
+		else if (name.startsWith("get"))
+		{
 			name = "set" + name.substring(3);
-		} else if (name.startsWith("is")) {
+		}
+		else if (name.startsWith("is"))
+		{
 			name = "set" + name.substring(2);
-		} else {
-			throw new RuntimeException(String.format(
-					"no setter for %s#%s", getter.getClass(), name));
+		}
+		else
+		{
+			throw new RuntimeException(
+				String.format("no setter for %s#%s", getter.getClass(), name));
 		}
 
 		Class<?>[] setterParameters = new Class[getterParameters.length + 1];
-		System.arraycopy(getterParameters, 0, setterParameters, 0,
-				getterParameters.length);
+		System.arraycopy(getterParameters, 0, setterParameters, 0, getterParameters.length);
 		setterParameters[getterParameters.length] = getter.getReturnType();
 
 		Class<?> owner = getter.getDeclaringClass();
 		Method setter;
-		while (true) {
-			try {
+		while (true)
+		{
+			try
+			{
 				setter = owner.getDeclaredMethod(name, setterParameters);
 				break;
-			} catch (Exception e) {
-				if (owner == Object.class) {
-					throw new RuntimeException(String.format(
-						"no setter for %s#%s", getter.getDeclaringClass(), name));
+			}
+			catch (Exception e)
+			{
+				if (owner == Object.class)
+				{
+					throw new RuntimeException(
+						String.format("no setter for %s#%s", getter.getDeclaringClass(), name));
 				}
 
 				// getter might be overriden and setter is declared in superclass only
@@ -145,9 +171,12 @@ public class DefaultMethodResolver implements IMethodResolver {
 			}
 		}
 
-		try {
+		try
+		{
 			setter.setAccessible(true);
-		} catch (SecurityException accessNotAllowed) {
+		}
+		catch (SecurityException accessNotAllowed)
+		{
 		}
 
 		return setter;

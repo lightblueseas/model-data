@@ -23,19 +23,19 @@ import java.lang.reflect.Method;
 
 import org.junit.Test;
 
-import de.alpharogroup.model.reflect.DefaultMethodResolver;
-
 /**
  * Test for {@link DefaultMethodResolver}.
  *
  * @author svenmeier
  */
-public class DefaultMethodResolverTest {
+public class DefaultMethodResolverTest
+{
 
 	private DefaultMethodResolver resolver = new DefaultMethodResolver();
 
 	@Test
-	public void methodWithoutArgs() throws Exception {
+	public void methodWithoutArgs() throws Exception
+	{
 
 		Method method = Foo.class.getMethod("method");
 
@@ -43,52 +43,50 @@ public class DefaultMethodResolverTest {
 	}
 
 	@Test
-	public void methodWithPrimitiveArgs() throws Exception {
+	public void methodWithPrimitiveArgs() throws Exception
+	{
 
-		Method method = Foo.class.getMethod("methodWithPrimitiveArgs",
-				int.class, float.class, double.class, long.class, byte.class,
-				short.class);
+		Method method = Foo.class.getMethod("methodWithPrimitiveArgs", int.class, float.class,
+			double.class, long.class, byte.class, short.class);
 
-		assertEquals("methodWithPrimitiveArgs(i,f,d,l,b,s)",
-				resolver.getId(method));
+		assertEquals("methodWithPrimitiveArgs(i,f,d,l,b,s)", resolver.getId(method));
 	}
 
 	@Test
-	public void methodWithPrimitiveArrayArgs() throws Exception {
+	public void methodWithPrimitiveArrayArgs() throws Exception
+	{
 
-		Method method = Foo.class.getMethod("methodWithPrimitiveArrayArgs",
-				int[].class, float[].class, double[].class, long[].class,
-				byte[].class, short[].class);
+		Method method = Foo.class.getMethod("methodWithPrimitiveArrayArgs", int[].class,
+			float[].class, double[].class, long[].class, byte[].class, short[].class);
 
-		assertEquals("methodWithPrimitiveArrayArgs([i,[f,[d,[l,[b,[s)",
-				resolver.getId(method));
+		assertEquals("methodWithPrimitiveArrayArgs([i,[f,[d,[l,[b,[s)", resolver.getId(method));
 	}
 
 	@Test
-	public void methodWithArgs() throws Exception {
+	public void methodWithArgs() throws Exception
+	{
 
-		Method method = Foo.class.getMethod("methodWithArgs", Integer.class,
-				Float.class, Double.class, Long.class, Byte.class, Short.class,
-				Object.class, String.class, Foo.class);
+		Method method = Foo.class.getMethod("methodWithArgs", Integer.class, Float.class,
+			Double.class, Long.class, Byte.class, Short.class, Object.class, String.class,
+			Foo.class);
 
-		assertEquals("methodWithArgs(I,F,D,L,B,S,O,S,F)",
-				resolver.getId(method));
+		assertEquals("methodWithArgs(I,F,D,L,B,S,O,S,F)", resolver.getId(method));
 	}
 
 	@Test
-	public void methodWithArrayArgs() throws Exception {
+	public void methodWithArrayArgs() throws Exception
+	{
 
-		Method method = Foo.class.getMethod("methodWithArrayArgs",
-				Integer[].class, Float[].class, Double[].class, Long[].class,
-				Byte[].class, Short[].class, Object[].class, String[].class,
-				Foo[].class);
+		Method method = Foo.class.getMethod("methodWithArrayArgs", Integer[].class, Float[].class,
+			Double[].class, Long[].class, Byte[].class, Short[].class, Object[].class,
+			String[].class, Foo[].class);
 
-		assertEquals("methodWithArrayArgs([I,[F,[D,[L,[B,[S,[O,[S,[F)",
-				resolver.getId(method));
+		assertEquals("methodWithArrayArgs([I,[F,[D,[L,[B,[S,[O,[S,[F)", resolver.getId(method));
 	}
 
 	@Test
-	public void getter() throws Exception {
+	public void getter() throws Exception
+	{
 
 		Method method = Foo.class.getMethod("getBar");
 
@@ -96,7 +94,8 @@ public class DefaultMethodResolverTest {
 	}
 
 	@Test
-	public void boolGetter() throws Exception {
+	public void boolGetter() throws Exception
+	{
 
 		Method method = Foo.class.getMethod("isBaz");
 
@@ -104,7 +103,8 @@ public class DefaultMethodResolverTest {
 	}
 
 	@Test
-	public void booleanGetter() throws Exception {
+	public void booleanGetter() throws Exception
+	{
 
 		Method method = Foo.class.getMethod("isBaz2");
 
@@ -112,7 +112,8 @@ public class DefaultMethodResolverTest {
 	}
 
 	@Test
-	public void noGetter() throws Exception {
+	public void noGetter() throws Exception
+	{
 
 		Method method = Foo.class.getMethod("getQuux");
 
@@ -120,7 +121,8 @@ public class DefaultMethodResolverTest {
 	}
 
 	@Test
-	public void noGetter2() throws Exception {
+	public void noGetter2() throws Exception
+	{
 
 		Method method = Foo.class.getMethod("getQuux2", String.class);
 
@@ -128,7 +130,8 @@ public class DefaultMethodResolverTest {
 	}
 
 	@Test
-	public void setterForGet() throws Exception {
+	public void setterForGet() throws Exception
+	{
 
 		Method getter = Foo.class.getMethod("getBar");
 
@@ -138,7 +141,8 @@ public class DefaultMethodResolverTest {
 	}
 
 	@Test
-	public void setterForOverridenGet() throws Exception {
+	public void setterForOverridenGet() throws Exception
+	{
 
 		Method getter = ExtendedFoo.class.getMethod("getBar");
 
@@ -148,7 +152,8 @@ public class DefaultMethodResolverTest {
 	}
 
 	@Test
-	public void setterForIs() throws Exception {
+	public void setterForIs() throws Exception
+	{
 
 		Method getter = Foo.class.getMethod("isBaz");
 
@@ -158,117 +163,143 @@ public class DefaultMethodResolverTest {
 	}
 
 	@Test
-	public void setterForGetterWithParameter() throws Exception {
+	public void setterForGetterWithParameter() throws Exception
+	{
 
 		Method getter = Foo.class.getMethod("getQuux2", String.class);
 
 		Method setter = resolver.getSetter(getter);
 
-		assertEquals(
-				Foo.class.getMethod("setQuux2", String.class, String.class),
-				setter);
+		assertEquals(Foo.class.getMethod("setQuux2", String.class, String.class), setter);
 	}
 
 	@Test
-	public void getterWithoutSetter() throws Exception {
+	public void getterWithoutSetter() throws Exception
+	{
 
 		Method getter = Foo.class.getMethod("getQuux");
 
-		try {
+		try
+		{
 			resolver.getSetter(getter);
 
 			fail();
-		} catch (Exception ex) {
-			assertEquals("no setter for class de.alpharogroup.model.reflect.DefaultMethodResolverTest$Foo#setQuux", ex.getMessage());
+		}
+		catch (Exception ex)
+		{
+			assertEquals(
+				"no setter for class de.alpharogroup.model.reflect.DefaultMethodResolverTest$Foo#setQuux",
+				ex.getMessage());
 		}
 	}
 
 	@Test
-	public void syntheticMethodOnAnonymousClass() {
+	public void syntheticMethodOnAnonymousClass()
+	{
 
-		// this nested construct results in the generation of a synthetic accessor for {@code accessed},
-		// whose first parameter type (the anonymous outer subclass) has {@code #getSimpleName()} returning an empty String
+		// this nested construct results in the generation of a synthetic accessor for {@code
+		// accessed},
+		// whose first parameter type (the anonymous outer subclass) has {@code #getSimpleName()}
+		// returning an empty String
 		@SuppressWarnings("unused")
 		Object outer = new Object()
 		{
 			private boolean accessed;
 
-			private Object inner = new Object() {
+			private Object inner = new Object()
+			{
 				{
 					accessed = true;
 				}
 			};
 		};
 
-		try {
+		try
+		{
 			// check that resolver does not fail on the synthetic method
 			resolver.getMethod(outer.getClass(), "notExistingMethod");
 
 			// there is no method "notExistingMethod"
 			fail();
-		} catch (IllegalArgumentException expected) {
+		}
+		catch (IllegalArgumentException expected)
+		{
 		}
 	}
 
-	public static class Foo {
+	public static class Foo
+	{
 
-		public Object method() {
+		public Object method()
+		{
 			return null;
 		}
 
-		public Object methodWithPrimitiveArgs(int i, float f, double d, long l,
-				byte b, short s) {
+		public Object methodWithPrimitiveArgs(int i, float f, double d, long l, byte b, short s)
+		{
 			return null;
 		}
 
-		public Object methodWithPrimitiveArrayArgs(int[] i, float[] f,
-				double[] d, long[] l, byte[] b, short[] s) {
+		public Object methodWithPrimitiveArrayArgs(int[] i, float[] f, double[] d, long[] l,
+			byte[] b, short[] s)
+		{
 			return null;
 		}
 
-		public Object methodWithArgs(Integer i, Float f, Double d, Long l,
-				Byte b, Short s, Object object, String string, Foo foo) {
+		public Object methodWithArgs(Integer i, Float f, Double d, Long l, Byte b, Short s,
+			Object object, String string, Foo foo)
+		{
 			return null;
 		}
 
-		public Object methodWithArrayArgs(Integer[] i, Float[] f, Double[] d,
-				Long[] l, Byte[] b, Short[] s, Object[] object,
-				String[] string, Foo[] foo) {
+		public Object methodWithArrayArgs(Integer[] i, Float[] f, Double[] d, Long[] l, Byte[] b,
+			Short[] s, Object[] object, String[] string, Foo[] foo)
+		{
 			return null;
 		}
 
-		public Object getBar() {
+		public Object getBar()
+		{
 			return null;
 		}
 
-		public void setBar(Object bar) {
+		public void setBar(Object bar)
+		{
 		}
 
-		public boolean isBaz() {
+		public boolean isBaz()
+		{
 			return false;
 		}
 
-		public void setBaz(boolean baz) {
+		public void setBaz(boolean baz)
+		{
 		}
 
-		public Boolean isBaz2() {
+		public Boolean isBaz2()
+		{
 			return null;
 		}
 
-		public void getQuux() {
+		public void getQuux()
+		{
 		}
 
-		public String getQuux2(String key) {
+		public String getQuux2(String key)
+		{
 			return key;
 		}
 
-		public void setQuux2(String key, String value) {
+		public void setQuux2(String key, String value)
+		{
 		}
 	}
 
-	public static class ExtendedFoo extends Foo {
+	public static class ExtendedFoo extends Foo
+	{
 		@Override
-		public Object getBar() {
+		public Object getBar()
+		{
 			return super.getBar();
 		}
 	}

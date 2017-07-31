@@ -23,45 +23,47 @@ import java.lang.reflect.Method;
 
 import org.junit.Test;
 
-import de.alpharogroup.model.reflect.CachingMethodResolver;
-import de.alpharogroup.model.reflect.IMethodResolver;
-
 /**
  * Test for {@link CachingMethodResolver}.
  *
  * @author svenmeier
  */
-public class CachingMethodResolverTest {
+public class CachingMethodResolverTest
+{
 
 	@Test
-	public void test() throws Exception {
+	public void test() throws Exception
+	{
 		final Method method = getClass().getMethod("test");
 		final Serializable id = "";
 		final int[] count = new int[1];
 
-		IMethodResolver resolver = new CachingMethodResolver(
-				new IMethodResolver() {
-					@Override
-					public Method getSetter(Method getter) {
-						count[0]++;
+		IMethodResolver resolver = new CachingMethodResolver(new IMethodResolver()
+		{
+			@Override
+			public Method getSetter(Method getter)
+			{
+				count[0]++;
 
-						return getter;
-					}
+				return getter;
+			}
 
-					@Override
-					public Method getMethod(Class<?> owner, Serializable id) {
-						count[0]++;
+			@Override
+			public Method getMethod(Class<?> owner, Serializable id)
+			{
+				count[0]++;
 
-						return method;
-					}
+				return method;
+			}
 
-					@Override
-					public Serializable getId(Method method) {
-						count[0]++;
+			@Override
+			public Serializable getId(Method method)
+			{
+				count[0]++;
 
-						return id;
-					}
-				});
+				return id;
+			}
+		});
 
 		resolver.getId(method);
 		resolver.getId(method);

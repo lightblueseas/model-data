@@ -16,14 +16,14 @@
  */
 package de.alpharogroup.model.typesafe;
 
+import static de.alpharogroup.model.typesafe.TypeSafeModel.from;
+import static de.alpharogroup.model.typesafe.TypeSafeModel.model;
+import static de.alpharogroup.model.typesafe.TypeSafeModel.path;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static de.alpharogroup.model.typesafe.TypeSafeModel.from;
-import static de.alpharogroup.model.typesafe.TypeSafeModel.model;
-import static de.alpharogroup.model.typesafe.TypeSafeModel.path;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
-import de.alpharogroup.model.typesafe.TypeSafeModel;
 
 import de.alpharogroup.model.BaseModel;
 import de.alpharogroup.model.LoadableDetachableModel;
@@ -50,10 +49,12 @@ import de.alpharogroup.model.reflect.Reflection;
  * @author svenmeier
  */
 @SuppressWarnings("serial")
-public class TypeSafeModelTest {
+public class TypeSafeModelTest
+{
 
 	@Test
-	public void inheritedTypeVariable() {
+	public void inheritedTypeVariable()
+	{
 		G2 g = new G2();
 
 		TypeSafeModel<String> model = model(from(g).getT());
@@ -64,7 +65,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void backtrackedTypeVariable() {
+	public void backtrackedTypeVariable()
+	{
 		G1 g = new G1();
 
 		TypeSafeModel<String> model = model(from(g).getList().get(0));
@@ -75,7 +77,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void typeErasedWithUpperBound() {
+	public void typeErasedWithUpperBound()
+	{
 		G<Serializable> g = new G<>();
 
 		TypeSafeModel<Serializable> model = model(from(g).getT());
@@ -86,8 +89,9 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void toStringNeverFails() {
-		Model<B> model = model(from(A.class).getB()).bind(SerializableModel.of((A) null));
+	public void toStringNeverFails()
+	{
+		Model<B> model = model(from(A.class).getB()).bind(SerializableModel.of((A)null));
 
 		// targetType is unknown, thus #getPath() fails - but #toString()
 		// catches all exceptions anyway
@@ -95,10 +99,13 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void improveTargetTypeWithTargetObjectClass() {
-		Model<Serializable> target = new SerializableModel<Serializable>() {
+	public void improveTargetTypeWithTargetObjectClass()
+	{
+		Model<Serializable> target = new SerializableModel<Serializable>()
+		{
 			@Override
-			public Serializable getObject() {
+			public Serializable getObject()
+			{
 				return new A();
 			}
 		};
@@ -109,14 +116,17 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void loadableDetachable() {
+	public void loadableDetachable()
+	{
 		final int[] got = new int[1];
 
-		Model<String> string = new SerializableModel<String>() {
+		Model<String> string = new SerializableModel<String>()
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public String getObject() {
+			public String getObject()
+			{
 				got[0]++;
 
 				return null;
@@ -136,17 +146,22 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void nullFails() {
-		try {
-			from((A) null);
+	public void nullFails()
+	{
+		try
+		{
+			from((A)null);
 
 			fail();
-		} catch (Exception ex) {
+		}
+		catch (Exception ex)
+		{
 		}
 	}
 
 	@Test
-	public void getTarget() {
+	public void getTarget()
+	{
 		A a = new A();
 
 		TypeSafeModel<A> model = model(from(a));
@@ -158,20 +173,25 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getTargetNotBoundFails() {
+	public void getTargetNotBoundFails()
+	{
 		TypeSafeModel<String> model = model(from(String.class));
 
-		try {
+		try
+		{
 			model.getObject();
 
 			fail();
-		} catch (Exception ex) {
+		}
+		catch (Exception ex)
+		{
 		}
 
 	}
 
 	@Test
-	public void setTargetFails() {
+	public void setTargetFails()
+	{
 		A a = new A();
 
 		TypeSafeModel<A> model = model(from(a));
@@ -179,16 +199,20 @@ public class TypeSafeModelTest {
 		assertEquals(A.class, model.getObjectClass());
 		assertEquals("", model.getPath());
 
-		try {
+		try
+		{
 			model.setObject(new A());
 
 			fail();
-		} catch (UnsupportedOperationException expected) {
+		}
+		catch (UnsupportedOperationException expected)
+		{
 		}
 	}
 
 	@Test
-	public void getInt() {
+	public void getInt()
+	{
 		A a = new A();
 
 		a.integer = 42;
@@ -202,7 +226,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setInt() {
+	public void setInt()
+	{
 		A a = new A();
 
 		TypeSafeModel<Integer> model = model(from(a).getInteger());
@@ -216,7 +241,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getBoolean() {
+	public void getBoolean()
+	{
 		A a = new A();
 
 		a.bool = true;
@@ -230,7 +256,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setBoolean() {
+	public void setBoolean()
+	{
 		A a = new A();
 
 		TypeSafeModel<Boolean> model = model(from(a).isBool());
@@ -244,7 +271,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setIntToNullFails() {
+	public void setIntToNullFails()
+	{
 		A a = new A();
 
 		TypeSafeModel<Integer> model = model(from(a).getInteger());
@@ -252,16 +280,20 @@ public class TypeSafeModelTest {
 		assertEquals(Integer.TYPE, model.getObjectClass());
 		assertEquals("integer", model.getPath());
 
-		try {
+		try
+		{
 			model.setObject(null);
 
 			fail();
-		} catch (RuntimeException expected) {
+		}
+		catch (RuntimeException expected)
+		{
 		}
 	}
 
 	@Test
-	public void getObject() {
+	public void getObject()
+	{
 		A a = new A();
 
 		a.b = new B();
@@ -275,7 +307,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setObject() {
+	public void setObject()
+	{
 		A a = new A();
 
 		TypeSafeModel<B> model = model(from(a).getB());
@@ -290,7 +323,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getInterface() {
+	public void getInterface()
+	{
 		A a = new A();
 
 		a.b = new B();
@@ -304,7 +338,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getGenericListFromInterface() {
+	public void getGenericListFromInterface()
+	{
 		A a = new A();
 
 		a.b = new B();
@@ -318,7 +353,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getRawList() {
+	public void getRawList()
+	{
 		B b = new B();
 		b.cs.add(new C());
 
@@ -331,13 +367,13 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getGenericMap() {
+	public void getGenericMap()
+	{
 		A a = new A();
 
 		a.b = new B();
 
-		TypeSafeModel<Map<String, String>> model = model(from(a).getB()
-				.getStrings());
+		TypeSafeModel<Map<String, String>> model = model(from(a).getB().getStrings());
 
 		assertEquals(Map.class, model.getObjectClass());
 		assertEquals("b.strings", model.getPath());
@@ -346,13 +382,13 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setGenericMap() {
+	public void setGenericMap()
+	{
 		A a = new A();
 
 		a.b = new B();
 
-		TypeSafeModel<Map<String, String>> model = model(from(a).getB()
-				.getStrings());
+		TypeSafeModel<Map<String, String>> model = model(from(a).getB().getStrings());
 
 		assertEquals(Map.class, model.getObjectClass());
 		assertEquals("b.strings", model.getPath());
@@ -363,7 +399,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getIntFromNull() {
+	public void getIntFromNull()
+	{
 		A a = new A();
 
 		TypeSafeModel<Character> model = model(from(a).getB().getCharacter());
@@ -375,7 +412,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setCharacterOnNullFails() {
+	public void setCharacterOnNullFails()
+	{
 		A a = new A();
 
 		TypeSafeModel<Character> model = model(from(a).getB().getCharacter());
@@ -383,16 +421,20 @@ public class TypeSafeModelTest {
 		assertEquals(Character.TYPE, model.getObjectClass());
 		assertEquals("b.character", model.getPath());
 
-		try {
+		try
+		{
 			model.setObject('c');
 
 			fail();
-		} catch (NullPointerException expected) {
+		}
+		catch (NullPointerException expected)
+		{
 		}
 	}
 
 	@Test
-	public void getValueFromGenericMap() {
+	public void getValueFromGenericMap()
+	{
 		A a = new A();
 
 		a.b = new B();
@@ -408,7 +450,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setValueToGenericMap() {
+	public void setValueToGenericMap()
+	{
 		A a = new A();
 
 		a.b = new B();
@@ -424,7 +467,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getGenericListFromNull() {
+	public void getGenericListFromNull()
+	{
 		A a = new A();
 
 		TypeSafeModel<List<C>> model = model(from(a).getB().getCs());
@@ -436,15 +480,18 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getEntryFromGenericList() {
+	public void getEntryFromGenericList()
+	{
 		final List<C> cs = new ArrayList<>();
 
 		C c = new C();
 		cs.add(c);
 
-		Model<List<C>> target = new BaseModel<List<C>>() {
+		Model<List<C>> target = new BaseModel<List<C>>()
+		{
 			@Override
-			public List<C> getObject() {
+			public List<C> getObject()
+			{
 				return cs;
 			}
 		};
@@ -458,13 +505,16 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setEntryToGenericList() {
+	public void setEntryToGenericList()
+	{
 		final List<C> cs = new ArrayList<>();
 		cs.add(new C());
 
-		Model<List<C>> target = new BaseModel<List<C>>() {
+		Model<List<C>> target = new BaseModel<List<C>>()
+		{
 			@Override
-			public List<C> getObject() {
+			public List<C> getObject()
+			{
 				return cs;
 			}
 		};
@@ -481,7 +531,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getGenericList() {
+	public void getGenericList()
+	{
 		A a = new A();
 		a.b = new B();
 
@@ -494,7 +545,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setGenericList() {
+	public void setGenericList()
+	{
 		A a = new A();
 		a.b = new B();
 
@@ -510,7 +562,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getObjectByIndex() {
+	public void getObjectByIndex()
+	{
 		A a = new A();
 		a.b = new B();
 
@@ -528,7 +581,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getOutOfBoundsFromGenericList() {
+	public void getOutOfBoundsFromGenericList()
+	{
 		B b = new B();
 
 		TypeSafeModel<C> model = model(from(b).getCs().get(0));
@@ -540,7 +594,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getObjectFromGenericList() {
+	public void getObjectFromGenericList()
+	{
 		A a = new A();
 		a.b = new B();
 
@@ -558,7 +613,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getObjectFromEntryFromGenericList() {
+	public void getObjectFromEntryFromGenericList()
+	{
 		A a = new A();
 		a.b = new B();
 
@@ -576,7 +632,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setObjectFromEntryFromGenericList() {
+	public void setObjectFromEntryFromGenericList()
+	{
 		A a = new A();
 		a.b = new B();
 
@@ -594,21 +651,26 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void detach() {
+	public void detach()
+	{
 		final boolean[] detached = { false };
 
-		Model<A> target = new SerializableModel<A>() {
+		Model<A> target = new SerializableModel<A>()
+		{
 			@Override
-			public A getObject() {
+			public A getObject()
+			{
 				return null;
 			}
 
 			@Override
-			public void setObject(A a) {
+			public void setObject(A a)
+			{
 			}
 
 			@Override
-			public void detach() {
+			public void detach()
+			{
 				detached[0] = true;
 			}
 		};
@@ -621,23 +683,28 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setTargetInModel() {
+	public void setTargetInModel()
+	{
 		final A[] as = new A[] { new A() };
 
-		Model<A> target = new SerializableModel<A>() {
+		Model<A> target = new SerializableModel<A>()
+		{
 
 			@Override
-			public A getObject() {
+			public A getObject()
+			{
 				return as[0];
 			}
 
 			@Override
-			public void setObject(A a) {
+			public void setObject(A a)
+			{
 				as[0] = a;
 			}
 
 			@Override
-			public void detach() {
+			public void detach()
+			{
 			}
 		};
 
@@ -654,7 +721,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getObjectFromObjectClassAwareModel() {
+	public void getObjectFromObjectClassAwareModel()
+	{
 		A a = new A();
 		a.b = new B();
 
@@ -672,26 +740,31 @@ public class TypeSafeModelTest {
 	}
 
 	/**
-	 * A {@link IObjectClassAwareModel} doesn't provide generic information,
-	 * thus the type of the model result is {@code List<Object>} only.
+	 * A {@link IObjectClassAwareModel} doesn't provide generic information, thus the type of the
+	 * model result is {@code List<Object>} only.
 	 */
 	@Test
-	public void getEntryFromGenericListInObjectClassAwareModelFails() {
+	public void getEntryFromGenericListInObjectClassAwareModelFails()
+	{
 		B b = new B();
 		b.cs.add(new C());
 
 		PropertyModel<List<C>> target = new PropertyModel<>(b, "cs");
 
-		try {
+		try
+		{
 			model(from(target).get(0).getString());
 
 			fail();
-		} catch (ClassCastException expected) {
+		}
+		catch (ClassCastException expected)
+		{
 		}
 	}
 
 	@Test
-	public void getWithNestedLazyModel() {
+	public void getWithNestedLazyModel()
+	{
 		A a = new A();
 		a.integer = 0;
 
@@ -709,7 +782,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void setWithNestedLazyModel() {
+	public void setWithNestedLazyModel()
+	{
 		A a = new A();
 		a.integer = 0;
 
@@ -728,16 +802,19 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getObjectFromGenericModel() {
+	public void getObjectFromGenericModel()
+	{
 		final A a = new A();
 		a.b = new B();
 
 		C c = new C();
 		a.b.cs.add(c);
 
-		Model<A> target = new SerializableModel<A>() {
+		Model<A> target = new SerializableModel<A>()
+		{
 			@Override
-			public A getObject() {
+			public A getObject()
+			{
 				return a;
 			}
 		};
@@ -756,13 +833,16 @@ public class TypeSafeModelTest {
 	 * {@link LoadableDetachableModel#getObject()}'s type is a type variable.
 	 */
 	@Test
-	public void getObjectFromLoadableModel() {
+	public void getObjectFromLoadableModel()
+	{
 		final A a = new A();
 		a.b = new B();
 
-		Model<A> target = new LoadableDetachableModel<A>() {
+		Model<A> target = new LoadableDetachableModel<A>()
+		{
 			@Override
-			protected A load() {
+			protected A load()
+			{
 				return a;
 			}
 
@@ -781,7 +861,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getFromPrivateConstructor() {
+	public void getFromPrivateConstructor()
+	{
 		final A a = new A();
 		a.p = P.P1;
 
@@ -794,7 +875,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getInherited() {
+	public void getInherited()
+	{
 		final A a = new A();
 		a.b = new B();
 		a.b.d = new D();
@@ -808,7 +890,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getEnum() {
+	public void getEnum()
+	{
 		final A a = new A();
 		a.e = E.E1;
 
@@ -821,7 +904,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getFinal() {
+	public void getFinal()
+	{
 		final A a = new A();
 		a.f = new F();
 
@@ -834,55 +918,69 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getFinalFails() {
+	public void getFinalFails()
+	{
 		final A a = new A();
 
-		try {
+		try
+		{
 			model(from(a).getFinalB().getCharacter());
 
 			fail();
-		} catch (NullPointerException expected) {
+		}
+		catch (NullPointerException expected)
+		{
 		}
 	}
 
 	@Test
-	public void getStringFromFinalFails() {
+	public void getStringFromFinalFails()
+	{
 		final A a = new A();
 		a.f = new F();
 		a.f.string = "string";
 
-		try {
+		try
+		{
 			from(a).getF().getString();
 
 			fail();
-		} catch (NullPointerException expected) {
+		}
+		catch (NullPointerException expected)
+		{
 		}
 	}
 
 	@Test
-	public void noBindFails() {
+	public void noBindFails()
+	{
 		TypeSafeModel<B> model = model(from(A.class).getB());
 
-		try {
+		try
+		{
 			model.getObject();
 
 			fail();
-		} catch (Exception ex) {
+		}
+		catch (Exception ex)
+		{
 		}
 	}
 
 	@Test
-	public void bindToGenericModel() {
+	public void bindToGenericModel()
+	{
 		final A a = new A();
 		a.b = new B();
 
-		TypeSafeModel<B> model = model(from(A.class).getB()).bind(
-				new SerializableModel<A>() {
-					@Override
-					public A getObject() {
-						return a;
-					}
-				});
+		TypeSafeModel<B> model = model(from(A.class).getB()).bind(new SerializableModel<A>()
+		{
+			@Override
+			public A getObject()
+			{
+				return a;
+			}
+		});
 
 		assertEquals(B.class, model.getObjectClass());
 		assertEquals("b", model.getPath());
@@ -890,7 +988,8 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void bindToTypeErasedModel() {
+	public void bindToTypeErasedModel()
+	{
 		final A a = new A();
 		a.b = new B();
 
@@ -902,32 +1001,41 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void fromTypeErasedModelFails() {
-		class GenericModel<T> implements Model<T> {
+	public void fromTypeErasedModelFails()
+	{
+		class GenericModel<T> implements Model<T>
+		{
 			@Override
-			public void detach() {
+			public void detach()
+			{
 			}
 
 			@Override
-			public T getObject() {
+			public T getObject()
+			{
 				return null;
 			}
 
 			@Override
-			public void setObject(T arg0) {
+			public void setObject(T arg0)
+			{
 			}
 
 			@Override
 			public void attach()
 			{
 			}
-		};
+		}
+		;
 
-		try {
+		try
+		{
 			from(new GenericModel<A>());
 
 			fail();
-		} catch (RuntimeException ex) {
+		}
+		catch (RuntimeException ex)
+		{
 			assertEquals("cannot detect target type", ex.getMessage());
 		}
 	}
@@ -950,24 +1058,28 @@ public class TypeSafeModelTest {
 
 
 	@Test
-	public void bindToTypeErasedModelWithNull() {
-		TypeSafeModel<B> model = model(from(A.class).getB()).bind(
-				new SerializableModel<A>(null));
+	public void bindToTypeErasedModelWithNull()
+	{
+		TypeSafeModel<B> model = model(from(A.class).getB()).bind(new SerializableModel<A>(null));
 
 		assertNull(model.getObjectType());
 		assertNull(model.getObjectClass());
 
-		try {
+		try
+		{
 			model.getPath();
 
 			fail();
-		} catch (RuntimeException ex) {
+		}
+		catch (RuntimeException ex)
+		{
 			assertEquals("cannot detect target type", ex.getMessage());
 		}
 	}
 
 	@Test
-	public void bindToObject() {
+	public void bindToObject()
+	{
 		final A a = new A();
 		a.b = new B();
 
@@ -979,26 +1091,27 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void getPath() {
+	public void getPath()
+	{
 		assertEquals("b.cs.size()", path(from(A.class).getB().getCs().size()));
 	}
 
 	@Test
-	public void propertyReflectionAwareModel() throws Exception {
+	public void propertyReflectionAwareModel() throws Exception
+	{
 		A a = new A();
 		a.b = new B();
 
 		TypeSafeModel<Character> model = model(from(a).getB().getCharacter());
 
 		assertNull(model.getPropertyField());
-		assertEquals(B.class.getMethod("getCharacter"),
-				model.getPropertyGetter());
-		assertEquals(B.class.getMethod("setCharacter", Character.TYPE),
-				model.getPropertySetter());
+		assertEquals(B.class.getMethod("getCharacter"), model.getPropertyGetter());
+		assertEquals(B.class.getMethod("setCharacter", Character.TYPE), model.getPropertySetter());
 	}
 
 	@Test
-	public void propertyReflectionAwareModelNoProperty() throws Exception {
+	public void propertyReflectionAwareModelNoProperty() throws Exception
+	{
 		A a = new A();
 		a.b = new B();
 
@@ -1010,23 +1123,28 @@ public class TypeSafeModelTest {
 	}
 
 	@Test
-	public void fromProxy() throws Exception {
+	public void fromProxy() throws Exception
+	{
 		final List<String> list = new ArrayList<>();
 
 		@SuppressWarnings("unchecked")
-		I<String> proxy = (I<String>) Proxy.newProxyInstance(getClass().getClassLoader(), new Class<?>[]{I.class}, new InvocationHandler() {
-			@Override
-			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-				return list;
-			}
-		});
+		I<String> proxy = (I<String>)Proxy.newProxyInstance(getClass().getClassLoader(),
+			new Class<?>[] { I.class }, new InvocationHandler()
+			{
+				@Override
+				public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
+				{
+					return list;
+				}
+			});
 
 		TypeSafeModel<List<String>> model = model(from(proxy).getTs());
 
 		assertSame(list, model.getObject());
 	}
 
-	public static class A implements Serializable {
+	public static class A implements Serializable
+	{
 
 		B b;
 
@@ -1040,52 +1158,64 @@ public class TypeSafeModelTest {
 
 		boolean bool;
 
-		public E getE() {
+		public E getE()
+		{
 			return e;
 		}
 
-		public P getP() {
+		public P getP()
+		{
 			return p;
 		}
 
-		public F getF() {
+		public F getF()
+		{
 			return f;
 		}
 
-		public final B getFinalB() {
+		public final B getFinalB()
+		{
 			return b;
 		}
 
-		public B getB() {
+		public B getB()
+		{
 			return b;
 		}
 
-		public void setB(B b) {
+		public void setB(B b)
+		{
 			this.b = b;
 		}
 
-		public I<C> getI() {
+		public I<C> getI()
+		{
 			return b;
 		}
 
-		int getInteger() {
+		int getInteger()
+		{
 			return integer;
 		}
 
-		void setInteger(int integer) {
+		void setInteger(int integer)
+		{
 			this.integer = integer;
 		}
 
-		public void setBool(boolean bool) {
+		public void setBool(boolean bool)
+		{
 			this.bool = bool;
 		}
 
-		public boolean isBool() {
+		public boolean isBool()
+		{
 			return bool;
 		}
 	}
 
-	public static class B implements I<C>, Serializable {
+	public static class B implements I<C>, Serializable
+	{
 
 		char character;
 
@@ -1095,131 +1225,161 @@ public class TypeSafeModelTest {
 
 		D d;
 
-		B() {
+		B()
+		{
 		}
 
-		public char getCharacter() {
+		public char getCharacter()
+		{
 			return character;
 		}
 
-		public void setCharacter(char character) {
+		public void setCharacter(char character)
+		{
 			this.character = character;
 		}
 
-		public Map<String, String> getStrings() {
+		public Map<String, String> getStrings()
+		{
 			return strings;
 		}
 
-		public void setStrings(Map<String, String> strings) {
+		public void setStrings(Map<String, String> strings)
+		{
 			this.strings = strings;
 		}
 
-		public List<C> getCs() {
+		public List<C> getCs()
+		{
 			return cs;
 		}
 
-		public D getD() {
+		public D getD()
+		{
 			return d;
 		}
 
-		public void setCs(List<C> cs) {
+		public void setCs(List<C> cs)
+		{
 			this.cs = cs;
 		}
 
-		public C getC(int index) {
+		public C getC(int index)
+		{
 			return cs.get(index);
 		}
 
-		public void setC(int index, C c) {
-			if (index == cs.size()) {
+		public void setC(int index, C c)
+		{
+			if (index == cs.size())
+			{
 				cs.add(c);
-			} else {
+			}
+			else
+			{
 				cs.set(index, c);
 			}
 		}
 
 		@Override
-		public List<C> getTs() {
+		public List<C> getTs()
+		{
 			return cs;
 		}
 
 		@SuppressWarnings("rawtypes")
-		public List getRs() {
+		public List getRs()
+		{
 			return cs;
 		}
 	}
 
-	public static class C implements Serializable {
+	public static class C implements Serializable
+	{
 
 		String string;
 
-		public String getString() {
+		public String getString()
+		{
 			return string;
 		}
 
-		public void setString(String string) {
+		public void setString(String string)
+		{
 			this.string = string;
 		}
 	}
 
-	public static class D extends C {
+	public static class D extends C
+	{
 	}
 
-	public static interface I<T> {
+	public static interface I<T>
+	{
 		public List<T> getTs();
 	}
 
-	public static final class F {
+	public static final class F
+	{
 
 		public String string;
 
-		public String getString() {
+		public String getString()
+		{
 			return string;
 		}
 	}
 
-	public static class P {
+	public static class P
+	{
 
 		public static P P1 = new P();
 
-		private P() {
+		private P()
+		{
 		}
 
-		public String getString() {
+		public String getString()
+		{
 			return "P";
 		}
 	}
 
-	public static enum E {
+	public static enum E
+	{
 		E1;
 	}
 
-	public static class G<T extends Serializable> {
+	public static class G<T extends Serializable>
+	{
 		/**
-		 * {@link Reflection} has to walk up the type hierarchy to resolve the
-		 * return type.
+		 * {@link Reflection} has to walk up the type hierarchy to resolve the return type.
 		 *
 		 * @see TypeSafeModelTest#inheritedTypeVariable()
 		 */
-		public T getT() {
+		public T getT()
+		{
 			return null;
 		}
 
 		/**
-		 * {@link Reflection} has to backtrack from type variable {@code E} to
-		 * {@code T} to resolve the return type of {@link List#get(int)}
+		 * {@link Reflection} has to backtrack from type variable {@code E} to {@code T} to resolve
+		 * the return type of {@link List#get(int)}
 		 *
 		 * @see TypeSafeModelTest#backtrackedTypeVariable()
 		 */
 		@SuppressWarnings({ "rawtypes", "unchecked" })
-		public List<T> getList() {
+		public List<T> getList()
+		{
 			return new ArrayList();
 		}
 	}
 
-	public static class G1 extends G<String> {
+	public static class G1 extends G<String>
+	{
 	}
 
-	public static class G2 extends G1 {
+	public static class G2 extends G1
+	{
 	}
 }

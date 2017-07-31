@@ -24,40 +24,48 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @see #createClass(Class)
  */
-public class CachingProxyFactory implements IProxyFactory {
+public class CachingProxyFactory implements IProxyFactory
+{
 
 	private final ConcurrentHashMap<Object, IProxyFactory> scopes = new ConcurrentHashMap<>(2);
 
 	private final IProxyFactory factory;
 
-	public CachingProxyFactory(IProxyFactory factory) {
+	public CachingProxyFactory(IProxyFactory factory)
+	{
 		this.factory = factory;
 	}
 
 	@Override
-	public Class<?> createClass(Class<?> clazz) {
+	public Class<?> createClass(Class<?> clazz)
+	{
 		return getFactory().createClass(clazz);
 	}
 
 	@Override
-	public Object createInstance(final Class<?> proxyClass, final Callback callback) {
+	public Object createInstance(final Class<?> proxyClass, final Callback callback)
+	{
 		return getFactory().createInstance(proxyClass, callback);
 	}
 
 	@Override
-	public Callback getCallback(Object proxy) {
+	public Callback getCallback(Object proxy)
+	{
 		return getFactory().getCallback(proxy);
 	}
 
-	private IProxyFactory getFactory() {
+	private IProxyFactory getFactory()
+	{
 		Object key;
 
 		key = CachingProxyFactory.class;
 
 		IProxyFactory result = scopes.get(key);
-		if (result == null) {
+		if (result == null)
+		{
 			IProxyFactory tmpResult = scopes.putIfAbsent(key, result = new ApplicationScope());
-			if (tmpResult != null) {
+			if (tmpResult != null)
+			{
 				result = tmpResult;
 			}
 		}
@@ -65,26 +73,32 @@ public class CachingProxyFactory implements IProxyFactory {
 		return result;
 	}
 
-	public void destroy(Object application) {
+	public void destroy(Object application)
+	{
 		scopes.remove(application);
 	}
 
-	private class ApplicationScope implements IProxyFactory {
+	private class ApplicationScope implements IProxyFactory
+	{
 
 		private final Map<Class<?>, Class<?>> proxyClasses = new ConcurrentHashMap<>();
 
 		@Override
-		public Class<?> createClass(Class<?> clazz) {
+		public Class<?> createClass(Class<?> clazz)
+		{
 			Class<?> proxyClazz = proxyClasses.get(clazz);
-			if (proxyClazz == null) {
+			if (proxyClazz == null)
+			{
 				proxyClazz = factory.createClass(clazz);
-				if (proxyClazz == null) {
+				if (proxyClazz == null)
+				{
 					proxyClazz = NOT_PROXYABLE.class;
 				}
 				proxyClasses.put(clazz, proxyClazz);
 			}
 
-			if (proxyClazz == NOT_PROXYABLE.class) {
+			if (proxyClazz == NOT_PROXYABLE.class)
+			{
 				proxyClazz = null;
 			}
 
@@ -92,17 +106,19 @@ public class CachingProxyFactory implements IProxyFactory {
 		}
 
 		@Override
-		public Object createInstance(final Class<?> proxyClass,
-				final Callback callback) {
+		public Object createInstance(final Class<?> proxyClass, final Callback callback)
+		{
 			return factory.createInstance(proxyClass, callback);
 		}
 
 		@Override
-		public Callback getCallback(Object proxy) {
+		public Callback getCallback(Object proxy)
+		{
 			return factory.getCallback(proxy);
 		}
 	}
 
-	private class NOT_PROXYABLE {
+	private class NOT_PROXYABLE
+	{
 	}
 }
