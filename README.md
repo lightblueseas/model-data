@@ -18,11 +18,15 @@ model-api [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.
 
 model-object [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-object/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-object)
 
+model-type-safe [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-type-safe/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-type-safe)
+
 ## javadoc
 
 model-api [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/model-api.svg)](http://www.javadoc.io/doc/de.alpharogroup/model-api)
 
 model-object [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/model-object.svg)](http://www.javadoc.io/doc/de.alpharogroup/model-object)
+
+model-type-safe [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/model-type-safe.svg)](http://www.javadoc.io/doc/de.alpharogroup/model-type-safe)
 
 ## Maven dependency
 
@@ -39,6 +43,7 @@ You can first define the version properties:
 		<model-data.version>1.4.0</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
+		<model-type-safe.version>${model-data.version}</model-type-safe.version>
 		...
 	</properties>
 
@@ -63,6 +68,19 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>model-object</artifactId>
 				<version>${model-object.version}</version>
+			</dependency>
+			...			
+		</dependencies>
+
+
+Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of model-type-safe:
+
+		<dependencies>
+			...
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>model-type-safe</artifactId>
+				<version>${model-type-safe.version}</version>
 			</dependency>
 			...			
 		</dependencies>
