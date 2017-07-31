@@ -43,7 +43,7 @@ public interface IProxyFactory {
 	/**
 	 * Create a proxy instance.
 	 *
-	 * @param proxyClazz
+	 * @param proxyClass
 	 *            class of proxy
 	 * @param callback
 	 *            callback for invocations

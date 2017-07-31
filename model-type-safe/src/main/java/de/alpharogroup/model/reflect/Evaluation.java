@@ -36,13 +36,14 @@ import de.alpharogroup.model.util.Objects;
  * @author svenmeier
  */
 @SuppressWarnings("rawtypes")
-public class Evaluation<R> implements Callback {
+public class Evaluation<R> implements Callback
+{
 
 	private static final Logger log = LoggerFactory.getLogger(Evaluation.class);
 
 	/**
-	 * If not null containing the last invocation result which couldn't be
-	 * proxied (i.e. is was primitive or final).
+	 * If not null containing the last invocation result which couldn't be proxied (i.e. is was
+	 * primitive or final).
 	 *
 	 * @see #proxy()
 	 */
@@ -66,7 +67,8 @@ public class Evaluation<R> implements Callback {
 	 * @param type
 	 *            starting type
 	 */
-	public Evaluation(Type type) {
+	public Evaluation(Type type)
+	{
 		this.type = type;
 	}
 
@@ -78,20 +80,24 @@ public class Evaluation<R> implements Callback {
 	 * @see #proxy()
 	 */
 	@Override
-	public Object on(Object obj, Method method, Object[] parameters)
-			throws Throwable {
-		if ("finalize".equals(method.getName())) {
+	public Object on(Object obj, Method method, Object[] parameters) throws Throwable
+	{
+		if ("finalize".equals(method.getName()))
+		{
 			super.finalize();
 			return null;
 		}
 
 		stack.add(method);
 
-		for (Object param : parameters) {
-			if (param == null) {
+		for (Object param : parameters)
+		{
+			if (param == null)
+			{
 				// could be a non-proxyable nested evaluation
 				Evaluation evaluation = lastNonProxyable.get();
-				if (evaluation != null) {
+				if (evaluation != null)
+				{
 					lastNonProxyable.remove();
 					stack.add(evaluation);
 					continue;
@@ -102,7 +108,8 @@ public class Evaluation<R> implements Callback {
 		}
 
 		type = Reflection.resultType(type, method.getGenericReturnType());
-		if (type == null) {
+		if (type == null)
+		{
 			log.debug("falling back to raw type for method {}", method);
 			type = method.getReturnType();
 		}
@@ -113,23 +120,25 @@ public class Evaluation<R> implements Callback {
 	/**
 	 * Create a proxy for the current type.
 	 * <p>
-	 * If the result cannot be proxied, it is accessible via
-	 * {@link #lastNonProxyable}.
+	 * If the result cannot be proxied, it is accessible via {@link #lastNonProxyable}.
 	 *
 	 * @return proxy or {@code null} if invocation result cannot be proxied
 	 */
 	@SuppressWarnings("unchecked")
-	public Object proxy() {
+	public Object proxy()
+	{
 		Class clazz = Reflection.getClass(type);
 
-		if (clazz.isPrimitive()) {
+		if (clazz.isPrimitive())
+		{
 			lastNonProxyable.set(this);
 
 			return Objects.convertValue(null, clazz);
 		}
 
 		Class proxyClass = proxyFactory.createClass(clazz);
-		if (proxyClass == null) {
+		if (proxyClass == null)
+		{
 			lastNonProxyable.set(this);
 
 			return null;
@@ -139,20 +148,24 @@ public class Evaluation<R> implements Callback {
 	}
 
 	/**
-	 * Reverse operation of {@link #proxy()}, i.e. get the evaluation from an
-	 * evaluation result.
+	 * Reverse operation of {@link #proxy()}, i.e. get the evaluation from an evaluation result.
 	 *
+	 * @param <R>
+	 *            the generic type
 	 * @param result
 	 *            invocation result
 	 * @return evaluation
 	 */
 	@SuppressWarnings("unchecked")
-	public static <R> Evaluation<R> eval(R result) {
-		Evaluation<R> evaluation = (Evaluation<R>) proxyFactory.getCallback(result);
-		if (evaluation == null) {
-			evaluation = (Evaluation<R>) lastNonProxyable.get();
+	public static <R> Evaluation<R> eval(R result)
+	{
+		Evaluation<R> evaluation = (Evaluation<R>)proxyFactory.getCallback(result);
+		if (evaluation == null)
+		{
+			evaluation = (Evaluation<R>)lastNonProxyable.get();
 			lastNonProxyable.remove();
-			if (evaluation == null) {
+			if (evaluation == null)
+			{
 				throw new RuntimeException("no invocation result given");
 			}
 		}
@@ -162,13 +175,16 @@ public class Evaluation<R> implements Callback {
 	/**
 	 * Start evaluation from the give type.
 	 *
+	 * @param <T>
+	 *            the generic type
 	 * @param type
 	 *            starting type
 	 * @return proxy
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T of(Class<T> type) {
-		return (T) new Evaluation(type).proxy();
+	public static <T> T of(Class<T> type)
+	{
+		return (T)new Evaluation(type).proxy();
 	}
 
 }

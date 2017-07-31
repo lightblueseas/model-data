@@ -214,7 +214,8 @@ public final class Objects
 	 *            second value to compare
 	 *
 	 * @return integer describing the comparison between the two objects. A negative number
-	 *         indicates that v1 < v2. Positive indicates that v1 > v2. Zero indicates v1 == v2.
+	 *         indicates that v1 &lt; v2. Positive indicates that v1 &gt; v2. Zero indicates v1 ==
+	 *         v2.
 	 *
 	 * @throws IllegalArgumentException
 	 *             if the objects are both non-numeric yet of incompatible types or do not implement
@@ -231,8 +232,8 @@ public final class Objects
 		}
 		else
 		{
-			int t1 = getNumericType(v1), t2 = getNumericType(v2), type = getNumericType(t1, t2,
-				true);
+			int t1 = getNumericType(v1), t2 = getNumericType(v2),
+				type = getNumericType(t1, t2, true);
 
 			switch (type)
 			{
@@ -247,29 +248,27 @@ public final class Objects
 				case NONNUMERIC :
 					if ((t1 == NONNUMERIC) && (t2 == NONNUMERIC))
 					{
-						if ((v1 instanceof Comparable) &&
-							v1.getClass().isAssignableFrom(v2.getClass()))
+						if ((v1 instanceof Comparable)
+							&& v1.getClass().isAssignableFrom(v2.getClass()))
 						{
 							result = ((Comparable)v1).compareTo(v2);
 							break;
 						}
 						else
 						{
-							throw new IllegalArgumentException("invalid comparison: " +
-								v1.getClass().getName() + " and " + v2.getClass().getName());
+							throw new IllegalArgumentException("invalid comparison: "
+								+ v1.getClass().getName() + " and " + v2.getClass().getName());
 						}
 					}
 					// else fall through
 				case FLOAT :
 				case DOUBLE :
-					double dv1 = doubleValue(v1),
-					dv2 = doubleValue(v2);
+					double dv1 = doubleValue(v1), dv2 = doubleValue(v2);
 
 					return (dv1 == dv2) ? 0 : ((dv1 < dv2) ? -1 : 1);
 
 				default :
-					long lv1 = longValue(v1),
-					lv2 = longValue(v2);
+					long lv1 = longValue(v1), lv2 = longValue(v2);
 
 					return (lv1 == lv2) ? 0 : ((lv1 < lv2) ? -1 : 1);
 			}
@@ -446,8 +445,8 @@ public final class Objects
 			return t1;
 		}
 
-		if (canBeNonNumeric &&
-			((t1 == NONNUMERIC) || (t2 == NONNUMERIC) || (t1 == CHAR) || (t2 == CHAR)))
+		if (canBeNonNumeric
+			&& ((t1 == NONNUMERIC) || (t2 == NONNUMERIC) || (t1 == CHAR) || (t2 == CHAR)))
 		{
 			return NONNUMERIC;
 		}
@@ -579,7 +578,8 @@ public final class Objects
 	 *            whether the operator can be interpreted as non-numeric
 	 * @return the appropriate constant from the NumericTypes interface
 	 */
-	public static int getNumericType(final Object v1, final Object v2, final boolean canBeNonNumeric)
+	public static int getNumericType(final Object v1, final Object v2,
+		final boolean canBeNonNumeric)
 	{
 		return getNumericType(getNumericType(v1), getNumericType(v2), canBeNonNumeric);
 	}
@@ -607,13 +607,14 @@ public final class Objects
 		{
 			if ((object1 != null) && object1.getClass().isArray())
 			{
-				if ((object2 != null) && object2.getClass().isArray() &&
-					(object2.getClass() == object1.getClass()))
+				if ((object2 != null) && object2.getClass().isArray()
+					&& (object2.getClass() == object1.getClass()))
 				{
 					result = (Array.getLength(object1) == Array.getLength(object2));
 					if (result)
 					{
-						for (int i = 0, icount = Array.getLength(object1); result && (i < icount); i++)
+						for (int i = 0, icount = Array.getLength(object1); result
+							&& (i < icount); i++)
 						{
 							result = isEqual(Array.get(object1, i), Array.get(object2, i));
 						}
@@ -624,8 +625,8 @@ public final class Objects
 			{
 				// Check for converted equivalence first, then equals()
 				// equivalence
-				result = (object1 != null) && (object2 != null) &&
-					((compareWithConversion(object1, object2) == 0) || object1.equals(object2));
+				result = (object1 != null) && (object2 != null)
+					&& ((compareWithConversion(object1, object2) == 0) || object1.equals(object2));
 			}
 		}
 		return result;
@@ -721,6 +722,7 @@ public final class Objects
 	 * returns hashcode of the objects by calling obj.hashcode(). safe to use when obj is null.
 	 *
 	 * @param obj
+	 *            the obj
 	 * @return hashcode of the object or 0 if obj is null
 	 */
 	public static int hashCode(final Object... obj)
@@ -767,13 +769,15 @@ public final class Objects
 	}
 
 	/**
-	 * Returns the original object if this one is != null. If the original object is null
-	 * the default one is returned. The default object has no restriction, it might be itself null.
+	 * Returns the original object if this one is != null. If the original object is null the
+	 * default one is returned. The default object has no restriction, it might be itself null.
 	 *
+	 * @param <T>
+	 *            the generic type
 	 * @param originalObj
-	 * 			the original object
+	 *            the original object
 	 * @param defaultObj
-	 * 			the default object
+	 *            the default object
 	 * @return the original object if not null, the default one otherwise.
 	 */
 	public static <T> T defaultIfNull(T originalObj, T defaultObj)

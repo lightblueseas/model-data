@@ -1,6 +1,5 @@
 package de.alpharogroup.model.typesafe;
 
-
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -10,6 +9,7 @@ import java.lang.reflect.TypeVariable;
 import java.util.List;
 
 import de.alpharogroup.model.LoadableDetachableModel;
+import de.alpharogroup.model.PropertyModel;
 import de.alpharogroup.model.api.ChainableModel;
 import de.alpharogroup.model.api.Detachable;
 import de.alpharogroup.model.api.Model;
@@ -46,10 +46,12 @@ import de.alpharogroup.model.reflect.Reflection;
  */
 @SuppressWarnings("unchecked")
 public class TypeSafeModel<T>
-implements Model<T>,
-ObjectClassAware<T>,
+	implements
+		Model<T>,
+		ObjectClassAware<T>,
 		ObjectTypeAware<T>,
-		PropertyReflectionAwareModel<T> {
+		PropertyReflectionAwareModel<T>
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -57,7 +59,7 @@ ObjectClassAware<T>,
 	 * The resolver for {@link Method}s.
 	 */
 	public static IMethodResolver methodResolver = new CachingMethodResolver(
-			new DefaultMethodResolver());
+		new DefaultMethodResolver());
 
 	private static final Object[] EMPTY_ARGS = new Object[0];
 
@@ -71,7 +73,8 @@ ObjectClassAware<T>,
 	 */
 	protected final Object stack;
 
-	TypeSafeModel(Object target, Object stack) {
+	TypeSafeModel(Object target, Object stack)
+	{
 		this.target = target;
 		this.stack = stack;
 	}
@@ -81,7 +84,8 @@ ObjectClassAware<T>,
 	 *
 	 * @return model wrapper
 	 */
-	public Model<T> loadableDetachable() {
+	public Model<T> loadableDetachable()
+	{
 		return new LoadableDetachableWrapper();
 	}
 
@@ -91,12 +95,14 @@ ObjectClassAware<T>,
 	 * @return result class or {@code null} if it cannot be determined
 	 */
 	@Override
-	public Class<T> getObjectClass() {
+	public Class<T> getObjectClass()
+	{
 		Type type = getObjectType();
-		if (type == null) {
+		if (type == null)
+		{
 			return null;
 		}
-		return (Class<T>) Reflection.getClass(type);
+		return (Class<T>)Reflection.getClass(type);
 	}
 
 	/**
@@ -105,8 +111,10 @@ ObjectClassAware<T>,
 	 * @return {@link Class}, {@link ParameterizedType} or {@code null} if not available
 	 */
 	@Override
-	public Type getObjectType() {
-		if (target == null) {
+	public Type getObjectType()
+	{
+		if (target == null)
+		{
 			return null;
 		}
 
@@ -119,7 +127,8 @@ ObjectClassAware<T>,
 				methodIterator.next(Reflection.getClass(type));
 
 				type = Reflection.resultType(type, methodIterator.method.getGenericReturnType());
-				if (type == null) {
+				if (type == null)
+				{
 					break;
 				}
 			}
@@ -133,7 +142,8 @@ ObjectClassAware<T>,
 	 * @return always {@code null}
 	 */
 	@Override
-	public Field getPropertyField() {
+	public Field getPropertyField()
+	{
 		return null;
 	}
 
@@ -143,22 +153,27 @@ ObjectClassAware<T>,
 	 * @return method representing a JavaBeans getter or {@code null}
 	 */
 	@Override
-	public Method getPropertyGetter() {
+	public Method getPropertyGetter()
+	{
 		checkBound();
 
 		Type type = getTargetType();
-		if (type != null) {
+		if (type != null)
+		{
 			MethodIterator methodIterator = new MethodIterator();
-			while (methodIterator.hasNext()) {
+			while (methodIterator.hasNext())
+			{
 				methodIterator.next(Reflection.getClass(type));
 
 				type = Reflection.resultType(type, methodIterator.method.getGenericReturnType());
-				if (type == null) {
+				if (type == null)
+				{
 					return null;
 				}
 			}
 
-			if (Reflection.isGetter(methodIterator.method)) {
+			if (Reflection.isGetter(methodIterator.method))
+			{
 				return methodIterator.method;
 			}
 		}
@@ -172,11 +187,13 @@ ObjectClassAware<T>,
 	 * @return method representing a JavaBeans setter or {@code null}
 	 */
 	@Override
-	public Method getPropertySetter() {
+	public Method getPropertySetter()
+	{
 		checkBound();
 
 		Method getter = getPropertyGetter();
-		if (getter == null) {
+		if (getter == null)
+		{
 			return null;
 		}
 
@@ -184,19 +201,25 @@ ObjectClassAware<T>,
 	}
 
 	@Override
-	public void detach() {
-		if (target instanceof Detachable) {
-			((Detachable) target).detach();
+	public void detach()
+	{
+		if (target instanceof Detachable)
+		{
+			((Detachable)target).detach();
 		}
 
-		if (stack instanceof Detachable) {
-			((Detachable) stack).detach();
+		if (stack instanceof Detachable)
+		{
+			((Detachable)stack).detach();
 		}
 
-		if (stack instanceof Object[]) {
-			for (Object object : (Object[]) stack) {
-				if (object instanceof Detachable) {
-					((Detachable) object).detach();
+		if (stack instanceof Object[])
+		{
+			for (Object object : (Object[])stack)
+			{
+				if (object instanceof Detachable)
+				{
+					((Detachable)object).detach();
 				}
 			}
 		}
@@ -210,57 +233,68 @@ ObjectClassAware<T>,
 	 *             if this model is not bound to a target
 	 */
 	@Override
-	public T getObject() {
+	public T getObject()
+	{
 		checkBound();
 
 		Object result = target;
-		if (result instanceof Model) {
-			result = ((Model<T>) result).getObject();
+		if (result instanceof Model)
+		{
+			result = ((Model<T>)result).getObject();
 		}
 
 		MethodIterator methodIterator = new MethodIterator();
-		while (result != null && methodIterator.hasNext()) {
+		while (result != null && methodIterator.hasNext())
+		{
 			methodIterator.next(result.getClass());
 
 			result = methodIterator.get(result);
 		}
 
-		return (T) result;
+		return (T)result;
 	}
 
 	/**
 	 * Set the evaluation result.
 	 *
-	 * @param evaluation
-	 *            result
+	 * @param result
+	 *            the evaluation result
 	 * @throws RuntimeException
 	 *             if this model is not bound to a target
 	 */
 	@Override
-	public void setObject(T result) {
+	public void setObject(T result)
+	{
 		checkBound();
 
 		Object target = this.target;
 
 		MethodIterator methodIterator = new MethodIterator();
-		if (!methodIterator.hasNext()) {
-			if (target instanceof Model) {
-				((Model<T>) target).setObject(result);
+		if (!methodIterator.hasNext())
+		{
+			if (target instanceof Model)
+			{
+				((Model<T>)target).setObject(result);
 				return;
-			} else {
+			}
+			else
+			{
 				throw new UnsupportedOperationException();
 			}
 		}
 
-		if (target instanceof Model) {
-			target = ((Model<T>) target).getObject();
+		if (target instanceof Model)
+		{
+			target = ((Model<T>)target).getObject();
 		}
-		if (target == null) {
+		if (target == null)
+		{
 			throw new RuntimeException("no target");
 		}
 		methodIterator.next(target.getClass());
 
-		while (target != null && methodIterator.hasNext()) {
+		while (target != null && methodIterator.hasNext())
+		{
 			target = methodIterator.get(target);
 
 			methodIterator.next(target.getClass());
@@ -272,10 +306,10 @@ ObjectClassAware<T>,
 	/**
 	 * Get the target of this evaluation.
 	 *
-	 * @return target, may be {@code null} if this model is not bound to a
-	 *         target
+	 * @return target, may be {@code null} if this model is not bound to a target
 	 */
-	public Object getTarget() {
+	public Object getTarget()
+	{
 		return target;
 	}
 
@@ -286,7 +320,8 @@ ObjectClassAware<T>,
 	 *            target to bind to
 	 * @return bound model
 	 */
-	public TypeSafeModel<T> bind(Object target) {
+	public TypeSafeModel<T> bind(Object target)
+	{
 		return new TypeSafeModel<>(target, stack);
 	}
 
@@ -296,8 +331,10 @@ ObjectClassAware<T>,
 	 * @see #getPath()
 	 */
 	@Override
-	public String toString() {
-		if (target != null) {
+	public String toString()
+	{
+		if (target != null)
+		{
 			try
 			{
 				return getPath();
@@ -313,29 +350,33 @@ ObjectClassAware<T>,
 	/**
 	 * Get the invoked method path for the evaluation.
 	 * <p>
-	 * For evaluations accessing simple properties only, the representation
-	 * equals the property expression of a corresponding {@link PropertyModel}.
+	 * For evaluations accessing simple properties only, the representation equals the property
+	 * expression of a corresponding {@link PropertyModel}.
 	 *
 	 * @return invoked method path
 	 * @throws RuntimeException
 	 *             if this model is not bound
 	 * @see PropertyModel#getPropertyExpression()
 	 */
-	public String getPath() {
+	public String getPath()
+	{
 		checkBound();
 
 		StringBuilder string = new StringBuilder();
 
 		Type type = getTargetType();
-		if (type == null) {
+		if (type == null)
+		{
 			throw new RuntimeException("cannot detect target type");
 		}
 
 		MethodIterator methodIterator = new MethodIterator();
-		while (methodIterator.hasNext()) {
+		while (methodIterator.hasNext())
+		{
 			methodIterator.next(Reflection.getClass(type));
 
-			if (string.length() > 0) {
+			if (string.length() > 0)
+			{
 				string.append(".");
 			}
 			string.append(methodIterator.id.toString());
@@ -349,26 +390,33 @@ ObjectClassAware<T>,
 	/**
 	 * The type of the target.
 	 */
-	private Type getTargetType() {
+	private Type getTargetType()
+	{
 		Type type = null;
 
-		if (target instanceof Model) {
+		if (target instanceof Model)
+		{
 			type = getType((Model<?>)target);
 
-			if (type instanceof TypeVariable<?>) {
+			if (type instanceof TypeVariable<?>)
+			{
 				type = null;
 			}
 
 			/*
 			 * try to improve if no type available or just a non-generic class
 			 */
-			if (type == null || type instanceof Class) {
-				Object object = ((Model<?>) target).getObject();
-				if (object != null) {
+			if (type == null || type instanceof Class)
+			{
+				Object object = ((Model<?>)target).getObject();
+				if (object != null)
+				{
 					type = object.getClass();
 				}
 			}
-		} else {
+		}
+		else
+		{
 			type = target.getClass();
 		}
 
@@ -380,8 +428,10 @@ ObjectClassAware<T>,
 	 *
 	 * @throw {@link RuntimeException} if not bound to a target
 	 */
-	private void checkBound() {
-		if (target == null) {
+	private void checkBound()
+	{
+		if (target == null)
+		{
 			throw new RuntimeException("not bound to a target");
 		}
 	}
@@ -389,7 +439,8 @@ ObjectClassAware<T>,
 	/**
 	 * Iterator over the methods on the stack.
 	 */
-	private class MethodIterator {
+	private class MethodIterator
+	{
 
 		/**
 		 * The current index in the stack.
@@ -414,10 +465,14 @@ ObjectClassAware<T>,
 		/**
 		 * Is there a next invocation.
 		 */
-		public boolean hasNext() {
-			if (stack instanceof Object[]) {
-				return index < ((Object[]) stack).length;
-			} else {
+		public boolean hasNext()
+		{
+			if (stack instanceof Object[])
+			{
+				return index < ((Object[])stack).length;
+			}
+			else
+			{
 				return stack != null && index == 0;
 			}
 		}
@@ -428,11 +483,15 @@ ObjectClassAware<T>,
 		 * @param clazz
 		 *            class
 		 */
-		public void next(Class<?> clazz) {
-			if (stack instanceof Object[]) {
-				id = (Serializable) ((Object[]) stack)[index];
-			} else {
-				id = (Serializable) stack;
+		public void next(Class<?> clazz)
+		{
+			if (stack instanceof Object[])
+			{
+				id = (Serializable)((Object[])stack)[index];
+			}
+			else
+			{
+				id = (Serializable)stack;
 			}
 
 			index += 1;
@@ -449,24 +508,33 @@ ObjectClassAware<T>,
 		 *            target of method invocation
 		 * @return result
 		 */
-		public Object get(Object target) {
+		public Object get(Object target)
+		{
 			Object[] args;
-			if (count == 0) {
+			if (count == 0)
+			{
 				args = EMPTY_ARGS;
-			} else {
+			}
+			else
+			{
 				args = new Object[count];
 				fillArguments(args);
 			}
 
-			try {
-				if ((target instanceof List) && Reflection.isListIndex(method)) {
-					if (((List<?>) target).size() <= (Integer)args[0]) {
+			try
+			{
+				if ((target instanceof List) && Reflection.isListIndex(method))
+				{
+					if (((List<?>)target).size() <= (Integer)args[0])
+					{
 						// evaluate invalid index as null as PropertyModel does it
 						return null;
 					}
 				}
 				return method.invoke(target, args);
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				throw new RuntimeException(ex);
 			}
 		}
@@ -478,16 +546,20 @@ ObjectClassAware<T>,
 		 *            target of method invocation
 		 * @param result
 		 */
-		public void set(Object target, Object result) {
+		public void set(Object target, Object result)
+		{
 			Method setter = methodResolver.getSetter(method);
 
 			Object[] args = new Object[count + 1];
 			fillArguments(args);
 			args[count] = result;
 
-			try {
+			try
+			{
 				setter.invoke(target, args);
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				throw new RuntimeException(ex);
 			}
 		}
@@ -498,12 +570,15 @@ ObjectClassAware<T>,
 		 * @param args
 		 *            arguments to fill
 		 */
-		private void fillArguments(Object[] args) {
-			for (int a = 0; a < count; a++) {
-				Object arg = ((Object[]) stack)[index - count + a];
+		private void fillArguments(Object[] args)
+		{
+			for (int a = 0; a < count; a++)
+			{
+				Object arg = ((Object[])stack)[index - count + a];
 
-				if (arg instanceof TypeSafeModel<?>) {
-					arg = ((TypeSafeModel<T>) arg).getObject();
+				if (arg instanceof TypeSafeModel<?>)
+				{
+					arg = ((TypeSafeModel<T>)arg).getObject();
 				}
 
 				args[a] = arg;
@@ -514,92 +589,117 @@ ObjectClassAware<T>,
 	/**
 	 * Start a lazy evaluation.
 	 *
+	 * @param <T>
+	 *            the generic type
 	 * @param target
 	 *            the target object
 	 * @return a result proxy for further evaluation
 	 */
-	public static <T> T from(T target) {
-		if (target == null) {
+	public static <T> T from(T target)
+	{
+		if (target == null)
+		{
 			throw new RuntimeException("target must not be null");
 		}
 
 		Evaluation<T> evaluation = new BoundEvaluation<>(target.getClass(), target);
 
-		return (T) evaluation.proxy();
+		return (T)evaluation.proxy();
 	}
 
 	/**
 	 * Start a lazy evaluation.
 	 *
+	 * @param <T>
+	 *            the generic type
 	 * @param targetType
 	 *            class of target object
 	 * @return a result proxy for further evaluation
 	 */
-	public static <T> T from(Class<T> targetType) {
-		if (targetType == null) {
+	public static <T> T from(Class<T> targetType)
+	{
+		if (targetType == null)
+		{
 			throw new RuntimeException("target type must not be null");
 		}
 
 		Evaluation<T> evaluation = new Evaluation<>(targetType);
 
-		return (T) evaluation.proxy();
+		return (T)evaluation.proxy();
 	}
 
 	/**
-	 * Shortcut for {@link #from(Class)} and {@link #bind(Object)}. Use this for quick model building on top of a
-	 * type-erased model.
+	 * Shortcut for {@link #from(Class)} and {@link #bind(Object)}. Use this for quick model
+	 * building on top of a type-erased model.
 	 *
-	 * @param target The model to bind to.
-	 * @param type The type parameter for that model.
 	 * @param <T>
+	 *            the generic type
+	 * @param target
+	 *            The model to bind to.
+	 * @param type
+	 *            The type parameter for that model.
 	 * @return a result proxy for further evaluation.
 	 */
-	public static <T> T from(Model<T> target, Class<T> type) {
-		return (T) new BoundEvaluation<T>(type, target).proxy();
+	public static <T> T from(Model<T> target, Class<T> type)
+	{
+		return (T)new BoundEvaluation<T>(type, target).proxy();
 	}
 
 	/**
 	 * Start a lazy evaluation.
 	 *
+	 * @param <T>
+	 *            the generic type
 	 * @param target
 	 *            model holding the target object
 	 * @return a result proxy for further evaluation
 	 */
-	public static <T> T from(Model<T> target) {
-		if (target == null) {
+	public static <T> T from(Model<T> target)
+	{
+		if (target == null)
+		{
 			throw new RuntimeException("target must not be null");
 		}
 
 		Type type = getType(target);
-		if (type == null) {
+		if (type == null)
+		{
 			throw new RuntimeException("cannot detect target type");
 		}
 		Evaluation<T> evaluation = new BoundEvaluation<>(type, target);
 
-		return (T) evaluation.proxy();
+		return (T)evaluation.proxy();
 	}
 
 	/**
 	 * @return {@code null} if type cannot be detected
 	 */
 	@SuppressWarnings("rawtypes")
-	private static Type getType(Model<?> model) {
+	private static Type getType(Model<?> model)
+	{
 		Type type = null;
 
-		if (model instanceof ObjectTypeAware) {
-			type = ((ObjectTypeAware) model).getObjectType();
-		} else if (model instanceof ObjectClassAware) {
-			type = ((ObjectClassAware) model).getObjectClass();
+		if (model instanceof ObjectTypeAware)
+		{
+			type = ((ObjectTypeAware)model).getObjectType();
+		}
+		else if (model instanceof ObjectClassAware)
+		{
+			type = ((ObjectClassAware)model).getObjectClass();
 		}
 
-		if (type == null) {
-			try {
-				type = model.getClass().getMethod("getObject")
-						.getGenericReturnType();
-			} catch (Exception fallThrough) {
+		if (type == null)
+		{
+			try
+			{
+				type = model.getClass().getMethod("getObject").getGenericReturnType();
+			}
+			catch (Exception fallThrough)
+			{
 			}
 
-			if (type instanceof TypeVariable) {
+			if (type instanceof TypeVariable)
+			{
 				type = Reflection.resultType(model.getClass(), type);
 			}
 		}
@@ -610,45 +710,60 @@ ObjectClassAware<T>,
 	/**
 	 * Create a model for the given evaluation result.
 	 *
+	 * @param <R>
+	 *            the generic type
 	 * @param result
 	 *            evaluation result
 	 * @return lazy model
 	 */
-	public static <R> TypeSafeModel<R> model(R result) {
+	public static <R> TypeSafeModel<R> model(R result)
+	{
 		return model(Evaluation.eval(result));
 	}
 
 	/**
 	 * Create a model for the given evaluation.
 	 *
+	 * @param <R>
+	 *            the generic type
 	 * @param evaluation
 	 *            evaluation result
 	 * @return lazy model
 	 */
-	private static <R> TypeSafeModel<R> model(Evaluation<R> evaluation) {
+	private static <R> TypeSafeModel<R> model(Evaluation<R> evaluation)
+	{
 		Object target = null;
-		if (evaluation instanceof BoundEvaluation) {
-			target = ((BoundEvaluation<R>) evaluation).target;
+		if (evaluation instanceof BoundEvaluation)
+		{
+			target = ((BoundEvaluation<R>)evaluation).target;
 		}
 
 		Object stack;
-		if (evaluation.stack.size() == 0) {
+		if (evaluation.stack.size() == 0)
+		{
 			stack = null;
-		} else if (evaluation.stack.size() == 1) {
-			stack = methodResolver.getId((Method) evaluation.stack.get(0));
-		} else {
+		}
+		else if (evaluation.stack.size() == 1)
+		{
+			stack = methodResolver.getId((Method)evaluation.stack.get(0));
+		}
+		else
+		{
 			Object[] array = new Object[evaluation.stack.size()];
 			int index = 0;
-			while (index < array.length) {
-				Method method = (Method) evaluation.stack.get(index);
+			while (index < array.length)
+			{
+				Method method = (Method)evaluation.stack.get(index);
 
 				array[index] = methodResolver.getId(method);
 
 				index += 1;
 
-				for (int p = 0; p < method.getParameterTypes().length; p++) {
+				for (int p = 0; p < method.getParameterTypes().length; p++)
+				{
 					Object param = evaluation.stack.get(index);
-					if (param instanceof Evaluation) {
+					if (param instanceof Evaluation)
+					{
 						param = model(param);
 					}
 					array[index] = param;
@@ -664,22 +779,27 @@ ObjectClassAware<T>,
 	/**
 	 * Get the method invocation path for an evaluation.
 	 *
+	 * @param <R>
+	 *            the generic type
 	 * @param result
 	 *            evaluation result
 	 * @return method invocation path
 	 */
-	public static <R> String path(R result) {
+	public static <R> String path(R result)
+	{
 		Evaluation<R> evaluation = Evaluation.eval(result);
 
 		StringBuilder path = new StringBuilder();
 
 		int index = 0;
-		while (index < evaluation.stack.size()) {
-			if (path.length() > 0) {
+		while (index < evaluation.stack.size())
+		{
+			if (path.length() > 0)
+			{
 				path.append(".");
 			}
 
-			Method method = (Method) evaluation.stack.get(index);
+			Method method = (Method)evaluation.stack.get(index);
 			path.append(methodResolver.getId(method));
 
 			index += 1 + method.getParameterTypes().length;
@@ -694,54 +814,66 @@ ObjectClassAware<T>,
 	 * @see LoadableDetachableModel
 	 */
 	private class LoadableDetachableWrapper extends LoadableDetachableModel<T>
-			implements ObjectClassAware<T>, ObjectTypeAware<T>,
-			ChainableModel<T> {
+		implements
+			ObjectClassAware<T>,
+			ObjectTypeAware<T>,
+			ChainableModel<T>
+	{
 
 		private static final long serialVersionUID = 1L;
 
 		private transient Type type;
 
 		@Override
-		protected T load() {
+		protected T load()
+		{
 			return TypeSafeModel.this.getObject();
 		}
 
 		@Override
-		public void setObject(T object) {
+		public void setObject(T object)
+		{
 			super.setObject(object);
 
 			TypeSafeModel.this.setObject(object);
 		}
 
 		@Override
-		public Class<T> getObjectClass() {
+		public Class<T> getObjectClass()
+		{
 			Type type = getObjectType();
-			if (type == null) {
+			if (type == null)
+			{
 				return null;
 			}
-			return (Class<T>) Reflection.getClass(type);
+			return (Class<T>)Reflection.getClass(type);
 		}
 
 		@Override
-		public Type getObjectType() {
-			if (type == null) {
+		public Type getObjectType()
+		{
+			if (type == null)
+			{
 				type = TypeSafeModel.this.getObjectType();
 			}
 			return type;
 		}
 
 		@Override
-		public Model<?> getChainedModel() {
+		public Model<?> getChainedModel()
+		{
 			return TypeSafeModel.this;
 		}
 
 		@Override
-		public void setChainedModel(Model<?> model) {
+		public void setChainedModel(Model<?> model)
+		{
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public void detach() {
+		public void detach()
+		{
 			super.detach();
 
 			type = null;
@@ -758,11 +890,13 @@ ObjectClassAware<T>,
 	/**
 	 * An evaluation which is bound to a target.
 	 */
-	private static class BoundEvaluation<R> extends Evaluation<R> {
+	private static class BoundEvaluation<R> extends Evaluation<R>
+	{
 
 		public final Object target;
 
-		public BoundEvaluation(Type type, Object target) {
+		public BoundEvaluation(Type type, Object target)
+		{
 			super(type);
 
 			this.target = target;

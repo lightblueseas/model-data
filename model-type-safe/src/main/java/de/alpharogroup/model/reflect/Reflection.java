@@ -109,7 +109,7 @@ public final class Reflection
 	/**
 	 * Get the type for a class type variable.
 	 *
-	 * @param previousType
+	 * @param type
 	 *            the owning type
 	 * @param variable
 	 *            the variable

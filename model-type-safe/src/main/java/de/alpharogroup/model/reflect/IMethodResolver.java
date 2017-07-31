@@ -24,7 +24,8 @@ import java.lang.reflect.Method;
  *
  * @author svenmeier
  */
-public interface IMethodResolver {
+public interface IMethodResolver
+{
 
 	/**
 	 * Get method by identifier.
@@ -50,7 +51,8 @@ public interface IMethodResolver {
 	 * Get a setter for the given method.
 	 *
 	 * @param getter
-	 * @return
+	 *            the getter
+	 * @return the setter
 	 */
 	public Method getSetter(Method getter);
 }
