@@ -24,6 +24,7 @@
 		<model-data.version>1.4.0</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
+		<model-type-safe.version>${model-data.version}</model-type-safe.version>
 		<!-- EXT LIBRARIES versions -->
 		<jcommons-lang.version>4.20.0</jcommons-lang.version>
 		<vintage-time.version>4.11.0</vintage-time.version>
@@ -53,6 +54,12 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>model-object</artifactId>
 				<version>${model-object.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>model-type-safe</artifactId>
+				<version>${model-type-safe.version}</version>
 			</dependency>
 
 			<dependency>
