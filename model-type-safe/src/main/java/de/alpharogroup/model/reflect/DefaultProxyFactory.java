@@ -38,6 +38,24 @@ import net.sf.cglib.proxy.MethodProxy;
 public final class DefaultProxyFactory implements IProxyFactory
 {
 
+	private final class MethodInterceptorImplementation implements MethodInterceptor
+	{
+
+		public final Callback callback;
+
+		private MethodInterceptorImplementation(Callback callback)
+		{
+			this.callback = callback;
+		}
+
+		@Override
+		public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy)
+			throws Throwable
+		{
+			return callback.on(obj, method, args);
+		}
+	}
+
 	private final NamingPolicy NAMING_POLICY = new DefaultNamingPolicy()
 	{
 		@Override
@@ -120,24 +138,6 @@ public final class DefaultProxyFactory implements IProxyFactory
 			return interceptor.callback;
 		}
 		return null;
-	}
-
-	private final class MethodInterceptorImplementation implements MethodInterceptor
-	{
-
-		public final Callback callback;
-
-		private MethodInterceptorImplementation(Callback callback)
-		{
-			this.callback = callback;
-		}
-
-		@Override
-		public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy)
-			throws Throwable
-		{
-			return callback.on(obj, method, args);
-		}
 	}
 
 }

@@ -9,8 +9,8 @@ import de.alpharogroup.model.api.Model;
 
 /**
  * <p>
- * If AbstractPropertyModel has an target that implements the ObjectClassAware interface then
- * the class of that target is used to infer the modeled property type.
+ * If AbstractPropertyModel has an target that implements the ObjectClassAware interface then the
+ * class of that target is used to infer the modeled property type.
  * </p>
  *
  * @see <a href="https://issues.apache.org/jira/browse/WICKET-2937">WICKET-2937</a>
@@ -19,13 +19,40 @@ import de.alpharogroup.model.api.Model;
 public class AbstractPropertyModelObjectClassTest extends Assert
 {
 
-	/**
-	 *
-	 */
-	@Test
-	public void testModel()
+	private static class CustomBean implements Serializable
 	{
-		assertPropertyModelTargetTypeIsInteger(new SerializableModel<>(new CustomType()));
+		private static final long serialVersionUID = 1L;
+		private CustomType customType;
+
+		@SuppressWarnings("unused")
+		public CustomType getCustomType()
+		{
+			return customType;
+		}
+
+		@SuppressWarnings("unused")
+		public void setCustomType(CustomType customType)
+		{
+			this.customType = customType;
+		}
+	}
+
+	private static class CustomType implements Serializable
+	{
+		private static final long serialVersionUID = 1L;
+		private Integer someProperty;
+
+		@SuppressWarnings("unused")
+		public Integer getSomeProperty()
+		{
+			return someProperty;
+		}
+
+		@SuppressWarnings("unused")
+		public void setSomeProperty(Integer someProperty)
+		{
+			this.someProperty = someProperty;
+		}
 	}
 
 	/**
@@ -36,8 +63,8 @@ public class AbstractPropertyModelObjectClassTest extends Assert
 	 */
 	private void assertPropertyModelTargetTypeIsInteger(Model<?> modelForCustomTypeObject)
 	{
-		assertEquals(Integer.class, new PropertyModel<Model<?>>(modelForCustomTypeObject,
-			"someProperty").getObjectClass());
+		assertEquals(Integer.class,
+			new PropertyModel<Model<?>>(modelForCustomTypeObject, "someProperty").getObjectClass());
 	}
 
 	/**
@@ -59,39 +86,12 @@ public class AbstractPropertyModelObjectClassTest extends Assert
 		assertEquals(Integer.class, somePropertyModel.getObjectClass());
 	}
 
-	private static class CustomType implements Serializable
+	/**
+	 *
+	 */
+	@Test
+	public void testModel()
 	{
-		private static final long serialVersionUID = 1L;
-		private Integer someProperty;
-
-		@SuppressWarnings("unused")
-		public void setSomeProperty(Integer someProperty)
-		{
-			this.someProperty = someProperty;
-		}
-
-		@SuppressWarnings("unused")
-		public Integer getSomeProperty()
-		{
-			return someProperty;
-		}
-	}
-
-	private static class CustomBean implements Serializable
-	{
-		private static final long serialVersionUID = 1L;
-		private CustomType customType;
-
-		@SuppressWarnings("unused")
-		public CustomType getCustomType()
-		{
-			return customType;
-		}
-
-		@SuppressWarnings("unused")
-		public void setCustomType(CustomType customType)
-		{
-			this.customType = customType;
-		}
+		assertPropertyModelTargetTypeIsInteger(new SerializableModel<>(new CustomType()));
 	}
 }

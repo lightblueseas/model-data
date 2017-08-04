@@ -37,9 +37,11 @@ public class CachingProxyFactoryTest
 		{
 
 			@Override
-			public Callback getCallback(Object proxy)
+			public Class<?> createClass(Class<?> clazz)
 			{
-				return null;
+				count[0]++;
+
+				return clazz;
 			}
 
 			@Override
@@ -49,11 +51,9 @@ public class CachingProxyFactoryTest
 			}
 
 			@Override
-			public Class<?> createClass(Class<?> clazz)
+			public Callback getCallback(Object proxy)
 			{
-				count[0]++;
-
-				return clazz;
+				return null;
 			}
 		});
 

@@ -28,6 +28,15 @@ public interface IMethodResolver
 {
 
 	/**
+	 * Get the identifier for the given method.
+	 *
+	 * @param method
+	 *            method
+	 * @return method identifier
+	 */
+	public Serializable getId(Method method);
+
+	/**
 	 * Get method by identifier.
 	 *
 	 * @param owner
@@ -37,15 +46,6 @@ public interface IMethodResolver
 	 * @return method
 	 */
 	public Method getMethod(Class<?> owner, Serializable id);
-
-	/**
-	 * Get the identifier for the given method.
-	 *
-	 * @param method
-	 *            method
-	 * @return method identifier
-	 */
-	public Serializable getId(Method method);
 
 	/**
 	 * Get a setter for the given method.

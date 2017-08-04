@@ -36,18 +36,43 @@ import org.junit.Test;
 public class ReflectionTest
 {
 
-	@Test
-	public void variableType() throws Exception
+	public static class Foo extends HashMap<String, Integer>
 	{
-		Method method = Foo.class.getMethod("put", Object.class, Object.class);
+		private static final long serialVersionUID = 1L;
 
-		assertEquals(String.class,
-			Reflection.variableType((ParameterizedType)Foo.class.getGenericSuperclass(),
-				(TypeVariable<?>)method.getGenericParameterTypes()[0]));
+		public String getnonProperty()
+		{
+			return null;
+		}
 
-		assertEquals(Integer.class,
-			Reflection.variableType((ParameterizedType)Foo.class.getGenericSuperclass(),
-				(TypeVariable<?>)method.getGenericParameterTypes()[1]));
+		public void getNonProperty()
+		{
+		}
+
+		public String getNonProperty(String arg)
+		{
+			return null;
+		}
+
+		public String getProperty()
+		{
+			return null;
+		}
+
+		public String isNonProperty()
+		{
+			return null;
+		}
+
+		public boolean isProperty()
+		{
+			return true;
+		}
+
+		public String nonProperty()
+		{
+			return null;
+		}
 	}
 
 	@Test
@@ -82,42 +107,17 @@ public class ReflectionTest
 		assertTrue(Reflection.isGetter(Foo.class.getMethod("isProperty")));
 	}
 
-	public static class Foo extends HashMap<String, Integer>
+	@Test
+	public void variableType() throws Exception
 	{
-		private static final long serialVersionUID = 1L;
+		Method method = Foo.class.getMethod("put", Object.class, Object.class);
 
-		public String getProperty()
-		{
-			return null;
-		}
+		assertEquals(String.class,
+			Reflection.variableType((ParameterizedType)Foo.class.getGenericSuperclass(),
+				(TypeVariable<?>)method.getGenericParameterTypes()[0]));
 
-		public String getNonProperty(String arg)
-		{
-			return null;
-		}
-
-		public String getnonProperty()
-		{
-			return null;
-		}
-
-		public String isNonProperty()
-		{
-			return null;
-		}
-
-		public String nonProperty()
-		{
-			return null;
-		}
-
-		public void getNonProperty()
-		{
-		}
-
-		public boolean isProperty()
-		{
-			return true;
-		}
+		assertEquals(Integer.class,
+			Reflection.variableType((ParameterizedType)Foo.class.getGenericSuperclass(),
+				(TypeVariable<?>)method.getGenericParameterTypes()[1]));
 	}
 }

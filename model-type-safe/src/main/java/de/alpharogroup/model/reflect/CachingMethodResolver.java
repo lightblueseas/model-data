@@ -30,6 +30,57 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CachingMethodResolver implements IMethodResolver
 {
 
+	private class ApplicationScope implements IMethodResolver
+	{
+
+		private final Map<String, Method> methods = new ConcurrentHashMap<>();
+
+		private final Map<Method, Serializable> ids = new ConcurrentHashMap<>();
+
+		private final Map<Method, Method> setters = new ConcurrentHashMap<>();
+
+		@Override
+		public Serializable getId(Method method)
+		{
+			Serializable id = ids.get(method);
+			if (id == null)
+			{
+				id = resolver.getId(method);
+				ids.put(method, id);
+			}
+			return id;
+		}
+
+		@Override
+		public Method getMethod(Class<?> owner, Serializable id)
+		{
+			String key = owner.getName() + ":" + id;
+
+			Method method = methods.get(key);
+			if (method == null)
+			{
+				method = resolver.getMethod(owner, id);
+				methods.put(key, method);
+			}
+
+			return method;
+		}
+
+		@Override
+		public Method getSetter(Method getter)
+		{
+			Method setter = setters.get(getter);
+
+			if (setter == null)
+			{
+				setter = resolver.getSetter(getter);
+				setters.put(getter, setter);
+			}
+
+			return setter;
+		}
+	}
+
 	private final ConcurrentHashMap<Object, IMethodResolver> scopes = new ConcurrentHashMap<>(2);
 
 	private final IMethodResolver resolver;
@@ -37,6 +88,23 @@ public class CachingMethodResolver implements IMethodResolver
 	public CachingMethodResolver(IMethodResolver resolver)
 	{
 		this.resolver = resolver;
+	}
+
+	public void destroy(Object application)
+	{
+		scopes.remove(application);
+	}
+
+	@Override
+	public Serializable getId(Method method)
+	{
+		return getResolver().getId(method);
+	}
+
+	@Override
+	public Method getMethod(Class<?> owner, Serializable id)
+	{
+		return getResolver().getMethod(owner, id);
 	}
 
 	private IMethodResolver getResolver()
@@ -59,76 +127,8 @@ public class CachingMethodResolver implements IMethodResolver
 	}
 
 	@Override
-	public Method getMethod(Class<?> owner, Serializable id)
-	{
-		return getResolver().getMethod(owner, id);
-	}
-
-	@Override
-	public Serializable getId(Method method)
-	{
-		return getResolver().getId(method);
-	}
-
-	@Override
 	public Method getSetter(Method getter)
 	{
 		return getResolver().getSetter(getter);
-	}
-
-	public void destroy(Object application)
-	{
-		scopes.remove(application);
-	}
-
-	private class ApplicationScope implements IMethodResolver
-	{
-
-		private final Map<String, Method> methods = new ConcurrentHashMap<>();
-
-		private final Map<Method, Serializable> ids = new ConcurrentHashMap<>();
-
-		private final Map<Method, Method> setters = new ConcurrentHashMap<>();
-
-		@Override
-		public Method getMethod(Class<?> owner, Serializable id)
-		{
-			String key = owner.getName() + ":" + id;
-
-			Method method = methods.get(key);
-			if (method == null)
-			{
-				method = resolver.getMethod(owner, id);
-				methods.put(key, method);
-			}
-
-			return method;
-		}
-
-		@Override
-		public Serializable getId(Method method)
-		{
-			Serializable id = ids.get(method);
-			if (id == null)
-			{
-				id = resolver.getId(method);
-				ids.put(method, id);
-			}
-			return id;
-		}
-
-		@Override
-		public Method getSetter(Method getter)
-		{
-			Method setter = setters.get(getter);
-
-			if (setter == null)
-			{
-				setter = resolver.getSetter(getter);
-				setters.put(getter, setter);
-			}
-
-			return setter;
-		}
 	}
 }

@@ -62,6 +62,14 @@ public abstract class LoadableDetachableModel<T> implements Model<T>
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void attach()
+	{
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void detach()
 	{
 		if (attached)

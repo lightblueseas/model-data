@@ -70,6 +70,7 @@ public final class PropertyResolver
 			map.put(clz, values);
 		}
 	}
+
 	private final static int RETURN_NULL = 0;
 	private final static int CREATE_NEW_VALUE = 1;
 
@@ -79,8 +80,6 @@ public final class PropertyResolver
 		2);
 	private static final String GET = "get";
 	private static final String IS = "is";
-
-	private static final String SET = "set";
 
 	/**
 	 * Clean up cache for this app.

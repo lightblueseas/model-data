@@ -10,23 +10,20 @@
 	</parent>
 
 	<artifactId>model-data</artifactId>
-	<packaging>pom</packaging>
-	<version>1.4.0</version>
-
-	<modules>
-		<module>model-api</module>
-		<module>model-object</module>
-		<module>model-type-safe</module>
-	</modules>
+	<packaging>pom</packaging> 
+	<!-- NOTE: on version change DO NOT FORGET 
+	to change ${model-data.version} 
+	in the properties section ON SAME VERSION. -->
+	<version>1.5.0</version>
 
 	<properties>
 		<!-- MODEL-DATA version -->
-		<model-data.version>1.4.0</model-data.version>
+		<model-data.version>1.5.0</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		<model-type-safe.version>${model-data.version}</model-type-safe.version>
 		<!-- EXT LIBRARIES versions -->
-		<jcommons-lang.version>4.20.0</jcommons-lang.version>
+		<jcommons-lang.version>4.21.0</jcommons-lang.version>
 		<vintage-time.version>4.11.0</vintage-time.version>
 		<test-objects.version>4.16.0</test-objects.version>
 		<!-- EXTERNAL LIBRARIES versions -->
@@ -39,6 +36,36 @@
 		<cglib.version>3.2.4</cglib.version>
 		<asm-util.version>5.0.3</asm-util.version>
 	</properties>
+	
+	<name>${project.artifactId}</name>
+
+	<description>
+		Parent project that holds module projects for base classes for persistence like base entity or base business objects and mapper for mapping between them.
+	</description>
+
+	<url>https://github.com/lightblueseas/model-data</url>
+
+	<scm>
+		<connection>scm:git:git:@github.com:lightblueseas/model-data.git</connection>
+		<developerConnection>scm:git:git@github.com:lightblueseas/model-data.git</developerConnection>
+		<url>git:@github.com:lightblueseas/model-data.git</url>
+	</scm>
+
+	<ciManagement>
+		<system>travis-ci</system>
+		<url>https://travis-ci.org/lightblueseas/model-data</url>
+	</ciManagement>
+
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/lightblueseas/model-data/issues</url>
+	</issueManagement>
+	
+	<modules>
+		<module>model-api</module>
+		<module>model-object</module>
+		<module>model-type-safe</module>
+	</modules>
 
 	<dependencyManagement>
 

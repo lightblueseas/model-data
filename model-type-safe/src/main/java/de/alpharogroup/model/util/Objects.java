@@ -369,6 +369,23 @@ public final class Objects
 	}
 
 	/**
+	 * Returns the original object if this one is != null. If the original object is null the
+	 * default one is returned. The default object has no restriction, it might be itself null.
+	 *
+	 * @param <T>
+	 *            the generic type
+	 * @param originalObj
+	 *            the original object
+	 * @param defaultObj
+	 *            the default object
+	 * @return the original object if not null, the default one otherwise.
+	 */
+	public static <T> T defaultIfNull(T originalObj, T defaultObj)
+	{
+		return originalObj != null ? originalObj : defaultObj;
+	}
+
+	/**
 	 * Evaluates the given object as a double-precision floating-point number.
 	 *
 	 * @param value
@@ -401,6 +418,7 @@ public final class Objects
 		return (s.length() == 0) ? 0.0 : Double.parseDouble(s);
 	}
 
+
 	/**
 	 * Returns true if a and b are equal. Either object may be null.
 	 *
@@ -424,7 +442,6 @@ public final class Objects
 
 		return false;
 	}
-
 
 	/**
 	 * Returns the constant from the NumericTypes interface that best expresses the type of an
@@ -585,6 +602,28 @@ public final class Objects
 	}
 
 	/**
+	 * returns hashcode of the objects by calling obj.hashcode(). safe to use when obj is null.
+	 *
+	 * @param obj
+	 *            the obj
+	 * @return hashcode of the object or 0 if obj is null
+	 */
+	public static int hashCode(final Object... obj)
+	{
+		if ((obj == null) || (obj.length == 0))
+		{
+			return 0;
+		}
+		int result = 37;
+		for (int i = obj.length - 1; i > -1; i--)
+		{
+			result = 37 * result + (obj[i] != null ? obj[i].hashCode() : 0);
+		}
+		return result;
+	}
+
+
+	/**
 	 * Returns true if object1 is equal to object2 in either the sense that they are the same object
 	 * or, if both are non-null if they are equal in the <CODE>equals()</CODE> sense.
 	 *
@@ -632,6 +671,7 @@ public final class Objects
 		return result;
 	}
 
+
 	/**
 	 * Evaluates the given object as a long integer.
 	 *
@@ -662,7 +702,6 @@ public final class Objects
 		}
 		return Long.parseLong(stringValue(value, true));
 	}
-
 
 	/**
 	 * Returns a new Number object of an appropriate type to hold the given integer value. The type
@@ -704,7 +743,6 @@ public final class Objects
 		}
 	}
 
-
 	/**
 	 * Evaluates the given object as a String.
 	 *
@@ -716,27 +754,6 @@ public final class Objects
 	public static String stringValue(final Object value)
 	{
 		return stringValue(value, false);
-	}
-
-	/**
-	 * returns hashcode of the objects by calling obj.hashcode(). safe to use when obj is null.
-	 *
-	 * @param obj
-	 *            the obj
-	 * @return hashcode of the object or 0 if obj is null
-	 */
-	public static int hashCode(final Object... obj)
-	{
-		if ((obj == null) || (obj.length == 0))
-		{
-			return 0;
-		}
-		int result = 37;
-		for (int i = obj.length - 1; i > -1; i--)
-		{
-			result = 37 * result + (obj[i] != null ? obj[i].hashCode() : 0);
-		}
-		return result;
 	}
 
 	/**
@@ -766,23 +783,6 @@ public final class Objects
 			}
 		}
 		return result;
-	}
-
-	/**
-	 * Returns the original object if this one is != null. If the original object is null the
-	 * default one is returned. The default object has no restriction, it might be itself null.
-	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param originalObj
-	 *            the original object
-	 * @param defaultObj
-	 *            the default object
-	 * @return the original object if not null, the default one otherwise.
-	 */
-	public static <T> T defaultIfNull(T originalObj, T defaultObj)
-	{
-		return originalObj != null ? originalObj : defaultObj;
 	}
 
 	/**

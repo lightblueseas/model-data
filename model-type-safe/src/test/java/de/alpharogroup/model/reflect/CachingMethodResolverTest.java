@@ -41,11 +41,11 @@ public class CachingMethodResolverTest
 		IMethodResolver resolver = new CachingMethodResolver(new IMethodResolver()
 		{
 			@Override
-			public Method getSetter(Method getter)
+			public Serializable getId(Method method)
 			{
 				count[0]++;
 
-				return getter;
+				return id;
 			}
 
 			@Override
@@ -57,11 +57,11 @@ public class CachingMethodResolverTest
 			}
 
 			@Override
-			public Serializable getId(Method method)
+			public Method getSetter(Method getter)
 			{
 				count[0]++;
 
-				return id;
+				return getter;
 			}
 		});
 

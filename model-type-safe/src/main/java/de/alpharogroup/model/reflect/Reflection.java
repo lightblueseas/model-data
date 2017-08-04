@@ -33,10 +33,127 @@ import org.slf4j.LoggerFactory;
 public final class Reflection
 {
 
+	/**
+	 * Allows backtracking of type variables.
+	 */
+	private static class BacktrackingParameterizedType implements ParameterizedType
+	{
+
+		private Type declaringType;
+
+		private ParameterizedType type;
+
+		public BacktrackingParameterizedType(Type declaringType, ParameterizedType type)
+		{
+			this.declaringType = declaringType;
+			this.type = type;
+		}
+
+		@Override
+		public Type[] getActualTypeArguments()
+		{
+			return type.getActualTypeArguments();
+		}
+
+		@Override
+		public Type getOwnerType()
+		{
+			return type.getOwnerType();
+		}
+
+		@Override
+		public Type getRawType()
+		{
+			return type.getRawType();
+		}
+	}
+
 	private static Logger log = LoggerFactory.getLogger(Reflection.class);
 
-	private Reflection()
+	/**
+	 * Get the {@link Class} for a generic type.
+	 *
+	 * @param type
+	 *            {@link Class} or {@link ParameterizedType}
+	 * @return class class
+	 * @throws IllegalArgumentException
+	 *             if type doesn't represent a class
+	 */
+	public static Class<?> getClass(Type type)
 	{
+		Class<?> clazz;
+
+		if (type instanceof Class)
+		{
+			clazz = ((Class<?>)type);
+		}
+		else if (type instanceof ParameterizedType)
+		{
+			clazz = (Class<?>)((ParameterizedType)type).getRawType();
+		}
+		else if (type == null)
+		{
+			throw new IllegalArgumentException("type must not be null");
+		}
+		else
+		{
+			throw new IllegalArgumentException(
+				String.format("%s is not a class or parameterizedType", type));
+		}
+
+		return clazz;
+	}
+
+	/**
+	 * Is the given method a JavaBeans getter.
+	 *
+	 * @param method
+	 *            method to test
+	 * @return {@code true} if method is a getter
+	 */
+	public static boolean isGetter(Method method)
+	{
+		String name = method.getName();
+
+		if (method.getParameterTypes().length == 0)
+		{
+			Class<?> returnType = method.getReturnType();
+
+			if (name.startsWith("get") && name.length() > 3 && Character.isUpperCase(name.charAt(3))
+				&& returnType != Void.TYPE)
+			{
+				return true;
+			}
+
+			if (name.startsWith("is") && name.length() > 2 && Character.isUpperCase(name.charAt(2))
+				&& (returnType == Boolean.TYPE || returnType == Boolean.class))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Does the given method represent a {@link List} index.
+	 *
+	 * @param method
+	 *            method to test
+	 * @return {@code true} if list index
+	 */
+	public static boolean isListIndex(Method method)
+	{
+		if ("get".equals(method.getName()))
+		{
+			Class<?>[] parameters = method.getParameterTypes();
+			if (parameters.length == 1 && parameters[0] == Integer.TYPE)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -146,124 +263,7 @@ public final class Reflection
 		return null;
 	}
 
-	/**
-	 * Get the {@link Class} for a generic type.
-	 *
-	 * @param type
-	 *            {@link Class} or {@link ParameterizedType}
-	 * @return class class
-	 * @throws IllegalArgumentException
-	 *             if type doesn't represent a class
-	 */
-	public static Class<?> getClass(Type type)
+	private Reflection()
 	{
-		Class<?> clazz;
-
-		if (type instanceof Class)
-		{
-			clazz = ((Class<?>)type);
-		}
-		else if (type instanceof ParameterizedType)
-		{
-			clazz = (Class<?>)((ParameterizedType)type).getRawType();
-		}
-		else if (type == null)
-		{
-			throw new IllegalArgumentException("type must not be null");
-		}
-		else
-		{
-			throw new IllegalArgumentException(
-				String.format("%s is not a class or parameterizedType", type));
-		}
-
-		return clazz;
-	}
-
-	/**
-	 * Is the given method a JavaBeans getter.
-	 *
-	 * @param method
-	 *            method to test
-	 * @return {@code true} if method is a getter
-	 */
-	public static boolean isGetter(Method method)
-	{
-		String name = method.getName();
-
-		if (method.getParameterTypes().length == 0)
-		{
-			Class<?> returnType = method.getReturnType();
-
-			if (name.startsWith("get") && name.length() > 3 && Character.isUpperCase(name.charAt(3))
-				&& returnType != Void.TYPE)
-			{
-				return true;
-			}
-
-			if (name.startsWith("is") && name.length() > 2 && Character.isUpperCase(name.charAt(2))
-				&& (returnType == Boolean.TYPE || returnType == Boolean.class))
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Does the given method represent a {@link List} index.
-	 *
-	 * @param method
-	 *            method to test
-	 * @return {@code true} if list index
-	 */
-	public static boolean isListIndex(Method method)
-	{
-		if ("get".equals(method.getName()))
-		{
-			Class<?>[] parameters = method.getParameterTypes();
-			if (parameters.length == 1 && parameters[0] == Integer.TYPE)
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Allows backtracking of type variables.
-	 */
-	private static class BacktrackingParameterizedType implements ParameterizedType
-	{
-
-		private Type declaringType;
-
-		private ParameterizedType type;
-
-		public BacktrackingParameterizedType(Type declaringType, ParameterizedType type)
-		{
-			this.declaringType = declaringType;
-			this.type = type;
-		}
-
-		@Override
-		public Type[] getActualTypeArguments()
-		{
-			return type.getActualTypeArguments();
-		}
-
-		@Override
-		public Type getRawType()
-		{
-			return type.getRawType();
-		}
-
-		@Override
-		public Type getOwnerType()
-		{
-			return type.getOwnerType();
-		}
 	}
 }
