@@ -27,57 +27,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CachingProxyFactory implements IProxyFactory
 {
 
-	private final ConcurrentHashMap<Object, IProxyFactory> scopes = new ConcurrentHashMap<>(2);
-
-	private final IProxyFactory factory;
-
-	public CachingProxyFactory(IProxyFactory factory)
-	{
-		this.factory = factory;
-	}
-
-	@Override
-	public Class<?> createClass(Class<?> clazz)
-	{
-		return getFactory().createClass(clazz);
-	}
-
-	@Override
-	public Object createInstance(final Class<?> proxyClass, final Callback callback)
-	{
-		return getFactory().createInstance(proxyClass, callback);
-	}
-
-	@Override
-	public Callback getCallback(Object proxy)
-	{
-		return getFactory().getCallback(proxy);
-	}
-
-	private IProxyFactory getFactory()
-	{
-		Object key;
-
-		key = CachingProxyFactory.class;
-
-		IProxyFactory result = scopes.get(key);
-		if (result == null)
-		{
-			IProxyFactory tmpResult = scopes.putIfAbsent(key, result = new ApplicationScope());
-			if (tmpResult != null)
-			{
-				result = tmpResult;
-			}
-		}
-
-		return result;
-	}
-
-	public void destroy(Object application)
-	{
-		scopes.remove(application);
-	}
-
 	private class ApplicationScope implements IProxyFactory
 	{
 
@@ -120,5 +69,56 @@ public class CachingProxyFactory implements IProxyFactory
 
 	private class NOT_PROXYABLE
 	{
+	}
+
+	private final ConcurrentHashMap<Object, IProxyFactory> scopes = new ConcurrentHashMap<>(2);
+
+	private final IProxyFactory factory;
+
+	public CachingProxyFactory(IProxyFactory factory)
+	{
+		this.factory = factory;
+	}
+
+	@Override
+	public Class<?> createClass(Class<?> clazz)
+	{
+		return getFactory().createClass(clazz);
+	}
+
+	@Override
+	public Object createInstance(final Class<?> proxyClass, final Callback callback)
+	{
+		return getFactory().createInstance(proxyClass, callback);
+	}
+
+	public void destroy(Object application)
+	{
+		scopes.remove(application);
+	}
+
+	@Override
+	public Callback getCallback(Object proxy)
+	{
+		return getFactory().getCallback(proxy);
+	}
+
+	private IProxyFactory getFactory()
+	{
+		Object key;
+
+		key = CachingProxyFactory.class;
+
+		IProxyFactory result = scopes.get(key);
+		if (result == null)
+		{
+			IProxyFactory tmpResult = scopes.putIfAbsent(key, result = new ApplicationScope());
+			if (tmpResult != null)
+			{
+				result = tmpResult;
+			}
+		}
+
+		return result;
 	}
 }

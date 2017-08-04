@@ -13,7 +13,8 @@ public class GenericModelTest
 	@Test
 	public void testSetInnerProperty()
 	{
-		final Employee employee = Employee.builder().person(Person.builder().name("bar").build()).build();
+		final Employee employee = Employee.builder().person(Person.builder().name("bar").build())
+			.build();
 		final PropertyModel<String> model = new PropertyModel<>(employee, "person.name");
 		model.setObject("foo");
 		String expected = employee.getPerson().getName();

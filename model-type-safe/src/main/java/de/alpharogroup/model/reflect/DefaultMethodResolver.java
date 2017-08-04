@@ -29,36 +29,6 @@ public class DefaultMethodResolver implements IMethodResolver
 {
 
 	/**
-	 * Inverse operation of {@link #getId(Method)}.
-	 */
-	@Override
-	public Method getMethod(Class<?> owner, Serializable id)
-	{
-		Class<?> candidate = owner;
-		while (candidate != null)
-		{
-			for (Method method : candidate.getDeclaredMethods())
-			{
-				if (id.equals(getId(method)))
-				{
-					try
-					{
-						method.setAccessible(true);
-					}
-					catch (SecurityException accessNotAllowed)
-					{
-					}
-					return method;
-				}
-			}
-
-			candidate = candidate.getSuperclass();
-		}
-		throw new IllegalArgumentException(
-			String.format("unknown method %s#%s", owner.getName(), id));
-	}
-
-	/**
 	 * Generates an identifier for the given method consisting of the method name and the first
 	 * character of each parameter type.
 	 * <p>
@@ -113,6 +83,36 @@ public class DefaultMethodResolver implements IMethodResolver
 		id.append(")");
 
 		return id.toString();
+	}
+
+	/**
+	 * Inverse operation of {@link #getId(Method)}.
+	 */
+	@Override
+	public Method getMethod(Class<?> owner, Serializable id)
+	{
+		Class<?> candidate = owner;
+		while (candidate != null)
+		{
+			for (Method method : candidate.getDeclaredMethods())
+			{
+				if (id.equals(getId(method)))
+				{
+					try
+					{
+						method.setAccessible(true);
+					}
+					catch (SecurityException accessNotAllowed)
+					{
+					}
+					return method;
+				}
+			}
+
+			candidate = candidate.getSuperclass();
+		}
+		throw new IllegalArgumentException(
+			String.format("unknown method %s#%s", owner.getName(), id));
 	}
 
 	/**

@@ -22,6 +22,7 @@ public final class ArrayPropertyGetSet extends AbstractGetAndSet
 		}
 		return null;
 	}
+
 	final private Integer index;
 	final private Method getMethod;
 

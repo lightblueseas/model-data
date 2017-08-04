@@ -47,7 +47,6 @@
 		<dependency>
 			<groupId>org.danekja</groupId>
 			<artifactId>jdk-serializable-functional</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 	</dependencies>

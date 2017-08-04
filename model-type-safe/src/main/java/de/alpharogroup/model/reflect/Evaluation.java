@@ -55,6 +55,46 @@ public class Evaluation<R> implements Callback
 	public static IProxyFactory proxyFactory = new CachingProxyFactory(new DefaultProxyFactory());
 
 	/**
+	 * Reverse operation of {@link #proxy()}, i.e. get the evaluation from an evaluation result.
+	 *
+	 * @param <R>
+	 *            the generic type
+	 * @param result
+	 *            invocation result
+	 * @return evaluation
+	 */
+	@SuppressWarnings("unchecked")
+	public static <R> Evaluation<R> eval(R result)
+	{
+		Evaluation<R> evaluation = (Evaluation<R>)proxyFactory.getCallback(result);
+		if (evaluation == null)
+		{
+			evaluation = (Evaluation<R>)lastNonProxyable.get();
+			lastNonProxyable.remove();
+			if (evaluation == null)
+			{
+				throw new RuntimeException("no invocation result given");
+			}
+		}
+		return evaluation;
+	}
+
+	/**
+	 * Start evaluation from the give type.
+	 *
+	 * @param <T>
+	 *            the generic type
+	 * @param type
+	 *            starting type
+	 * @return proxy
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T of(Class<T> type)
+	{
+		return (T)new Evaluation(type).proxy();
+	}
+
+	/**
 	 * Each invoked method followed by its arguments.
 	 */
 	public final List<Object> stack = new ArrayList<>();
@@ -145,46 +185,6 @@ public class Evaluation<R> implements Callback
 		}
 
 		return proxyFactory.createInstance(proxyClass, this);
-	}
-
-	/**
-	 * Reverse operation of {@link #proxy()}, i.e. get the evaluation from an evaluation result.
-	 *
-	 * @param <R>
-	 *            the generic type
-	 * @param result
-	 *            invocation result
-	 * @return evaluation
-	 */
-	@SuppressWarnings("unchecked")
-	public static <R> Evaluation<R> eval(R result)
-	{
-		Evaluation<R> evaluation = (Evaluation<R>)proxyFactory.getCallback(result);
-		if (evaluation == null)
-		{
-			evaluation = (Evaluation<R>)lastNonProxyable.get();
-			lastNonProxyable.remove();
-			if (evaluation == null)
-			{
-				throw new RuntimeException("no invocation result given");
-			}
-		}
-		return evaluation;
-	}
-
-	/**
-	 * Start evaluation from the give type.
-	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param type
-	 *            starting type
-	 * @return proxy
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> T of(Class<T> type)
-	{
-		return (T)new Evaluation(type).proxy();
 	}
 
 }
