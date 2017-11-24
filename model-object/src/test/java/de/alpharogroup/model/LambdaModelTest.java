@@ -23,8 +23,7 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import de.alpharogroup.lang.object.CloneObjectExtensions;
-//import de.alpharogroup.model.Model;
+import de.alpharogroup.clone.object.CloneObjectExtensions;
 import de.alpharogroup.model.api.Model;
 import de.alpharogroup.model.lambda.Person;
 

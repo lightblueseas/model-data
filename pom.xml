@@ -37,6 +37,9 @@
 		<objenesis.version>2.6</objenesis.version>
 		<cglib.version>3.2.4</cglib.version>
 		<asm-util.version>5.0.3</asm-util.version>
+		<!-- JOBJECT-EXTENSIONS versions -->
+		<jobject-extensions.version>1.4.0</jobject-extensions.version>		
+		<jobject-clone.version>${jobject-extensions.version}</jobject-clone.version>
 	</properties>
 	
 	<name>${project.artifactId}</name>
@@ -153,6 +156,12 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>jcommons-lang</artifactId>
 				<version>${jcommons-lang.version}</version>
+			</dependency>
+			<!-- JOBJECT-CLONE DEPENDENCY -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>jobject-clone</artifactId>
+				<version>${jobject-clone.version}</version>
 			</dependency>
 
 		</dependencies>
