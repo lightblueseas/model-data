@@ -23,7 +23,7 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import de.alpharogroup.clone.object.CloneObjectExtensions;
+import de.alpharogroup.clone.object.CloneObjectQuietlyExtensions;
 import de.alpharogroup.model.api.Model;
 import de.alpharogroup.model.lambda.Person;
 
@@ -63,7 +63,7 @@ public class LambdaModelTest
 
 	private void serialize(final Model<String> personNameModel, final String personName)
 	{
-		final Model<String> clone = CloneObjectExtensions.cloneQuietly(personNameModel);
+		final Model<String> clone = CloneObjectQuietlyExtensions.cloneQuietly(personNameModel);
 		assertThat(clone, is(instanceOf(LambdaModel.class)));
 		assertThat(clone.getObject(), is(personName));
 	}
