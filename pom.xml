@@ -40,6 +40,9 @@
 		<!-- JOBJECT-EXTENSIONS versions -->
 		<jobject-extensions.version>1.12</jobject-extensions.version>		
 		<jobject-clone.version>${jobject-extensions.version}</jobject-clone.version>
+		<jobject-evaluate.version>${jobject-extensions.version}</jobject-evaluate.version>
+		<!--  SILLY-COLLECTIONS version -->
+		<silly-collections.version>4.33</silly-collections.version>
 	</properties>
 	
 	<name>${project.artifactId}</name>
@@ -80,6 +83,7 @@
 		<module>model-api</module>
 		<module>model-object</module>
 		<module>model-type-safe</module>
+		<module>model-core</module>
 	</modules>
 
 	<dependencyManagement>
@@ -102,6 +106,12 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>model-type-safe</artifactId>
 				<version>${model-type-safe.version}</version>
+			</dependency>
+			<!-- JOBJECT-EVALUATE DEPENDENCY -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>jobject-evaluate</artifactId>
+				<version>${jobject-evaluate.version}</version>
 			</dependency>
 
 			<dependency>
@@ -138,6 +148,12 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>test-objects</artifactId>
 				<version>${test-objects.version}</version>
+			</dependency>
+			<!-- SILLY-COLLECTIONS DEPENDENCY -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>silly-collections</artifactId>
+				<version>${silly-collections.version}</version>
 			</dependency>
 
 			<dependency>
