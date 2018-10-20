@@ -24,10 +24,16 @@
  */
 package de.alpharogroup.collections.pairs;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.io.Serializable;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 /**
  * The class {@link ImmutableBox} represents one value with a generic parameter for an immutable

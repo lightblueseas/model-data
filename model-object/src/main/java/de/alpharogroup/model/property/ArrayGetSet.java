@@ -7,8 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public final class ArrayGetSet extends AbstractGetAndSet
 {
-	private final int index;
 	private final Class<?> clzComponentType;
+	private final int index;
 
 	ArrayGetSet(Class<?> clzComponentType, int index)
 	{

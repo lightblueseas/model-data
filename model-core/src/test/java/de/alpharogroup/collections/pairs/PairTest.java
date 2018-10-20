@@ -24,11 +24,12 @@
  */
 package de.alpharogroup.collections.pairs;
 
-import de.alpharogroup.evaluate.object.evaluators.EqualsHashCodeAndToStringEvaluator;
+import static org.testng.AssertJUnit.assertEquals;
+
 import org.meanbean.test.BeanTester;
 import org.testng.annotations.Test;
 
-import static org.testng.AssertJUnit.assertEquals;
+import de.alpharogroup.evaluate.object.evaluators.EqualsHashCodeAndToStringEvaluator;
 
 /**
  * The unit test class for the class {@link Pair}.

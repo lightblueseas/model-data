@@ -26,9 +26,9 @@ public class Address implements Serializable
 
 	private static final long serialVersionUID = 1L;
 
-	private String street;
-
 	private int number;
+
+	private String street;
 
 	public int getNumber()
 	{

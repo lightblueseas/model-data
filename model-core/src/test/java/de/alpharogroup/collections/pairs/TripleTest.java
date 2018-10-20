@@ -24,14 +24,15 @@
  */
 package de.alpharogroup.collections.pairs;
 
+import static org.testng.AssertJUnit.assertEquals;
+
+import org.meanbean.test.BeanTester;
+import org.testng.annotations.Test;
+
 import de.alpharogroup.evaluate.object.evaluators.EqualsHashCodeAndToStringEvaluator;
 import de.alpharogroup.test.objects.Customer;
 import de.alpharogroup.test.objects.Employee;
 import de.alpharogroup.test.objects.Person;
-import org.meanbean.test.BeanTester;
-import org.testng.annotations.Test;
-
-import static org.testng.AssertJUnit.assertEquals;
 
 /**
  * The unit test class for the class {@link Triple}.

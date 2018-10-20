@@ -24,14 +24,22 @@
  */
 package de.alpharogroup.collections.pairs;
 
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertNotNull;
+import static org.testng.AssertJUnit.assertNotSame;
+import static org.testng.AssertJUnit.assertTrue;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import org.testng.annotations.Test;
+
 import de.alpharogroup.evaluate.object.evaluators.EqualsEvaluator;
 import de.alpharogroup.evaluate.object.evaluators.HashcodeEvaluator;
 import de.alpharogroup.evaluate.object.evaluators.ToStringEvaluator;
-import org.testng.annotations.Test;
-
-import java.util.*;
-
-import static org.testng.AssertJUnit.*;
 
 /**
  * The unit test class for the class {@link KeyValuePair}
