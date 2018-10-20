@@ -71,9 +71,9 @@ public class CachingProxyFactory implements IProxyFactory
 	{
 	}
 
-	private final ConcurrentHashMap<Object, IProxyFactory> scopes = new ConcurrentHashMap<>(2);
-
 	private final IProxyFactory factory;
+
+	private final ConcurrentHashMap<Object, IProxyFactory> scopes = new ConcurrentHashMap<>(2);
 
 	public CachingProxyFactory(IProxyFactory factory)
 	{

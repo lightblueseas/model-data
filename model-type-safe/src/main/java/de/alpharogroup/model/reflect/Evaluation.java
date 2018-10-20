@@ -39,8 +39,6 @@ import de.alpharogroup.model.util.Objects;
 public class Evaluation<R> implements Callback
 {
 
-	private static final Logger log = LoggerFactory.getLogger(Evaluation.class);
-
 	/**
 	 * If not null containing the last invocation result which couldn't be proxied (i.e. is was
 	 * primitive or final).
@@ -48,6 +46,8 @@ public class Evaluation<R> implements Callback
 	 * @see #proxy()
 	 */
 	private static final ThreadLocal<Evaluation<?>> lastNonProxyable = new ThreadLocal<>();
+
+	private static final Logger log = LoggerFactory.getLogger(Evaluation.class);
 
 	/**
 	 * The factory for proxies.

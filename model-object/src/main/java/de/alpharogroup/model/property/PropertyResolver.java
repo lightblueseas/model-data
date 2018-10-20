@@ -71,15 +71,15 @@ public final class PropertyResolver
 		}
 	}
 
-	private final static int RETURN_NULL = 0;
-	private final static int CREATE_NEW_VALUE = 1;
-
-	private final static int RESOLVE_CLASS = 2;
-
 	private final static ConcurrentHashMap<Object, ClassCache> applicationToClassesToGetAndSetters = new ConcurrentHashMap<>(
 		2);
+	private final static int CREATE_NEW_VALUE = 1;
+
 	private static final String GET = "get";
+
 	private static final String IS = "is";
+	private final static int RESOLVE_CLASS = 2;
+	private final static int RETURN_NULL = 0;
 
 	/**
 	 * Clean up cache for this app.

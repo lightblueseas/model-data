@@ -33,9 +33,9 @@ public class CachingMethodResolver implements IMethodResolver
 	private class ApplicationScope implements IMethodResolver
 	{
 
-		private final Map<String, Method> methods = new ConcurrentHashMap<>();
-
 		private final Map<Method, Serializable> ids = new ConcurrentHashMap<>();
+
+		private final Map<String, Method> methods = new ConcurrentHashMap<>();
 
 		private final Map<Method, Method> setters = new ConcurrentHashMap<>();
 
@@ -81,9 +81,9 @@ public class CachingMethodResolver implements IMethodResolver
 		}
 	}
 
-	private final ConcurrentHashMap<Object, IMethodResolver> scopes = new ConcurrentHashMap<>(2);
-
 	private final IMethodResolver resolver;
+
+	private final ConcurrentHashMap<Object, IMethodResolver> scopes = new ConcurrentHashMap<>(2);
 
 	public CachingMethodResolver(IMethodResolver resolver)
 	{

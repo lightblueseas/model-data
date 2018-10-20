@@ -57,15 +57,15 @@ public class TypeSafeModelTest
 
 		B b;
 
-		F f;
+		boolean bool;
 
 		E e;
 
-		P p;
+		F f;
 
 		int integer;
 
-		boolean bool;
+		P p;
 
 		public B getB()
 		{
@@ -128,11 +128,11 @@ public class TypeSafeModelTest
 
 		char character;
 
-		Map<String, String> strings = new HashMap<>();
-
 		List<C> cs = new ArrayList<>();
 
 		D d;
+
+		Map<String, String> strings = new HashMap<>();
 
 		B()
 		{

@@ -55,10 +55,10 @@ final class MethodGetAndSet extends AbstractGetAndSet
 		return null;
 	}
 
-	private final Method getMethod;
-	private final Method setMethod;
-
 	private final Field field;
+	private final Method getMethod;
+
+	private final Method setMethod;
 
 	MethodGetAndSet(Method getMethod, Method setMethod, Field field)
 	{
