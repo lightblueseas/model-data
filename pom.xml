@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-java-parent</artifactId>
-		<version>4.1</version>
+		<version>4.4</version>
 		<relativePath></relativePath>
 	</parent>
 
@@ -23,11 +23,11 @@
 		<model-object.version>${model-data.version}</model-object.version>
 		<model-type-safe.version>${model-data.version}</model-type-safe.version>
 		<!-- JCOMMONS-LANG version -->
-		<jcommons-lang.version>4.35</jcommons-lang.version>
+		<jcommons-lang.version>5</jcommons-lang.version>
 		<!-- VINTAGE-TIME version -->
-		<vintage-time.version>4.12</vintage-time.version>
+		<vintage-time.version>5.1</vintage-time.version>
 		<!-- TEST-OBJECTS version -->
-		<test-objects.version>4.28</test-objects.version>
+		<test-objects.version>5</test-objects.version>
 		<!-- EXTERNAL LIBRARIES versions -->
 		<hamcrest-all.version>1.3</hamcrest-all.version>
 		<jdk-serializable-functional.version>1.8.5</jdk-serializable-functional.version>
@@ -38,11 +38,11 @@
 		<cglib.version>3.2.8</cglib.version>
 		<asm-util.version>5.0.3</asm-util.version>
 		<!-- JOBJECT-EXTENSIONS versions -->
-		<jobject-extensions.version>1.12</jobject-extensions.version>		
+		<jobject-extensions.version>2.5</jobject-extensions.version>		
 		<jobject-clone.version>${jobject-extensions.version}</jobject-clone.version>
 		<jobject-evaluate.version>${jobject-extensions.version}</jobject-evaluate.version>
 		<!--  SILLY-COLLECTIONS version -->
-		<silly-collections.version>4.33</silly-collections.version>
+		<silly-collections.version>5</silly-collections.version>
 	</properties>
 	
 	<name>${project.artifactId}</name>
