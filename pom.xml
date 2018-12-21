@@ -14,7 +14,7 @@
 	<!-- NOTE: on version change DO NOT FORGET 
 	to change ${model-data.version} 
 	in the properties section ON SAME VERSION. -->
-	<version>1.6.1</version>
+	<version>1.7-SNAPSHOT</version>
 
 	<properties>
 		<!-- MODEL-DATA version -->
