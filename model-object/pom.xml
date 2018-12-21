@@ -5,11 +5,16 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>model-data</artifactId>
-		<version>1.6</version>
+		<version>1.6.1</version>
 	</parent>
 	<artifactId>model-object</artifactId>
 
 	<dependencies>
+		<!-- LOG4J-TO-SLF4J DEPENDENCY -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-to-slf4j</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>

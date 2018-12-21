@@ -34,6 +34,7 @@ import org.testng.annotations.Test;
 
 import de.alpharogroup.evaluate.object.evaluators.EqualsHashCodeAndToStringEvaluator;
 import de.alpharogroup.evaluate.object.evaluators.SilentEqualsHashCodeAndToStringEvaluator;
+import io.github.benas.randombeans.api.EnhancedRandom;
 
 /**
  * The unit test class for the class {@link ValueBox}.
@@ -75,15 +76,18 @@ public class ValueBoxTest
 	 *             if a new instance of the bean's class cannot be instantiated
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred
+	 * @throws ClassNotFoundException
 	 */
 	@Test
 	public void testEqualsHashcodeAndToStringWithClass() throws NoSuchMethodException,
-		IllegalAccessException, InvocationTargetException, InstantiationException, IOException
+		IllegalAccessException, InvocationTargetException, InstantiationException, IOException, ClassNotFoundException
 	{
 		boolean expected;
 		boolean actual;
 		actual = EqualsHashCodeAndToStringEvaluator
-			.evaluateEqualsHashcodeAndToString(ValueBox.class);
+			.evaluateEqualsHashcodeAndToString(ValueBox.class, clazz -> ValueBox.builder()
+				.value(EnhancedRandom.random(String.class))
+				.build());
 		expected = true;
 		assertEquals(expected, actual);
 	}
@@ -98,7 +102,9 @@ public class ValueBoxTest
 		boolean expected;
 		boolean actual;
 		actual = SilentEqualsHashCodeAndToStringEvaluator
-			.evaluateEqualsHashcodeAndToStringQuietly(ValueBox.class);
+			.evaluateEqualsHashcodeAndToStringQuietly(ValueBox.class, clazz -> ValueBox.builder()
+				.value(EnhancedRandom.random(String.class))
+				.build());
 		expected = true;
 		assertEquals(expected, actual);
 	}
