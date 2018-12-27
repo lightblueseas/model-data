@@ -2,9 +2,8 @@ package de.alpharogroup.model.property;
 
 import java.lang.reflect.Array;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.SneakyThrows;
 
-@Slf4j
 public final class ArrayGetSet extends AbstractGetAndSet
 {
 	private final Class<?> clzComponentType;
@@ -42,19 +41,12 @@ public final class ArrayGetSet extends AbstractGetAndSet
 	 * {@inheritDoc}
 	 */
 	@Override
+	@SneakyThrows
 	public Object newValue(Object object)
 	{
 		Object value = null;
-		try
-		{
-			value = clzComponentType.newInstance();
-			Array.set(object, index, value);
-		}
-		catch (Exception e)
-		{
-			log.warn("Cannot set new value " + value + " at index " + index
-				+ " for array holding elements of class " + clzComponentType, e);
-		}
+		value = clzComponentType.newInstance();
+		Array.set(object, index, value);
 		return value;
 	}
 
