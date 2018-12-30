@@ -3,10 +3,11 @@ package de.alpharogroup.model.property;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 
-@Slf4j
+@Log
 final class MethodGetAndSet extends AbstractGetAndSet
 {
 	public final static Method findSetter(Method getMethod, Class<?> clz)
@@ -46,11 +47,11 @@ final class MethodGetAndSet extends AbstractGetAndSet
 					}
 				}
 			}
-			log.debug("Cannot find setter corresponding to " + getMethod);
+			log.log(Level.FINE, "Cannot find setter corresponding to " + getMethod);
 		}
 		catch (Exception e)
 		{
-			log.debug("Cannot find setter corresponding to " + getMethod);
+			log.log(Level.FINE, "Cannot find setter corresponding to " + getMethod);
 		}
 		return null;
 	}
@@ -136,7 +137,7 @@ final class MethodGetAndSet extends AbstractGetAndSet
 	{
 		if (setMethod == null)
 		{
-			log.warn("Null setMethod");
+			log.log(Level.WARNING, "Null setMethod");
 			return null;
 		}
 
@@ -149,7 +150,7 @@ final class MethodGetAndSet extends AbstractGetAndSet
 		}
 		catch (Exception e)
 		{
-			log.warn("Cannot set new value " + value, e);
+			log.log(Level.WARNING, "Cannot set new value " + value, e);
 		}
 		return value;
 	}

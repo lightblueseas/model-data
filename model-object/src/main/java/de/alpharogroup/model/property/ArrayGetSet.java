@@ -1,10 +1,11 @@
 package de.alpharogroup.model.property;
 
 import java.lang.reflect.Array;
+import java.util.logging.Level;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 
-@Slf4j
+@Log
 public final class ArrayGetSet extends AbstractGetAndSet
 {
 	private final Class<?> clzComponentType;
@@ -52,7 +53,7 @@ public final class ArrayGetSet extends AbstractGetAndSet
 		}
 		catch (Exception e)
 		{
-			log.warn("Cannot set new value " + value + " at index " + index
+			log.log(Level.WARNING, "Cannot set new value " + value + " at index " + index
 				+ " for array holding elements of class " + clzComponentType, e);
 		}
 		return value;

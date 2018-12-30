@@ -79,15 +79,15 @@ public class ValueBoxTest
 	 * @throws ClassNotFoundException
 	 */
 	@Test
-	public void testEqualsHashcodeAndToStringWithClass() throws NoSuchMethodException,
-		IllegalAccessException, InvocationTargetException, InstantiationException, IOException, ClassNotFoundException
+	public void testEqualsHashcodeAndToStringWithClass()
+		throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
+		InstantiationException, IOException, ClassNotFoundException
 	{
 		boolean expected;
 		boolean actual;
-		actual = EqualsHashCodeAndToStringEvaluator
-			.evaluateEqualsHashcodeAndToString(ValueBox.class, clazz -> ValueBox.builder()
-				.value(EnhancedRandom.random(String.class))
-				.build());
+		actual = EqualsHashCodeAndToStringEvaluator.evaluateEqualsHashcodeAndToString(
+			ValueBox.class,
+			clazz -> ValueBox.builder().value(EnhancedRandom.random(String.class)).build());
 		expected = true;
 		assertEquals(expected, actual);
 	}
@@ -101,10 +101,9 @@ public class ValueBoxTest
 	{
 		boolean expected;
 		boolean actual;
-		actual = SilentEqualsHashCodeAndToStringEvaluator
-			.evaluateEqualsHashcodeAndToStringQuietly(ValueBox.class, clazz -> ValueBox.builder()
-				.value(EnhancedRandom.random(String.class))
-				.build());
+		actual = SilentEqualsHashCodeAndToStringEvaluator.evaluateEqualsHashcodeAndToStringQuietly(
+			ValueBox.class,
+			clazz -> ValueBox.builder().value(EnhancedRandom.random(String.class)).build());
 		expected = true;
 		assertEquals(expected, actual);
 	}

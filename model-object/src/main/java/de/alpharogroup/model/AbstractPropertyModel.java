@@ -3,10 +3,8 @@ package de.alpharogroup.model;
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import de.alpharogroup.model.api.Model;
@@ -16,7 +14,7 @@ import de.alpharogroup.model.property.PropertyResolver;
 
 /**
  * The class {@link AbstractPropertyModel} serves as a base class for different kinds of property
- * models. By default, this class uses {@link PropertyUtils} to resolve expressions on the target
+ * models. By default, this class uses {@link PropertyResolver} to resolve expressions on the target
  * model object.
  *
  * @param <T>
@@ -107,7 +105,7 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 		{
 			try
 			{
-				return (Class<T>)PropertyUtils.getPropertyType(target, expression);
+				return (Class<T>)PropertyResolver.getPropertyClass(expression, target);
 			}
 			catch (final Exception e)
 			{
@@ -261,19 +259,7 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 		}
 		else
 		{
-			final Object target = getInnermostModelOrObject();
-
-			if (target != null)
-			{
-				try
-				{
-					PropertyUtils.setProperty(target, expression, object);
-				}
-				catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
-				{
-					throw new RuntimeException(e);
-				}
-			}
+			PropertyResolver.setValue(expression, getInnermostModelOrObject(), object);
 		}
 	}
 }
