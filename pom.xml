@@ -113,10 +113,16 @@
 				<artifactId>jobject-evaluate</artifactId>
 				<version>${jobject-evaluate.version}</version>
 			</dependency>
-
+			<!-- COMMONS-BEANUTILS DEPENDENCY -->
 			<dependency>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
+				<exclusions>
+					<exclusion>
+						<artifactId>commons-logging</artifactId>
+						<groupId>commons-logging</groupId>
+					</exclusion>
+				</exclusions>
 				<version>${commons-beanutils.version}</version>
 			</dependency>
 
