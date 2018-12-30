@@ -191,7 +191,7 @@ public final class Reflection
 							}
 							else
 							{
-								Object[] objects = {typeVariable, variableType};
+								Object[] objects = { typeVariable, variableType };
 								log.log(Level.FINE, "typeVariable {} resolves to typeVariable {}",
 									objects);
 								type = null;
