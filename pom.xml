@@ -20,6 +20,7 @@
 		<!-- MODEL-DATA version -->
 		<model-data.version>1.6.2</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
+		<model-core.version>${model-data.version}</model-core.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		<model-type-safe.version>${model-data.version}</model-type-safe.version>
 		<!-- JCOMMONS-LANG version -->
@@ -93,6 +94,12 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>model-api</artifactId>
 				<version>${model-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>model-core</artifactId>
+				<version>${model-core.version}</version>
 			</dependency>
 
 			<dependency>
