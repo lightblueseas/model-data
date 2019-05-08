@@ -34,8 +34,8 @@ import lombok.extern.java.Log;
  *
  * @author svenmeier
  */
-@SuppressWarnings("rawtypes")
 @Log
+@SuppressWarnings("rawtypes")
 public class Evaluation<R> implements Callback
 {
 
@@ -148,8 +148,7 @@ public class Evaluation<R> implements Callback
 		type = Reflection.resultType(type, method.getGenericReturnType());
 		if (type == null)
 		{
-			log.log(Level.FINE, "falling back to raw type for method {0}", new Object[] { method });
-
+			log.log(Level.FINE, "falling back to raw type for method {}", method);
 			type = method.getReturnType();
 		}
 

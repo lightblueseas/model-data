@@ -1,7 +1,8 @@
 package de.alpharogroup.model;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import org.testng.AssertJUnit;
 
 import de.alpharogroup.model.api.Model;
 import de.alpharogroup.test.objects.Employee;
@@ -29,12 +30,12 @@ public class PropertyModelTest
 		final Employee employee = Employee.builder().person(Person.builder().build()).build();
 		PropertyModel<String> model = new PropertyModel<>(employee, "person.name");
 		model.setObject("foo");
-		AssertJUnit.assertEquals(employee.getPerson().getName(), model.getObject());
+		assertEquals(employee.getPerson().getName(), model.getObject());
 
 		Model<Employee> employeeModel = BaseModel.of(employee);
 		model = new PropertyModel<>(employeeModel, "person.name");
 		model.setObject("foo");
-		AssertJUnit.assertEquals(employee.getPerson().getName(), model.getObject());
+		assertEquals(employee.getPerson().getName(), model.getObject());
 	}
 
 }

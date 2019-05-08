@@ -25,7 +25,6 @@ import java.util.logging.Level;
 
 import lombok.extern.java.Log;
 
-
 /**
  * Reflection utilities.
  *
@@ -192,8 +191,9 @@ public final class Reflection
 							}
 							else
 							{
-								log.log(Level.FINE, "typeVariable {0} resolves to typeVariable {1}",
-									new Object[] { typeVariable, variableType });
+								Object[] objects = { typeVariable, variableType };
+								log.log(Level.FINE, "typeVariable {} resolves to typeVariable {}",
+									objects);
 								type = null;
 							}
 						}
@@ -212,8 +212,7 @@ public final class Reflection
 				}
 				else
 				{
-					log.log(Level.FINE, "unsupported ownerType {0}",
-						new Object[] { declaringType });
+					log.log(Level.FINE, "unsupported ownerType {}", declaringType);
 					type = null;
 					break;
 				}
@@ -221,8 +220,7 @@ public final class Reflection
 				declaringType = clazz.getGenericSuperclass();
 				if (declaringType == Object.class)
 				{
-					log.log(Level.FINE, "typeVariable {0} cannot be resolved",
-						new Object[] { typeVariable });
+					log.log(Level.FINE, "typeVariable {} cannot be resolved", typeVariable);
 					type = null;
 					break;
 				}

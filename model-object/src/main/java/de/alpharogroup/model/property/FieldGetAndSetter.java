@@ -73,7 +73,6 @@ public class FieldGetAndSetter extends AbstractGetAndSet
 		}
 		catch (final Exception e)
 		{
-
 			log.log(Level.WARNING, "Cannot set field " + field + " to " + value, e);
 		}
 		return value;

@@ -137,7 +137,6 @@ final class MethodGetAndSet extends AbstractGetAndSet
 	{
 		if (setMethod == null)
 		{
-
 			log.log(Level.WARNING, "Null setMethod");
 			return null;
 		}

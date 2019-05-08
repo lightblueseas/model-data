@@ -37,8 +37,8 @@ import de.alpharogroup.model.lambda.Person;
 public class LambdaModelTest
 {
 	private void check(final Model<String> personNameModel)
-		throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException,
-		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
+		throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
+		ClassNotFoundException, InstantiationException, IOException
 	{
 		assertThat(personNameModel.getObject(), is(nullValue()));
 
@@ -50,10 +50,8 @@ public class LambdaModelTest
 	}
 
 	@Test
-	public void explicitLambdas()
-		throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException,
+	public void explicitLambdas() throws NoSuchMethodException, IllegalAccessException,
 		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
-
 	{
 		final Person person = new Person();
 		final Model<String> personNameModel = LambdaModel.<String> of(() -> person.getName(),
@@ -62,10 +60,8 @@ public class LambdaModelTest
 	}
 
 	@Test
-	public void methodReference()
-		throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException,
+	public void methodReference() throws NoSuchMethodException, IllegalAccessException,
 		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
-
 	{
 		final Person person = new Person();
 		final Model<String> personNameModel = LambdaModel.of(person::getName, person::setName);
@@ -73,8 +69,8 @@ public class LambdaModelTest
 	}
 
 	private void serialize(final Model<String> personNameModel, final String personName)
-		throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException,
-		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
+		throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
+		ClassNotFoundException, InstantiationException, IOException
 	{
 		final Model<String> clone = CloneObjectExtensions.clone(personNameModel);
 		assertThat(clone, is(instanceOf(LambdaModel.class)));
@@ -82,10 +78,8 @@ public class LambdaModelTest
 	}
 
 	@Test
-	public void targetModel()
-		throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException,
+	public void targetModel() throws NoSuchMethodException, IllegalAccessException,
 		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
-
 	{
 		final Model<Person> target = SerializableModel.of(new Person());
 
@@ -96,9 +90,6 @@ public class LambdaModelTest
 
 	@Test
 	public void targetModelNull()
-		throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException,
-		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
-
 	{
 		final Model<Person> target = SerializableModel.of((Person)null);
 
@@ -110,10 +101,8 @@ public class LambdaModelTest
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
-	public void targetReadOnly()
-		throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException,
+	public void targetReadOnly() throws NoSuchMethodException, IllegalAccessException,
 		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
-
 	{
 		final Model<Person> target = SerializableModel.of(new Person());
 

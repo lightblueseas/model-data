@@ -83,7 +83,6 @@ public final class ArrayPropertyGetSet extends AbstractGetAndSet
 
 		if (setMethod == null)
 		{
-
 			log.log(Level.WARNING, "Null setMethod");
 			return null;
 		}
