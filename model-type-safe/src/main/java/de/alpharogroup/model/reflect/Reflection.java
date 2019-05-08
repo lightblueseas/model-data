@@ -21,15 +21,17 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.List;
+import java.util.logging.Level;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.java.Log;
+
 
 /**
  * Reflection utilities.
  *
  * @author svenmeier
  */
+@Log
 public final class Reflection
 {
 
@@ -67,8 +69,6 @@ public final class Reflection
 			return type.getRawType();
 		}
 	}
-
-	private static Logger log = LoggerFactory.getLogger(Reflection.class);
 
 	/**
 	 * Get the {@link Class} for a generic type.
@@ -192,8 +192,8 @@ public final class Reflection
 							}
 							else
 							{
-								log.debug("typeVariable {} resolves to typeVariable {}",
-									typeVariable, variableType);
+								log.log(Level.FINE, "typeVariable {0} resolves to typeVariable {1}",
+									new Object[] { typeVariable, variableType });
 								type = null;
 							}
 						}
@@ -212,7 +212,8 @@ public final class Reflection
 				}
 				else
 				{
-					log.debug("unsupported ownerType {}", declaringType);
+					log.log(Level.FINE, "unsupported ownerType {0}",
+						new Object[] { declaringType });
 					type = null;
 					break;
 				}
@@ -220,7 +221,8 @@ public final class Reflection
 				declaringType = clazz.getGenericSuperclass();
 				if (declaringType == Object.class)
 				{
-					log.debug("typeVariable {} cannot be resolved", typeVariable);
+					log.log(Level.FINE, "typeVariable {0} cannot be resolved",
+						new Object[] { typeVariable });
 					type = null;
 					break;
 				}

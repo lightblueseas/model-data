@@ -20,12 +20,11 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Level;
 
 import de.alpharogroup.model.reflect.IProxyFactory.Callback;
 import de.alpharogroup.model.util.Objects;
+import lombok.extern.java.Log;
 
 /**
  * An evaluation of method invocations.
@@ -36,6 +35,7 @@ import de.alpharogroup.model.util.Objects;
  * @author svenmeier
  */
 @SuppressWarnings("rawtypes")
+@Log
 public class Evaluation<R> implements Callback
 {
 
@@ -46,8 +46,6 @@ public class Evaluation<R> implements Callback
 	 * @see #proxy()
 	 */
 	private static final ThreadLocal<Evaluation<?>> lastNonProxyable = new ThreadLocal<>();
-
-	private static final Logger log = LoggerFactory.getLogger(Evaluation.class);
 
 	/**
 	 * The factory for proxies.
@@ -150,7 +148,8 @@ public class Evaluation<R> implements Callback
 		type = Reflection.resultType(type, method.getGenericReturnType());
 		if (type == null)
 		{
-			log.debug("falling back to raw type for method {}", method);
+			log.log(Level.FINE, "falling back to raw type for method {0}", new Object[] { method });
+
 			type = method.getReturnType();
 		}
 
