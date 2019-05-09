@@ -14,11 +14,11 @@
 	<packaging>pom</packaging>
 	<!-- NOTE: on version change DO NOT FORGET to change ${model-data.version} 
 		in the properties section ON SAME VERSION. -->
-	<version>1.7-SNAPSHOT</version>
+	<version>1.7</version>
 
 	<properties>
 		<!-- MODEL-DATA version -->
-		<model-data.version>1.7-SNAPSHOT</model-data.version>
+		<model-data.version>1.7</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		<model-type-safe.version>${model-data.version}</model-type-safe.version>
