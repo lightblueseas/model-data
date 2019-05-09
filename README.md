@@ -3,7 +3,7 @@
 The model-data project provides classes for modeling objects and model binding. 
 The model-data project is ispired from model pattern of the [wicket project](https://wicket.apache.org/) and most classes have been forked and modified. 
 
-Lombok is used for not generating poilerplate source code.
+Lombok is used for not generating boilerplate source code.
 
 ## License
 
@@ -40,9 +40,8 @@ You can first define the version properties:
 	<properties>
 		...
 		<!-- MODEL-DATA version -->
-		<model-data.version>1.6.2</model-data.version>
+		<model-data.version>1.7</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
-		<model-core.version>${model-data.version}</model-core.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		<model-type-safe.version>${model-data.version}</model-type-safe.version>
 		...
@@ -56,20 +55,6 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>model-api</artifactId>
 				<version>${model-api.version}</version>
-			</dependency>
-			...			
-		</dependencies>
-
-
-
-Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of model-core:
-
-		<dependencies>
-			...
-			<dependency>
-				<groupId>de.alpharogroup</groupId>
-				<artifactId>model-core</artifactId>
-				<version>${model-core.version}</version>
 			</dependency>
 			...			
 		</dependencies>
