@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>model-data</artifactId>
-		<version>1.6.3</version>
+		<version>1.7-SNAPSHOT</version>
 	</parent>
 	<artifactId>model-object</artifactId>
 
@@ -26,15 +26,10 @@
 			<artifactId>jdk-serializable-functional</artifactId>
 		</dependency>
 
+		<!-- TEST-SCOPE DEPENDENCIES -->
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>test-objects</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>jcommons-lang</artifactId>
 			<scope>test</scope>
 		</dependency>
 
