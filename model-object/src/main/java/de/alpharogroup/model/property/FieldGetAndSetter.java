@@ -1,10 +1,11 @@
 package de.alpharogroup.model.property;
 
 import java.lang.reflect.Field;
+import java.util.logging.Level;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 
-@Slf4j
+@Log
 public class FieldGetAndSetter extends AbstractGetAndSet
 {
 	private final Field field;
@@ -72,7 +73,7 @@ public class FieldGetAndSetter extends AbstractGetAndSet
 		}
 		catch (final Exception e)
 		{
-			log.warn("Cannot set field " + field + " to " + value, e);
+			log.log(Level.WARNING, "Cannot set field " + field + " to " + value, e);
 		}
 		return value;
 	}

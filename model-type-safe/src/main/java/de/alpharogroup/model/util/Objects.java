@@ -68,11 +68,11 @@ public final class Objects
 	/** Type tag meaning something other than a number. */
 	private static final int NONNUMERIC = 10;
 
-	/** Type tag meaning short. */
-	private static final int SHORT = 3;
-
 	/** defaults for primitives. */
 	private static final HashMap<Class<?>, Object> primitiveDefaults = new HashMap<>();
+
+	/** Type tag meaning short. */
+	private static final int SHORT = 3;
 
 
 	static

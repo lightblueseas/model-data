@@ -23,9 +23,12 @@ import java.io.Serializable;
  */
 public class Address implements Serializable
 {
-	private String street;
+
+	private static final long serialVersionUID = 1L;
 
 	private int number;
+
+	private String street;
 
 	public int getNumber()
 	{
@@ -37,12 +40,12 @@ public class Address implements Serializable
 		return street;
 	}
 
-	public void setNumber(int number)
+	public void setNumber(final int number)
 	{
 		this.number = number;
 	}
 
-	public void setStreet(String street)
+	public void setStreet(final String street)
 	{
 		this.street = street;
 	}

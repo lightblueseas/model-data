@@ -1,7 +1,7 @@
 package de.alpharogroup.model;
 
+import static org.junit.Assert.assertEquals;
 
-import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import de.alpharogroup.test.objects.Employee;
@@ -19,7 +19,7 @@ public class GenericModelTest
 		model.setObject("foo");
 		String expected = employee.getPerson().getName();
 		String actual = model.getObject();
-		AssertJUnit.assertEquals(expected, actual);
+		assertEquals(expected, actual);
 	}
 
 }

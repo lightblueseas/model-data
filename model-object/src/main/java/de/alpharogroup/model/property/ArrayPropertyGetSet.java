@@ -2,10 +2,11 @@ package de.alpharogroup.model.property;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 
-@Slf4j
+@Log
 public final class ArrayPropertyGetSet extends AbstractGetAndSet
 {
 	private final static Method findSetter(final Method getMethod, final Class<?> clz)
@@ -18,13 +19,13 @@ public final class ArrayPropertyGetSet extends AbstractGetAndSet
 		}
 		catch (Exception e)
 		{
-			log.debug("Can't find setter method corresponding to " + getMethod);
+			log.log(Level.FINE, "Can't find setter method corresponding to " + getMethod);
 		}
 		return null;
 	}
 
-	final private Integer index;
 	final private Method getMethod;
+	final private Integer index;
 
 	private Method setMethod;
 
@@ -82,7 +83,7 @@ public final class ArrayPropertyGetSet extends AbstractGetAndSet
 
 		if (setMethod == null)
 		{
-			log.warn("Null setMethod");
+			log.log(Level.WARNING, "Null setMethod");
 			return null;
 		}
 
@@ -95,7 +96,7 @@ public final class ArrayPropertyGetSet extends AbstractGetAndSet
 		}
 		catch (Exception e)
 		{
-			log.warn("Cannot set new value " + value + " at index " + index, e);
+			log.log(Level.WARNING, "Cannot set new value " + value + " at index " + index, e);
 		}
 		return value;
 	}

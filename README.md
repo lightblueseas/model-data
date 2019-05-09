@@ -3,7 +3,7 @@
 The model-data project provides classes for modeling objects and model binding. 
 The model-data project is ispired from model pattern of the [wicket project](https://wicket.apache.org/) and most classes have been forked and modified. 
 
-Lombok is used for not generating poilerplate source code.
+Lombok is used for not generating boilerplate source code.
 
 ## License
 
@@ -40,7 +40,7 @@ You can first define the version properties:
 	<properties>
 		...
 		<!-- MODEL-DATA version -->
-		<model-data.version>1.5.0</model-data.version>
+		<model-data.version>1.7</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		<model-type-safe.version>${model-data.version}</model-type-safe.version>

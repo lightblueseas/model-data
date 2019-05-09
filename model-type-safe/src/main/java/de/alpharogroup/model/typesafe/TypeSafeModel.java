@@ -155,9 +155,9 @@ public class TypeSafeModel<T>
 	{
 
 		/**
-		 * The current index in the stack.
+		 * The count of arguments of the current method.
 		 */
-		private int index = 0;
+		private int count = 0;
 
 		/**
 		 * The identifier of the current method.
@@ -165,14 +165,14 @@ public class TypeSafeModel<T>
 		private Serializable id;
 
 		/**
+		 * The current index in the stack.
+		 */
+		private int index = 0;
+
+		/**
 		 * The current method.
 		 */
 		private Method method;
-
-		/**
-		 * The count of arguments of the current method.
-		 */
-		private int count = 0;
 
 		/**
 		 * Fill the arguments of the current method in the given array.
@@ -298,7 +298,7 @@ public class TypeSafeModel<T>
 		}
 	}
 
-	private static final long serialVersionUID = 1L;
+	private static final Object[] EMPTY_ARGS = new Object[0];
 
 	/**
 	 * The resolver for {@link Method}s.
@@ -306,7 +306,7 @@ public class TypeSafeModel<T>
 	public static IMethodResolver methodResolver = new CachingMethodResolver(
 		new DefaultMethodResolver());
 
-	private static final Object[] EMPTY_ARGS = new Object[0];
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Start a lazy evaluation.
@@ -531,14 +531,14 @@ public class TypeSafeModel<T>
 	}
 
 	/**
-	 * The target of the evaluation.
-	 */
-	protected final Object target;
-
-	/**
 	 * Each invoked method's identifier followed by its arguments.
 	 */
 	protected final Object stack;
+
+	/**
+	 * The target of the evaluation.
+	 */
+	protected final Object target;
 
 	TypeSafeModel(Object target, Object stack)
 	{

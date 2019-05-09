@@ -21,13 +21,14 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 
 import org.apache.commons.lang3.StringUtils;
 
 import de.alpharogroup.model.api.ClassCache;
 import de.alpharogroup.model.api.GetAndSet;
 import de.alpharogroup.model.api.Model;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 
 /**
  * This class parses expressions to lookup or set a value on the object that is given. <br>
@@ -49,7 +50,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author jcompagner
  */
-@Slf4j
+@Log
 public final class PropertyResolver
 {
 
@@ -71,15 +72,15 @@ public final class PropertyResolver
 		}
 	}
 
-	private final static int RETURN_NULL = 0;
-	private final static int CREATE_NEW_VALUE = 1;
-
-	private final static int RESOLVE_CLASS = 2;
-
 	private final static ConcurrentHashMap<Object, ClassCache> applicationToClassesToGetAndSetters = new ConcurrentHashMap<>(
 		2);
+	private final static int CREATE_NEW_VALUE = 1;
+
 	private static final String GET = "get";
+
 	private static final String IS = "is";
+	private final static int RESOLVE_CLASS = 2;
+	private final static int RETURN_NULL = 0;
 
 	/**
 	 * Clean up cache for this app.
@@ -120,7 +121,7 @@ public final class PropertyResolver
 				}
 				tmp = tmp.getSuperclass();
 			}
-			log.debug("Cannot find field " + clz + "." + expression);
+			log.log(Level.FINE, "Cannot find field " + clz + "." + expression);
 		}
 		return field;
 	}
@@ -149,7 +150,7 @@ public final class PropertyResolver
 			}
 			catch (final Exception e)
 			{
-				log.debug("Cannot find getter " + clz + "." + expression);
+				log.log(Level.FINE, "Cannot find getter " + clz + "." + expression);
 			}
 		}
 		return method;
@@ -168,7 +169,7 @@ public final class PropertyResolver
 		}
 		catch (final Exception e)
 		{
-			log.debug("Cannot find method " + clz + "." + expression);
+			log.log(Level.FINE, "Cannot find method " + clz + "." + expression);
 		}
 		return method;
 	}

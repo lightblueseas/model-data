@@ -23,9 +23,12 @@ import java.io.Serializable;
  */
 public class Person implements Serializable
 {
-	private String name;
+
+	private static final long serialVersionUID = 1L;
 
 	private Address address;
+
+	private String name;
 
 	public Address getAddress()
 	{
@@ -37,12 +40,12 @@ public class Person implements Serializable
 		return name;
 	}
 
-	public void setAddress(Address address)
+	public void setAddress(final Address address)
 	{
 		this.address = address;
 	}
 
-	public void setName(String name)
+	public void setName(final String name)
 	{
 		this.name = name;
 	}
