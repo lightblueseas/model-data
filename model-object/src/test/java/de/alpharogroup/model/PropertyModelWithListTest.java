@@ -77,11 +77,8 @@ public class PropertyModelWithListTest extends Assert
 		}
 	}
 
-	/**
-	 * @throws Exception
-	 */
 	@Test
-	public void containerPropertyModel() throws Exception
+	public void containerPropertyModel()
 	{
 		final BeansContainer container = new BeansContainer();
 		final Bean bean = new Bean();
@@ -91,13 +88,8 @@ public class PropertyModelWithListTest extends Assert
 		assertEquals("Wrinkly and green I am.", model.getObject());
 	}
 
-	/**
-	 *
-	 * @throws Exception
-	 */
-	@Ignore
 	@Test
-	public void listPropertyModel() throws Exception
+	public void listPropertyModel()
 	{
 		final List<Bean> beans = new ArrayList<>();
 		final Bean bean = new Bean();
@@ -107,12 +99,8 @@ public class PropertyModelWithListTest extends Assert
 		assertEquals("Wrinkly and green I am.", model.getObject());
 	}
 
-	/**
-	 * @throws Exception
-	 */
-	@Ignore
 	@Test
-	public void nestedListPropertyModel() throws Exception
+	public void nestedListPropertyModel()
 	{
 		final List<List<Bean>> outer = new ArrayList<>();
 		final List<Bean> inner = new ArrayList<>();

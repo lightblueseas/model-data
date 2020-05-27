@@ -35,7 +35,7 @@
 		<cglib.version>3.2.8</cglib.version>
 		<asm-util.version>5.0.3</asm-util.version>
 		<!-- JOBJECT-CLONE version -->
-		<jobject-clone.version>2.5</jobject-clone.version>
+		<jobject-clone.version>3.1.2</jobject-clone.version>
 		<!-- SILLY-COLLECTIONS version -->
 		<silly-collections.version>8.2</silly-collections.version>
 	</properties>
