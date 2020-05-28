@@ -17,8 +17,10 @@
 	<version>1.8-SNAPSHOT</version>
 
 	<properties>
+		<!-- LOMBOK version -->
+		<lombok.version>1.18.12</lombok.version>
 		<!-- MODEL-DATA version -->
-		<model-data.version>1.8-SNAPSHOT</model-data.version>
+		<model-data.version>1.8</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		<model-type-safe.version>${model-data.version}</model-type-safe.version>
@@ -32,12 +34,14 @@
 		<commons-lang3.version>3.10</commons-lang3.version>
 		<!-- TYPE-SAFE-MODEL LIBRARIES versions -->
 		<objenesis.version>3.1</objenesis.version>
-		<cglib.version>3.2.8</cglib.version>
+		<cglib.version>3.3.0</cglib.version>
 		<asm-util.version>5.0.3</asm-util.version>
 		<!-- JOBJECT-CLONE version -->
 		<jobject-clone.version>3.1.2</jobject-clone.version>
 		<!-- SILLY-COLLECTIONS version -->
 		<silly-collections.version>8.2</silly-collections.version>
+		<!-- TESTNG version -->
+		<testng.version>7.1.0</testng.version>
 	</properties>
 
 	<name>${project.artifactId}</name>
