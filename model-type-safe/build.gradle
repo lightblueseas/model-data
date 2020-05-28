@@ -34,8 +34,8 @@ license {
 }
 
 dependencies {
-    compile(project(":model-api"))
-    compile(project(":model-object"))
+    implementation(project(":model-api"))
+    implementation(project(":model-object"))
     implementation("org.objenesis:objenesis:$objenesisVersion")
     implementation("cglib:cglib:$cglibVersion")
 }

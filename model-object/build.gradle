@@ -34,7 +34,7 @@ license {
 }
 
 dependencies {
-    compile(project(":model-api"))
+    implementation(project(":model-api"))
     implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
     implementation("org.danekja:jdk-serializable-functional:$jdkSerializableFunctionalVersion")
     testImplementation("org.hamcrest:hamcrest-all:$hamcrestAllVersion")
