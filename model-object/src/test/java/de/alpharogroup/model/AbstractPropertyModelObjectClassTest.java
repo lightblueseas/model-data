@@ -1,9 +1,24 @@
+/**
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.alpharogroup.model;
 
 import java.io.Serializable;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 import de.alpharogroup.model.api.Model;
 
@@ -16,7 +31,7 @@ import de.alpharogroup.model.api.Model;
  * @see <a href="https://issues.apache.org/jira/browse/WICKET-2937">WICKET-2937</a>
  * @author Pedro Santos
  */
-public class AbstractPropertyModelObjectClassTest extends Assert
+public class AbstractPropertyModelObjectClassTest
 {
 
 	private static class CustomBean implements Serializable
@@ -56,6 +71,14 @@ public class AbstractPropertyModelObjectClassTest extends Assert
 	}
 
 	/**
+	 *
+	 */
+	@Test
+	void testBaseModel()
+	{
+		assertPropertyModelTargetTypeIsInteger(new BaseModel<CustomType>(new CustomType()));
+	}
+	/**
 	 * Just asserting that the the property expression for the somePropety is aware of this property
 	 * type.
 	 *
@@ -90,7 +113,7 @@ public class AbstractPropertyModelObjectClassTest extends Assert
 	 *
 	 */
 	@Test
-	public void testModel()
+	public void testSerializableModel()
 	{
 		assertPropertyModelTargetTypeIsInteger(new SerializableModel<>(new CustomType()));
 	}

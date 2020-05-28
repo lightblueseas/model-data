@@ -1,12 +1,11 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+/**
+ * Copyright (C) 2015 Asterios Raptis
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,12 +18,12 @@ package de.alpharogroup.model;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import de.alpharogroup.clone.object.CloneObjectExtensions;
 import de.alpharogroup.model.api.Model;
@@ -69,12 +68,9 @@ public class LambdaModelTest
 	}
 
 	private void serialize(final Model<String> personNameModel, final String personName)
-		throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
-		ClassNotFoundException, InstantiationException, IOException
 	{
-		final Model<String> clone = CloneObjectExtensions.clone(personNameModel);
-		assertThat(clone, is(instanceOf(LambdaModel.class)));
-		assertThat(clone.getObject(), is(personName));
+		assertThat(personNameModel, is(instanceOf(LambdaModel.class)));
+		assertThat(personNameModel.getObject(), is(personName));
 	}
 
 	@Test
@@ -100,7 +96,7 @@ public class LambdaModelTest
 		assertThat(personNameModel.getObject(), is(nullValue()));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test(expectedExceptions = UnsupportedOperationException.class)
 	public void targetReadOnly() throws NoSuchMethodException, IllegalAccessException,
 		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
 	{
