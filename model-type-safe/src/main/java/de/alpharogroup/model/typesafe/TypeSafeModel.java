@@ -25,12 +25,12 @@ import java.util.List;
 
 import de.alpharogroup.model.LoadableDetachableModel;
 import de.alpharogroup.model.PropertyModel;
-import de.alpharogroup.model.api.ChainableModel;
-import de.alpharogroup.model.api.Detachable;
-import de.alpharogroup.model.api.Model;
-import de.alpharogroup.model.api.ObjectClassAware;
-import de.alpharogroup.model.api.ObjectTypeAware;
-import de.alpharogroup.model.api.PropertyReflectionAwareModel;
+import io.github.astrapi69.model.api.ChainableModel;
+import io.github.astrapi69.model.api.Detachable;
+import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.ObjectClassAware;
+import io.github.astrapi69.model.api.ObjectTypeAware;
+import io.github.astrapi69.model.api.PropertyReflectionAwareModel;
 import de.alpharogroup.model.reflect.CachingMethodResolver;
 import de.alpharogroup.model.reflect.DefaultMethodResolver;
 import de.alpharogroup.model.reflect.Evaluation;

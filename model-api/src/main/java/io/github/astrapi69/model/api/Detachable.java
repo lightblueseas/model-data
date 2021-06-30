@@ -13,30 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.model.api;
+package io.github.astrapi69.model.api;
+
+import java.io.Serializable;
 
 /**
- * A Model decorates the actual model object that can be used by any other UI-Component. Model
- * implementations are used as a facade for the real model so that users have control over the
- * actual persistence strategy.
- *
- * @param <T>
- *            the generic type of the model object
+ * The interface {@link Detachable} provides the ability to detach an object that was previously
+ * attached to a context. This reduces the amount of state required by an object. This makes the
+ * object cheaper to replicate in a clustered environment.
  */
-public interface Model<T> extends Attachable, Detachable
+public interface Detachable extends Serializable
 {
-	/**
-	 * Gets the model object.
-	 *
-	 * @return The model object
-	 */
-	T getObject();
 
 	/**
-	 * Sets the model object.
-	 *
-	 * @param object
-	 *            The model object
+	 * Detach an object.
 	 */
-	void setObject(final T object);
+	void detach();
 }

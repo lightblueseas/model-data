@@ -15,10 +15,10 @@
  */
 package de.alpharogroup.model;
 
-import de.alpharogroup.model.api.Attachable;
-import de.alpharogroup.model.api.ChainableModel;
-import de.alpharogroup.model.api.Detachable;
-import de.alpharogroup.model.api.Model;
+import io.github.astrapi69.model.api.Attachable;
+import io.github.astrapi69.model.api.ChainableModel;
+import io.github.astrapi69.model.api.Detachable;
+import io.github.astrapi69.model.api.Model;
 
 /**
  * The class {@link ChainingModel} is the default implementation of {@link ChainableModel}

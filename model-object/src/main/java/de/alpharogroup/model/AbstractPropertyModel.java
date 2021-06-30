@@ -22,9 +22,9 @@ import java.lang.reflect.Method;
 
 import org.apache.commons.lang3.StringUtils;
 
-import de.alpharogroup.model.api.Model;
-import de.alpharogroup.model.api.ObjectClassAware;
-import de.alpharogroup.model.api.PropertyReflectionAwareModel;
+import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.ObjectClassAware;
+import io.github.astrapi69.model.api.PropertyReflectionAwareModel;
 import de.alpharogroup.model.property.PropertyResolver;
 
 /**

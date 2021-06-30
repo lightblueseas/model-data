@@ -18,7 +18,7 @@ package de.alpharogroup.model.property;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import de.alpharogroup.model.api.GetAndSet;
+import io.github.astrapi69.model.api.GetAndSet;
 
 public final class ObjectAndGetSetter
 {

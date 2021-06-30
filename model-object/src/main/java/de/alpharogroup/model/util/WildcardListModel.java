@@ -18,7 +18,7 @@ package de.alpharogroup.model.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.alpharogroup.model.api.Model;
+import io.github.astrapi69.model.api.Model;
 import lombok.NoArgsConstructor;
 
 /**

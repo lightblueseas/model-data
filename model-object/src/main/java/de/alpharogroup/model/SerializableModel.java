@@ -17,7 +17,7 @@ package de.alpharogroup.model;
 
 import java.io.Serializable;
 
-import de.alpharogroup.model.api.Model;
+import io.github.astrapi69.model.api.Model;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

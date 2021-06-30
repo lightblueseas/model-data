@@ -13,31 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.model.api;
+package io.github.astrapi69.model.api;
+
+import java.lang.reflect.Type;
 
 /**
- * The interface {@link ChainableModel} provides chaining for model objects. The
- * {@link ChainableModel} is also responsible to detach the internal models.
+ * The interface {@link ObjectTypeAware} can resolve the type of the generic object type.
  *
  * @param <T>
- *            the generic type of the model object
+ *            the generic type
  */
-public interface ChainableModel<T> extends Model<T>
+public interface ObjectTypeAware<T>
 {
 
 	/**
-	 * Gets the chained model.
+	 * Gets the type of the generic object type
 	 *
-	 * @return the chained model
+	 * @return the type of the generic object type
 	 */
-	public Model<?> getChainedModel();
-
-	/**
-	 * Sets the chained model.
-	 *
-	 * @param model
-	 *            the new chained model
-	 */
-	public void setChainedModel(Model<?> model);
-
+	Type getObjectType();
 }

@@ -18,9 +18,9 @@ package de.alpharogroup.model;
 import org.testng.annotations.Test;
 import static org.testng.AssertJUnit.assertEquals;
 
-import de.alpharogroup.model.api.Model;
-import de.alpharogroup.test.objects.Employee;
-import de.alpharogroup.test.objects.Person;
+import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.test.objects.Employee;
+import io.github.astrapi69.test.objects.Person;
 
 public class PropertyModelTest
 {

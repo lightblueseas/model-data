@@ -13,20 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.model.api;
+package io.github.astrapi69.model.api;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
- * The interface {@link Detachable} provides the ability to detach an object that was previously
- * attached to a context. This reduces the amount of state required by an object. This makes the
- * object cheaper to replicate in a clustered environment.
+ * The interface {@link ClassCache} provides methods for a class cache. This inteface was previously
+ * in the PropertyResolver class.
  */
-public interface Detachable extends Serializable
+public interface ClassCache
 {
 
 	/**
-	 * Detach an object.
+	 * Returns the class map from the cache.
+	 *
+	 * @param clz
+	 *            the class
+	 * @return the map of the given class
 	 */
-	void detach();
+	Map<String, GetAndSet> get(Class<?> clz);
+
+	/**
+	 * Put the class into the cache, or if that class shouldn't be cached do nothing.
+	 *
+	 * @param clz
+	 *            the class
+	 * @param values
+	 *            the values
+	 */
+	void put(Class<?> clz, Map<String, GetAndSet> values);
 }

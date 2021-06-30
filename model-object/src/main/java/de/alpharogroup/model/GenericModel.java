@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import de.alpharogroup.model.api.Attachable;
-import de.alpharogroup.model.api.Detachable;
-import de.alpharogroup.model.api.Model;
-import de.alpharogroup.model.api.ObjectClassAware;
+import io.github.astrapi69.model.api.Attachable;
+import io.github.astrapi69.model.api.Detachable;
+import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.ObjectClassAware;
 import de.alpharogroup.model.util.MapModel;
 import de.alpharogroup.model.util.WildcardCollectionModel;
 import de.alpharogroup.model.util.WildcardListModel;

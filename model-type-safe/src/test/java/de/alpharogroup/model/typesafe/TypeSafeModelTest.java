@@ -35,7 +35,7 @@ import de.alpharogroup.model.BaseModel;
 import de.alpharogroup.model.LoadableDetachableModel;
 import de.alpharogroup.model.PropertyModel;
 import de.alpharogroup.model.SerializableModel;
-import de.alpharogroup.model.api.Model;
+import io.github.astrapi69.model.api.Model;
 import de.alpharogroup.model.reflect.Reflection;
 
 /**

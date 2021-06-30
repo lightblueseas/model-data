@@ -25,8 +25,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.testng.annotations.Test;
 
-import de.alpharogroup.clone.object.CloneObjectExtensions;
-import de.alpharogroup.model.api.Model;
+import io.github.astrapi69.model.api.Model;
 import de.alpharogroup.model.lambda.Person;
 
 /**

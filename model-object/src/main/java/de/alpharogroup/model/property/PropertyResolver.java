@@ -24,9 +24,9 @@ import java.util.logging.Level;
 
 import org.apache.commons.lang3.StringUtils;
 
-import de.alpharogroup.model.api.ClassCache;
-import de.alpharogroup.model.api.GetAndSet;
-import de.alpharogroup.model.api.Model;
+import io.github.astrapi69.model.api.ClassCache;
+import io.github.astrapi69.model.api.GetAndSet;
+import io.github.astrapi69.model.api.Model;
 import lombok.extern.java.Log;
 
 /**

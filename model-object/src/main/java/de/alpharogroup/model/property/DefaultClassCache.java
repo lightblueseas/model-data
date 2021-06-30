@@ -18,8 +18,8 @@ package de.alpharogroup.model.property;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import de.alpharogroup.model.api.ClassCache;
-import de.alpharogroup.model.api.GetAndSet;
+import io.github.astrapi69.model.api.ClassCache;
+import io.github.astrapi69.model.api.GetAndSet;
 
 public class DefaultClassCache implements ClassCache
 {

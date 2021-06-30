@@ -20,7 +20,7 @@ import org.danekja.java.util.function.serializable.SerializableConsumer;
 import org.danekja.java.util.function.serializable.SerializableFunction;
 import org.danekja.java.util.function.serializable.SerializableSupplier;
 
-import de.alpharogroup.model.api.Model;
+import io.github.astrapi69.model.api.Model;
 
 /**
  * <code>LambdaModel</code> is a basic implementation of an <code>Model</code> that uses a

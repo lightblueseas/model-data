@@ -38,8 +38,8 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
     implementation("org.danekja:jdk-serializable-functional:$jdkSerializableFunctionalVersion")
     testImplementation("org.hamcrest:hamcrest-all:$hamcrestAllVersion")
-    testImplementation("de.alpharogroup:test-objects:$testObjectsVersion")
-    testImplementation("de.alpharogroup:jobject-clone:$jobjectCloneVersion")
+    testImplementation("io.github.astrapi69:test-objects:$testObjectsVersion")
+    testImplementation("io.github.astrapi69:jobj-clone:$jobjCloneVersion")
 }
 
 task sourcesJar(type: Jar) {

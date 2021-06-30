@@ -18,8 +18,8 @@ package de.alpharogroup.model;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-import de.alpharogroup.test.objects.Employee;
-import de.alpharogroup.test.objects.Person;
+import io.github.astrapi69.test.objects.Employee;
+import io.github.astrapi69.test.objects.Person;
 
 public class GenericModelTest
 {

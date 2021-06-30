@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.model.api;
+package io.github.astrapi69.model.api;
 
 /**
  * The marker interface {@link WrapModel} represents a model that serves as a decorator for another.

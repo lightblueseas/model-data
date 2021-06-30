@@ -20,7 +20,7 @@ import java.io.Serializable;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-import de.alpharogroup.model.api.Model;
+import io.github.astrapi69.model.api.Model;
 
 /**
  * <p>

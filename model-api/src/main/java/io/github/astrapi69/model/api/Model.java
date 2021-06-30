@@ -13,23 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.model.api;
-
-import java.lang.reflect.Type;
+package io.github.astrapi69.model.api;
 
 /**
- * The interface {@link ObjectTypeAware} can resolve the type of the generic object type.
+ * A Model decorates the actual model object that can be used by any other UI-Component. Model
+ * implementations are used as a facade for the real model so that users have control over the
+ * actual persistence strategy.
  *
  * @param <T>
- *            the generic type
+ *            the generic type of the model object
  */
-public interface ObjectTypeAware<T>
+public interface Model<T> extends Attachable, Detachable
 {
+	/**
+	 * Gets the model object.
+	 *
+	 * @return The model object
+	 */
+	T getObject();
 
 	/**
-	 * Gets the type of the generic object type
+	 * Sets the model object.
 	 *
-	 * @return the type of the generic object type
+	 * @param object
+	 *            The model object
 	 */
-	Type getObjectType();
+	void setObject(final T object);
 }

@@ -16,7 +16,7 @@
 package de.alpharogroup.model;
 
 
-import de.alpharogroup.model.api.Model;
+import io.github.astrapi69.model.api.Model;
 import org.testng.annotations.Test;
 import static org.testng.AssertJUnit.*;
 
@@ -26,7 +26,7 @@ import static org.testng.AssertJUnit.*;
  */
 public class ModelDetachTest
 {
-	static class Detachable implements de.alpharogroup.model.api.Detachable
+	static class Detachable implements io.github.astrapi69.model.api.Detachable
 	{
 		private static final long serialVersionUID = 1L;
 

@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.model.api;
-
-import java.io.Serializable;
+package io.github.astrapi69.model.api;
 
 /**
- * The interface {@link Attachable} provides the ability to attach an object from a context. This
- * reduces the amount of state required by an object. This makes the object cheaper to replicate in
- * a clustered environment.
+ * The interface {@link ObjectClassAware} can resolve the class of the generic type.
+ *
+ * @param <T>
+ *            the generic type
  */
-public interface Attachable extends Serializable
+public interface ObjectClassAware<T>
 {
 
 	/**
-	 * Attach an object.
+	 * Gets the object class.
+	 *
+	 * @return the object class
 	 */
-	void attach();
+	Class<T> getObjectClass();
 }

@@ -13,33 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.alpharogroup.model.api;
-
-import java.util.Map;
+package io.github.astrapi69.model.api;
 
 /**
- * The interface {@link ClassCache} provides methods for a class cache. This inteface was previously
- * in the PropertyResolver class.
+ * The interface {@link ChainableModel} provides chaining for model objects. The
+ * {@link ChainableModel} is also responsible to detach the internal models.
+ *
+ * @param <T>
+ *            the generic type of the model object
  */
-public interface ClassCache
+public interface ChainableModel<T> extends Model<T>
 {
 
 	/**
-	 * Returns the class map from the cache.
+	 * Gets the chained model.
 	 *
-	 * @param clz
-	 *            the class
-	 * @return the map of the given class
+	 * @return the chained model
 	 */
-	Map<String, GetAndSet> get(Class<?> clz);
+	public Model<?> getChainedModel();
 
 	/**
-	 * Put the class into the cache, or if that class shouldn't be cached do nothing.
+	 * Sets the chained model.
 	 *
-	 * @param clz
-	 *            the class
-	 * @param values
-	 *            the values
+	 * @param model
+	 *            the new chained model
 	 */
-	void put(Class<?> clz, Map<String, GetAndSet> values);
+	public void setChainedModel(Model<?> model);
+
 }
