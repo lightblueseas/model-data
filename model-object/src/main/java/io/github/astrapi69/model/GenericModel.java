@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Asterios Raptis
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,6 +21,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import io.github.astrapi69.model.api.Attachable;
 import io.github.astrapi69.model.api.Detachable;
 import io.github.astrapi69.model.api.Model;
@@ -29,11 +34,6 @@ import io.github.astrapi69.model.util.MapModel;
 import io.github.astrapi69.model.util.WildcardCollectionModel;
 import io.github.astrapi69.model.util.WildcardListModel;
 import io.github.astrapi69.model.util.WildcardSetModel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * The class {@link GenericModel} is the basic implementation of an <code>Model</code>. Decorates a
@@ -53,6 +53,19 @@ public abstract class GenericModel<T> implements Model<T>, ObjectClassAware<T>
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	/** Backing object. */
+	private T object;
+
+	/**
+	 * Instantiates a new {@link GenericModel}.
+	 *
+	 * @param object
+	 *            the object
+	 */
+	public GenericModel(T object)
+	{
+		setObject(object);
+	}
 
 	/**
 	 * Factory method for models that contain collections. This factory method will automatically
@@ -114,21 +127,6 @@ public abstract class GenericModel<T> implements Model<T>, ObjectClassAware<T>
 	public static <C> Model<Set<C>> ofSet(final Set<C> set)
 	{
 		return WildcardSetModel.ofSet(set);
-	}
-
-	/** Backing object. */
-	private T object;
-
-
-	/**
-	 * Instantiates a new {@link GenericModel}.
-	 *
-	 * @param object
-	 *            the object
-	 */
-	public GenericModel(T object)
-	{
-		setObject(object);
 	}
 
 	/**

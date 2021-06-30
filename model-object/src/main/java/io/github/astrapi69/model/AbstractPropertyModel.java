@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Asterios Raptis
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -98,6 +98,35 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 			return getProperty(expression, target);
 		}
 		return null;
+	}
+
+	/**
+	 * Applies the property expression on the model object using the given object argument.
+	 *
+	 * @param object
+	 *            The object that will be used when setting a value on the model object
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public void setObject(final T object)
+	{
+		final String expression = propertyExpression();
+		if (StringUtils.isEmpty(expression))
+		{
+			final Object target = getTarget();
+			if (target instanceof Model)
+			{
+				((Model<T>)target).setObject(object);
+			}
+			else
+			{
+				setTarget(object);
+			}
+		}
+		else
+		{
+			PropertyResolver.setValue(expression, getInnermostModelOrObject(), object);
+		}
 	}
 
 	/**
@@ -248,33 +277,4 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 	 * @return The property expression for the component
 	 */
 	protected abstract String propertyExpression();
-
-	/**
-	 * Applies the property expression on the model object using the given object argument.
-	 *
-	 * @param object
-	 *            The object that will be used when setting a value on the model object
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public void setObject(final T object)
-	{
-		final String expression = propertyExpression();
-		if (StringUtils.isEmpty(expression))
-		{
-			final Object target = getTarget();
-			if (target instanceof Model)
-			{
-				((Model<T>)target).setObject(object);
-			}
-			else
-			{
-				setTarget(object);
-			}
-		}
-		else
-		{
-			PropertyResolver.setValue(expression, getInnermostModelOrObject(), object);
-		}
-	}
 }

@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Asterios Raptis
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -91,6 +91,15 @@ public class ChainingModel<T> implements ChainableModel<T>
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void setChainedModel(final Model<?> model)
+	{
+		target = model;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public T getObject()
 	{
@@ -99,23 +108,6 @@ public class ChainingModel<T> implements ChainableModel<T>
 			return ((Model<T>)target).getObject();
 		}
 		return (T)target;
-	}
-
-	/**
-	 * @return The target - object or model
-	 */
-	protected final Object getTarget()
-	{
-		return target;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setChainedModel(final Model<?> model)
-	{
-		target = model;
 	}
 
 	/**
@@ -133,6 +125,14 @@ public class ChainingModel<T> implements ChainableModel<T>
 		{
 			target = object;
 		}
+	}
+
+	/**
+	 * @return The target - object or model
+	 */
+	protected final Object getTarget()
+	{
+		return target;
 	}
 
 	/**

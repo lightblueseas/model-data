@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Asterios Raptis
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,12 +22,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
+import lombok.extern.java.Log;
+
 import org.apache.commons.lang3.StringUtils;
 
 import io.github.astrapi69.model.api.ClassCache;
 import io.github.astrapi69.model.api.GetAndSet;
 import io.github.astrapi69.model.api.Model;
-import lombok.extern.java.Log;
 
 /**
  * This class parses expressions to lookup or set a value on the object that is given. <br>
@@ -53,33 +54,20 @@ import lombok.extern.java.Log;
 public final class PropertyResolver
 {
 
-	private static class DefaultClassCache implements ClassCache
-	{
-		private final ConcurrentHashMap<Class<?>, Map<String, GetAndSet>> map = new ConcurrentHashMap<>(
-			16);
-
-		@Override
-		public Map<String, GetAndSet> get(Class<?> clz)
-		{
-			return map.get(clz);
-		}
-
-		@Override
-		public void put(Class<?> clz, Map<String, GetAndSet> values)
-		{
-			map.put(clz, values);
-		}
-	}
-
 	private final static ConcurrentHashMap<Object, ClassCache> applicationToClassesToGetAndSetters = new ConcurrentHashMap<>(
 		2);
 	private final static int CREATE_NEW_VALUE = 1;
-
 	private static final String GET = "get";
-
 	private static final String IS = "is";
 	private final static int RESOLVE_CLASS = 2;
 	private final static int RETURN_NULL = 0;
+
+	/**
+	 * Utility class: instantiation not allowed.
+	 */
+	private PropertyResolver()
+	{
+	}
 
 	/**
 	 * Clean up cache for this app.
@@ -792,11 +780,21 @@ public final class PropertyResolver
 		setter.setValue(value);
 	}
 
-
-	/**
-	 * Utility class: instantiation not allowed.
-	 */
-	private PropertyResolver()
+	private static class DefaultClassCache implements ClassCache
 	{
+		private final ConcurrentHashMap<Class<?>, Map<String, GetAndSet>> map = new ConcurrentHashMap<>(
+			16);
+
+		@Override
+		public Map<String, GetAndSet> get(Class<?> clz)
+		{
+			return map.get(clz);
+		}
+
+		@Override
+		public void put(Class<?> clz, Map<String, GetAndSet> values)
+		{
+			map.put(clz, values);
+		}
 	}
 }

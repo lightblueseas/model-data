@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Asterios Raptis
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,6 +17,7 @@ package io.github.astrapi69.model;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.testng.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,9 +26,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import io.github.astrapi69.model.LoadableDetachableModel;
 import org.testng.annotations.Test;
-import static org.testng.Assert.fail;
 
 /**
  * Tests the states of a LoadableDetachableModel
@@ -35,19 +34,6 @@ import static org.testng.Assert.fail;
 @SuppressWarnings("javadoc")
 public class LoadableDetachableModelTest
 {
-	private static class SerializedLoad extends LoadableDetachableModel<Integer>
-	{
-		private static final long serialVersionUID = 1L;
-
-		private int count = 0;
-
-		@Override
-		protected Integer load()
-		{
-			return ++count;
-		}
-	}
-
 	/** Serialization helper */
 	@SuppressWarnings("unchecked")
 	private <T> LoadableDetachableModel<T> deserialize(byte[] serialized)
@@ -195,5 +181,18 @@ public class LoadableDetachableModelTest
 			stream = baos.toByteArray();
 		}
 		return stream;
+	}
+
+	private static class SerializedLoad extends LoadableDetachableModel<Integer>
+	{
+		private static final long serialVersionUID = 1L;
+
+		private int count = 0;
+
+		@Override
+		protected Integer load()
+		{
+			return ++count;
+		}
 	}
 }

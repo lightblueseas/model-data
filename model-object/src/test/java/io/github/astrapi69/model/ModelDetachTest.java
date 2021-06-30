@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Asterios Raptis
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,11 +16,11 @@
 package io.github.astrapi69.model;
 
 
-import io.github.astrapi69.model.AbstractPropertyModel;
-import io.github.astrapi69.model.PropertyModel;
-import io.github.astrapi69.model.api.Model;
+import static org.testng.AssertJUnit.assertTrue;
+
 import org.testng.annotations.Test;
-import static org.testng.AssertJUnit.*;
+
+import io.github.astrapi69.model.api.Model;
 
 /**
  * Tests the detach behavior for compatibility with Detachable nested objects, ensuring that the
@@ -28,20 +28,6 @@ import static org.testng.AssertJUnit.*;
  */
 public class ModelDetachTest
 {
-	static class Detachable implements io.github.astrapi69.model.api.Detachable
-	{
-		private static final long serialVersionUID = 1L;
-
-		private boolean detached = false;
-
-		@Override
-		public void detach()
-		{
-			detached = true;
-		}
-	}
-
-
 	/**
 	 * Performs the nested test for AbstractPropertyModel.
 	 */
@@ -73,5 +59,18 @@ public class ModelDetachTest
 		Model<?> model = new PropertyModel<Void>(detachable, "foo");
 		model.detach();
 		assertTrue(detachable.detached);
+	}
+
+	static class Detachable implements io.github.astrapi69.model.api.Detachable
+	{
+		private static final long serialVersionUID = 1L;
+
+		private boolean detached = false;
+
+		@Override
+		public void detach()
+		{
+			detached = true;
+		}
 	}
 }

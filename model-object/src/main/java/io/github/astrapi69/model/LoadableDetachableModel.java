@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Asterios Raptis
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,8 +15,8 @@
  */
 package io.github.astrapi69.model;
 
-import io.github.astrapi69.model.api.Model;
 import lombok.NoArgsConstructor;
+import io.github.astrapi69.model.api.Model;
 
 /**
  * Model that makes working with detachable models a breeze. LoadableDetachableModel holds a
@@ -117,6 +117,20 @@ public abstract class LoadableDetachableModel<T> implements Model<T>
 	}
 
 	/**
+	 * Manually loads the model with the specified object. Subsequent calls to {@link #getObject()}
+	 * will return {@code object} until {@link #detach()} is called.
+	 *
+	 * @param object
+	 *            The object to set into the model
+	 */
+	@Override
+	public void setObject(final T object)
+	{
+		attached = true;
+		transientModelObject = object;
+	}
+
+	/**
 	 * Checks if the object is attached.
 	 *
 	 * @return true, if the object is attached otherwise false
@@ -148,21 +162,6 @@ public abstract class LoadableDetachableModel<T> implements Model<T>
 	protected void onDetach()
 	{
 	}
-
-	/**
-	 * Manually loads the model with the specified object. Subsequent calls to {@link #getObject()}
-	 * will return {@code object} until {@link #detach()} is called.
-	 *
-	 * @param object
-	 *            The object to set into the model
-	 */
-	@Override
-	public void setObject(final T object)
-	{
-		attached = true;
-		transientModelObject = object;
-	}
-
 
 	/**
 	 * {@inheritDoc}

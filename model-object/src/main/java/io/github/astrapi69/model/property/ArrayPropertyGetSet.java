@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Asterios Raptis
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,6 +24,17 @@ import lombok.extern.java.Log;
 @Log
 public final class ArrayPropertyGetSet extends AbstractGetAndSet
 {
+	final private Method getMethod;
+	final private Integer index;
+	private Method setMethod;
+
+	ArrayPropertyGetSet(final Method method, final int index)
+	{
+		this.index = index;
+		getMethod = method;
+		getMethod.setAccessible(true);
+	}
+
 	private final static Method findSetter(final Method getMethod, final Class<?> clz)
 	{
 		String name = getMethod.getName();
@@ -37,18 +48,6 @@ public final class ArrayPropertyGetSet extends AbstractGetAndSet
 			log.log(Level.FINE, "Can't find setter method corresponding to " + getMethod);
 		}
 		return null;
-	}
-
-	final private Method getMethod;
-	final private Integer index;
-
-	private Method setMethod;
-
-	ArrayPropertyGetSet(final Method method, final int index)
-	{
-		this.index = index;
-		getMethod = method;
-		getMethod.setAccessible(true);
 	}
 
 	/**
