@@ -1,7 +1,6 @@
-
 license {
-    ext.year="$projectInceptionYear"
-    ext.owner="$projectLeaderName"
+    ext.year = "$projectInceptionYear"
+    ext.owner = "$projectLeaderName"
     header rootProject.file('src/main/resources/LICENSE.txt')
     excludes(["**/README",
               "**/README.md",
@@ -56,14 +55,14 @@ publishing {
             pom {
                 name = "${project.name}"
                 description = "$projectApiDescription"
-                url = "$projectScmProviderUrl"+"$projectHolderUsername"+"$slash"+"$rootProject.name"
+                url = "$projectScmProviderUrl" + "$projectHolderUsername" + "$slash" + "$rootProject.name"
                 organization {
                     name = "$projectOrganizationName"
                     url = "$projectOrganizationUrl"
                 }
                 issueManagement {
                     system = "$projectIssueManagementSystem"
-                    url = "$projectScmProviderUrl"+"$projectHolderUsername"+"$slash"+"$rootProject.name"+"$issuesPath"
+                    url = "$projectScmProviderUrl" + "$projectHolderUsername" + "$slash" + "$rootProject.name" + "$issuesPath"
                 }
                 licenses {
                     license {
