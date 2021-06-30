@@ -101,7 +101,9 @@ your project `build.gradle` if you want to import the core functionality of mode
 ```
 define version in file gradle.properties
 
-modelDataVersion=1.9
+modelApiVersion=1.9
+modelObjectVersion=1.9
+modelTypeSafeVersion=1.9
 ```
 
 or in build.gradle ext area
@@ -109,7 +111,9 @@ or in build.gradle ext area
 ```
 ext {
 			...
-    modelDataVersion = "1.9"
+    modelApiVersion = "1.9"
+    modelObjectVersion = "1.9"
+    modelTypeSafeVersion = "1.9"
 			...
 }
 ```
@@ -119,9 +123,9 @@ and then add the dependency to the dependencies area
 ```
 dependencies {
 			...
-    implementation("io.github.astrapi69:model-api:$modelDataVersion")
-    implementation("io.github.astrapi69:model-object:$modelDataVersion")
-    implementation("io.github.astrapi69:model-type-safe:$modelDataVersion")
+    implementation("io.github.astrapi69:model-api:$modelApiVersion")
+    implementation("io.github.astrapi69:model-object:$modelObjectVersion")
+    implementation("io.github.astrapi69:model-type-safe:$modelTypeSafeVersion")
 			...
 }
 ```
