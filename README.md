@@ -14,19 +14,19 @@ The source code comes under the liberal Apache License V2.0, making model-data g
 
 ## Maven Central
 
-model-api [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-api)
+model-api [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-api)
 
-model-object [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-object/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-object)
+model-object [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-object/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-object)
 
-model-type-safe [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-type-safe/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/model-type-safe)
+model-type-safe [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-type-safe/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-type-safe)
 
 ## javadoc
 
-model-api [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/model-api.svg)](http://www.javadoc.io/doc/de.alpharogroup/model-api)
+model-api [![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/model-api.svg)](http://www.javadoc.io/doc/io.github.astrapi69/model-api)
 
-model-object [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/model-object.svg)](http://www.javadoc.io/doc/de.alpharogroup/model-object)
+model-object [![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/model-object.svg)](http://www.javadoc.io/doc/io.github.astrapi69/model-object)
 
-model-type-safe [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/model-type-safe.svg)](http://www.javadoc.io/doc/de.alpharogroup/model-type-safe)
+model-type-safe [![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/model-type-safe.svg)](http://www.javadoc.io/doc/io.github.astrapi69/model-type-safe)
 
 ## Maven dependency
 
@@ -52,7 +52,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 		<dependencies>
 			...
 			<dependency>
-				<groupId>de.alpharogroup</groupId>
+				<groupId>io.github.astrapi69</groupId>
 				<artifactId>model-api</artifactId>
 				<version>${model-api.version}</version>
 			</dependency>
@@ -65,7 +65,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 		<dependencies>
 			...
 			<dependency>
-				<groupId>de.alpharogroup</groupId>
+				<groupId>io.github.astrapi69</groupId>
 				<artifactId>model-object</artifactId>
 				<version>${model-object.version}</version>
 			</dependency>
@@ -78,7 +78,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 		<dependencies>
 			...
 			<dependency>
-				<groupId>de.alpharogroup</groupId>
+				<groupId>io.github.astrapi69</groupId>
 				<artifactId>model-type-safe</artifactId>
 				<version>${model-type-safe.version}</version>
 			</dependency>
