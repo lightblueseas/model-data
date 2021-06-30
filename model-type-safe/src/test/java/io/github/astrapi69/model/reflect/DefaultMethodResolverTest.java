@@ -15,11 +15,12 @@
  */
 package io.github.astrapi69.model.reflect;
 
-import io.github.astrapi69.model.reflect.DefaultMethodResolver;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
 import java.lang.reflect.Method;
+
+import org.testng.annotations.Test;
 
 /**
  * Test for {@link DefaultMethodResolver}.
@@ -28,83 +29,6 @@ import java.lang.reflect.Method;
  */
 public class DefaultMethodResolverTest
 {
-
-	public static class ExtendedFoo extends Foo
-	{
-		@Override
-		public Object getBar()
-		{
-			return super.getBar();
-		}
-	}
-
-	public static class Foo
-	{
-
-		public Object getBar()
-		{
-			return null;
-		}
-
-		public void getQuux()
-		{
-		}
-
-		public String getQuux2(String key)
-		{
-			return key;
-		}
-
-		public boolean isBaz()
-		{
-			return false;
-		}
-
-		public Boolean isBaz2()
-		{
-			return null;
-		}
-
-		public Object method()
-		{
-			return null;
-		}
-
-		public Object methodWithArgs(Integer i, Float f, Double d, Long l, Byte b, Short s,
-			Object object, String string, Foo foo)
-		{
-			return null;
-		}
-
-		public Object methodWithArrayArgs(Integer[] i, Float[] f, Double[] d, Long[] l, Byte[] b,
-			Short[] s, Object[] object, String[] string, Foo[] foo)
-		{
-			return null;
-		}
-
-		public Object methodWithPrimitiveArgs(int i, float f, double d, long l, byte b, short s)
-		{
-			return null;
-		}
-
-		public Object methodWithPrimitiveArrayArgs(int[] i, float[] f, double[] d, long[] l,
-			byte[] b, short[] s)
-		{
-			return null;
-		}
-
-		public void setBar(Object bar)
-		{
-		}
-
-		public void setBaz(boolean baz)
-		{
-		}
-
-		public void setQuux2(String key, String value)
-		{
-		}
-	}
 
 	private DefaultMethodResolver resolver = new DefaultMethodResolver();
 
@@ -298,6 +222,83 @@ public class DefaultMethodResolverTest
 			fail();
 		}
 		catch (IllegalArgumentException expected)
+		{
+		}
+	}
+
+	public static class ExtendedFoo extends Foo
+	{
+		@Override
+		public Object getBar()
+		{
+			return super.getBar();
+		}
+	}
+
+	public static class Foo
+	{
+
+		public Object getBar()
+		{
+			return null;
+		}
+
+		public void setBar(Object bar)
+		{
+		}
+
+		public void getQuux()
+		{
+		}
+
+		public String getQuux2(String key)
+		{
+			return key;
+		}
+
+		public boolean isBaz()
+		{
+			return false;
+		}
+
+		public void setBaz(boolean baz)
+		{
+		}
+
+		public Boolean isBaz2()
+		{
+			return null;
+		}
+
+		public Object method()
+		{
+			return null;
+		}
+
+		public Object methodWithArgs(Integer i, Float f, Double d, Long l, Byte b, Short s,
+			Object object, String string, Foo foo)
+		{
+			return null;
+		}
+
+		public Object methodWithArrayArgs(Integer[] i, Float[] f, Double[] d, Long[] l, Byte[] b,
+			Short[] s, Object[] object, String[] string, Foo[] foo)
+		{
+			return null;
+		}
+
+		public Object methodWithPrimitiveArgs(int i, float f, double d, long l, byte b, short s)
+		{
+			return null;
+		}
+
+		public Object methodWithPrimitiveArrayArgs(int[] i, float[] f, double[] d, long[] l,
+			byte[] b, short[] s)
+		{
+			return null;
+		}
+
+		public void setQuux2(String key, String value)
 		{
 		}
 	}

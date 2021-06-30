@@ -15,10 +15,9 @@
  */
 package io.github.astrapi69.model.reflect;
 
-import io.github.astrapi69.model.reflect.CachingProxyFactory;
-import io.github.astrapi69.model.reflect.IProxyFactory;
-import org.testng.annotations.Test;
 import static org.testng.AssertJUnit.assertEquals;
+
+import org.testng.annotations.Test;
 
 /**
  * Test for {@link CachingProxyFactory}.

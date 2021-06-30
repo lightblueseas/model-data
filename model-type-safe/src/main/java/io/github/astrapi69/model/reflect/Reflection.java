@@ -33,39 +33,8 @@ import lombok.extern.java.Log;
 public final class Reflection
 {
 
-	/**
-	 * Allows backtracking of type variables.
-	 */
-	private static class BacktrackingParameterizedType implements ParameterizedType
+	private Reflection()
 	{
-
-		private Type declaringType;
-
-		private ParameterizedType type;
-
-		public BacktrackingParameterizedType(Type declaringType, ParameterizedType type)
-		{
-			this.declaringType = declaringType;
-			this.type = type;
-		}
-
-		@Override
-		public Type[] getActualTypeArguments()
-		{
-			return type.getActualTypeArguments();
-		}
-
-		@Override
-		public Type getOwnerType()
-		{
-			return type.getOwnerType();
-		}
-
-		@Override
-		public Type getRawType()
-		{
-			return type.getRawType();
-		}
 	}
 
 	/**
@@ -262,7 +231,38 @@ public final class Reflection
 		return null;
 	}
 
-	private Reflection()
+	/**
+	 * Allows backtracking of type variables.
+	 */
+	private static class BacktrackingParameterizedType implements ParameterizedType
 	{
+
+		private Type declaringType;
+
+		private ParameterizedType type;
+
+		public BacktrackingParameterizedType(Type declaringType, ParameterizedType type)
+		{
+			this.declaringType = declaringType;
+			this.type = type;
+		}
+
+		@Override
+		public Type[] getActualTypeArguments()
+		{
+			return type.getActualTypeArguments();
+		}
+
+		@Override
+		public Type getOwnerType()
+		{
+			return type.getOwnerType();
+		}
+
+		@Override
+		public Type getRawType()
+		{
+			return type.getRawType();
+		}
 	}
 }

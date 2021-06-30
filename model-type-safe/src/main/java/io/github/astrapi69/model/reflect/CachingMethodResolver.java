@@ -29,6 +29,56 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CachingMethodResolver implements IMethodResolver
 {
 
+	private final IMethodResolver resolver;
+	private final ConcurrentHashMap<Object, IMethodResolver> scopes = new ConcurrentHashMap<>(2);
+
+	public CachingMethodResolver(IMethodResolver resolver)
+	{
+		this.resolver = resolver;
+	}
+
+	public void destroy(Object application)
+	{
+		scopes.remove(application);
+	}
+
+	@Override
+	public Serializable getId(Method method)
+	{
+		return getResolver().getId(method);
+	}
+
+	@Override
+	public Method getMethod(Class<?> owner, Serializable id)
+	{
+		return getResolver().getMethod(owner, id);
+	}
+
+	private IMethodResolver getResolver()
+	{
+		Object key;
+
+		key = CachingMethodResolver.class;
+
+		IMethodResolver result = scopes.get(key);
+		if (result == null)
+		{
+			IMethodResolver tmpResult = scopes.putIfAbsent(key, result = new ApplicationScope());
+			if (tmpResult != null)
+			{
+				result = tmpResult;
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public Method getSetter(Method getter)
+	{
+		return getResolver().getSetter(getter);
+	}
+
 	private class ApplicationScope implements IMethodResolver
 	{
 
@@ -78,56 +128,5 @@ public class CachingMethodResolver implements IMethodResolver
 
 			return setter;
 		}
-	}
-
-	private final IMethodResolver resolver;
-
-	private final ConcurrentHashMap<Object, IMethodResolver> scopes = new ConcurrentHashMap<>(2);
-
-	public CachingMethodResolver(IMethodResolver resolver)
-	{
-		this.resolver = resolver;
-	}
-
-	public void destroy(Object application)
-	{
-		scopes.remove(application);
-	}
-
-	@Override
-	public Serializable getId(Method method)
-	{
-		return getResolver().getId(method);
-	}
-
-	@Override
-	public Method getMethod(Class<?> owner, Serializable id)
-	{
-		return getResolver().getMethod(owner, id);
-	}
-
-	private IMethodResolver getResolver()
-	{
-		Object key;
-
-		key = CachingMethodResolver.class;
-
-		IMethodResolver result = scopes.get(key);
-		if (result == null)
-		{
-			IMethodResolver tmpResult = scopes.putIfAbsent(key, result = new ApplicationScope());
-			if (tmpResult != null)
-			{
-				result = tmpResult;
-			}
-		}
-
-		return result;
-	}
-
-	@Override
-	public Method getSetter(Method getter)
-	{
-		return getResolver().getSetter(getter);
 	}
 }

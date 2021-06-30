@@ -88,6 +88,13 @@ public final class Objects
 	}
 
 	/**
+	 * Instantiation not allowed
+	 */
+	private Objects()
+	{
+	}
+
+	/**
 	 * Evaluates the given object as a BigDecimal.
 	 *
 	 * @param value
@@ -195,7 +202,6 @@ public final class Objects
 		}
 		return true; // non-null
 	}
-
 
 	/**
 	 * Compares two objects for equality, even if it has to convert one of them to the other type.
@@ -416,7 +422,6 @@ public final class Objects
 		return (s.length() == 0) ? 0.0 : Double.parseDouble(s);
 	}
 
-
 	/**
 	 * Returns true if a and b are equal. Either object may be null.
 	 *
@@ -620,7 +625,6 @@ public final class Objects
 		return result;
 	}
 
-
 	/**
 	 * Returns true if object1 is equal to object2 in either the sense that they are the same object
 	 * or, if both are non-null if they are equal in the <CODE>equals()</CODE> sense.
@@ -668,7 +672,6 @@ public final class Objects
 		}
 		return result;
 	}
-
 
 	/**
 	 * Evaluates the given object as a long integer.
@@ -781,13 +784,6 @@ public final class Objects
 			}
 		}
 		return result;
-	}
-
-	/**
-	 * Instantiation not allowed
-	 */
-	private Objects()
-	{
 	}
 
 }

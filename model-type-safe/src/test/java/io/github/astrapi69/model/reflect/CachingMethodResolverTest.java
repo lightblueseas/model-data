@@ -15,13 +15,12 @@
  */
 package io.github.astrapi69.model.reflect;
 
+import static org.testng.AssertJUnit.assertEquals;
+
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
-import io.github.astrapi69.model.reflect.CachingMethodResolver;
-import io.github.astrapi69.model.reflect.IMethodResolver;
 import org.testng.annotations.Test;
-import static org.testng.AssertJUnit.assertEquals;
 
 /**
  * Test for {@link CachingMethodResolver}.

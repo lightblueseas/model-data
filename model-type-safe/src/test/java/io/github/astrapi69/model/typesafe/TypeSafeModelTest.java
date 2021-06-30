@@ -18,9 +18,11 @@ package io.github.astrapi69.model.typesafe;
 import static io.github.astrapi69.model.typesafe.TypeSafeModel.from;
 import static io.github.astrapi69.model.typesafe.TypeSafeModel.model;
 import static io.github.astrapi69.model.typesafe.TypeSafeModel.path;
-
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertSame;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
@@ -30,6 +32,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.testng.annotations.Test;
 
 import io.github.astrapi69.model.BaseModel;
 import io.github.astrapi69.model.LoadableDetachableModel;
@@ -46,246 +50,6 @@ import io.github.astrapi69.model.reflect.Reflection;
 @SuppressWarnings("serial")
 public class TypeSafeModelTest
 {
-
-	public static class A implements Serializable
-	{
-
-		B b;
-
-		boolean bool;
-
-		E e;
-
-		F f;
-
-		int integer;
-
-		P p;
-
-		public B getB()
-		{
-			return b;
-		}
-
-		public E getE()
-		{
-			return e;
-		}
-
-		public F getF()
-		{
-			return f;
-		}
-
-		public final B getFinalB()
-		{
-			return b;
-		}
-
-		public I<C> getI()
-		{
-			return b;
-		}
-
-		int getInteger()
-		{
-			return integer;
-		}
-
-		public P getP()
-		{
-			return p;
-		}
-
-		public boolean isBool()
-		{
-			return bool;
-		}
-
-		public void setB(B b)
-		{
-			this.b = b;
-		}
-
-		public void setBool(boolean bool)
-		{
-			this.bool = bool;
-		}
-
-		void setInteger(int integer)
-		{
-			this.integer = integer;
-		}
-	}
-
-	public static class B implements I<C>, Serializable
-	{
-
-		char character;
-
-		List<C> cs = new ArrayList<>();
-
-		D d;
-
-		Map<String, String> strings = new HashMap<>();
-
-		B()
-		{
-		}
-
-		public C getC(int index)
-		{
-			return cs.get(index);
-		}
-
-		public char getCharacter()
-		{
-			return character;
-		}
-
-		public List<C> getCs()
-		{
-			return cs;
-		}
-
-		public D getD()
-		{
-			return d;
-		}
-
-		@SuppressWarnings("rawtypes")
-		public List getRs()
-		{
-			return cs;
-		}
-
-		public Map<String, String> getStrings()
-		{
-			return strings;
-		}
-
-		@Override
-		public List<C> getTs()
-		{
-			return cs;
-		}
-
-		public void setC(int index, C c)
-		{
-			if (index == cs.size())
-			{
-				cs.add(c);
-			}
-			else
-			{
-				cs.set(index, c);
-			}
-		}
-
-		public void setCharacter(char character)
-		{
-			this.character = character;
-		}
-
-		public void setCs(List<C> cs)
-		{
-			this.cs = cs;
-		}
-
-		public void setStrings(Map<String, String> strings)
-		{
-			this.strings = strings;
-		}
-	}
-
-	public static class C implements Serializable
-	{
-
-		String string;
-
-		public String getString()
-		{
-			return string;
-		}
-
-		public void setString(String string)
-		{
-			this.string = string;
-		}
-	}
-
-	public static class D extends C
-	{
-	}
-
-	public static enum E
-	{
-		E1;
-	}
-
-	public static final class F
-	{
-
-		public String string;
-
-		public String getString()
-		{
-			return string;
-		}
-	}
-
-	public static class G<T extends Serializable>
-	{
-		/**
-		 * {@link Reflection} has to backtrack from type variable {@code E} to {@code T} to resolve
-		 * the return type of {@link List#get(int)}
-		 *
-		 * @see TypeSafeModelTest#backtrackedTypeVariable()
-		 */
-		@SuppressWarnings({ "rawtypes", "unchecked" })
-		public List<T> getList()
-		{
-			return new ArrayList();
-		}
-
-		/**
-		 * {@link Reflection} has to walk up the type hierarchy to resolve the return type.
-		 *
-		 * @see TypeSafeModelTest#inheritedTypeVariable()
-		 */
-		public T getT()
-		{
-			return null;
-		}
-	}
-
-	public static class G1 extends G<String>
-	{
-	}
-
-	public static class G2 extends G1
-	{
-	}
-
-	public static interface I<T>
-	{
-		public List<T> getTs();
-	}
-
-	public static class P
-	{
-
-		public static P P1 = new P();
-
-		private P()
-		{
-		}
-
-		public String getString()
-		{
-			return "P";
-		}
-	}
 
 	@Test
 	public void backtrackedTypeVariable()
@@ -515,7 +279,7 @@ public class TypeSafeModelTest
 	}
 
 	/**
-	 * A {@link IObjectClassAwareModel} doesn't provide generic information, thus the type of the
+	 * A {@link io.github.astrapi69.model.api.ObjectClassAware} doesn't provide generic information, thus the type of the
 	 * model result is {@code List<Object>} only.
 	 */
 	@Test
@@ -1066,7 +830,6 @@ public class TypeSafeModelTest
 		}
 	}
 
-
 	@Test
 	public void propertyReflectionAwareModel() throws Exception
 	{
@@ -1376,5 +1139,245 @@ public class TypeSafeModelTest
 		assertEquals(null, model.getObject());
 
 		assertEquals(null, model.getObjectClass());
+	}
+
+	public static enum E
+	{
+		E1;
+	}
+
+	public static interface I<T>
+	{
+		public List<T> getTs();
+	}
+
+	public static class A implements Serializable
+	{
+
+		B b;
+
+		boolean bool;
+
+		E e;
+
+		F f;
+
+		int integer;
+
+		P p;
+
+		public B getB()
+		{
+			return b;
+		}
+
+		public void setB(B b)
+		{
+			this.b = b;
+		}
+
+		public E getE()
+		{
+			return e;
+		}
+
+		public F getF()
+		{
+			return f;
+		}
+
+		public final B getFinalB()
+		{
+			return b;
+		}
+
+		public I<C> getI()
+		{
+			return b;
+		}
+
+		int getInteger()
+		{
+			return integer;
+		}
+
+		void setInteger(int integer)
+		{
+			this.integer = integer;
+		}
+
+		public P getP()
+		{
+			return p;
+		}
+
+		public boolean isBool()
+		{
+			return bool;
+		}
+
+		public void setBool(boolean bool)
+		{
+			this.bool = bool;
+		}
+	}
+
+	public static class B implements I<C>, Serializable
+	{
+
+		char character;
+
+		List<C> cs = new ArrayList<>();
+
+		D d;
+
+		Map<String, String> strings = new HashMap<>();
+
+		B()
+		{
+		}
+
+		public C getC(int index)
+		{
+			return cs.get(index);
+		}
+
+		public char getCharacter()
+		{
+			return character;
+		}
+
+		public void setCharacter(char character)
+		{
+			this.character = character;
+		}
+
+		public List<C> getCs()
+		{
+			return cs;
+		}
+
+		public void setCs(List<C> cs)
+		{
+			this.cs = cs;
+		}
+
+		public D getD()
+		{
+			return d;
+		}
+
+		@SuppressWarnings("rawtypes")
+		public List getRs()
+		{
+			return cs;
+		}
+
+		public Map<String, String> getStrings()
+		{
+			return strings;
+		}
+
+		public void setStrings(Map<String, String> strings)
+		{
+			this.strings = strings;
+		}
+
+		@Override
+		public List<C> getTs()
+		{
+			return cs;
+		}
+
+		public void setC(int index, C c)
+		{
+			if (index == cs.size())
+			{
+				cs.add(c);
+			}
+			else
+			{
+				cs.set(index, c);
+			}
+		}
+	}
+
+	public static class C implements Serializable
+	{
+
+		String string;
+
+		public String getString()
+		{
+			return string;
+		}
+
+		public void setString(String string)
+		{
+			this.string = string;
+		}
+	}
+
+	public static class D extends C
+	{
+	}
+
+	public static final class F
+	{
+
+		public String string;
+
+		public String getString()
+		{
+			return string;
+		}
+	}
+
+	public static class G<T extends Serializable>
+	{
+		/**
+		 * {@link Reflection} has to backtrack from type variable {@code E} to {@code T} to resolve
+		 * the return type of {@link List#get(int)}
+		 *
+		 * @see TypeSafeModelTest#backtrackedTypeVariable()
+		 */
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		public List<T> getList()
+		{
+			return new ArrayList();
+		}
+
+		/**
+		 * {@link Reflection} has to walk up the type hierarchy to resolve the return type.
+		 *
+		 * @see TypeSafeModelTest#inheritedTypeVariable()
+		 */
+		public T getT()
+		{
+			return null;
+		}
+	}
+
+	public static class G1 extends G<String>
+	{
+	}
+
+	public static class G2 extends G1
+	{
+	}
+
+	public static class P
+	{
+
+		public static P P1 = new P();
+
+		private P()
+		{
+		}
+
+		public String getString()
+		{
+			return "P";
+		}
 	}
 }

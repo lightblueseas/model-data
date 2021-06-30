@@ -54,7 +54,7 @@ import io.github.astrapi69.model.reflect.Reflection;
  * Model&lt;C&gt; model = model(from(a).getB().getCs().get(from(d).getIndex()));
  * </pre>
  *
- * @param T
+ * @param <T>
  *            model object type
  *
  * @author svenmeier
@@ -68,260 +68,27 @@ public class TypeSafeModel<T>
 		PropertyReflectionAwareModel<T>
 {
 
-	/**
-	 * An evaluation which is bound to a target.
-	 */
-	private static class BoundEvaluation<R> extends Evaluation<R>
-	{
-
-		public final Object target;
-
-		public BoundEvaluation(Type type, Object target)
-		{
-			super(type);
-
-			this.target = target;
-		}
-	}
-
-	/**
-	 * A wrapper to make a lazy model also loadable detachable.
-	 *
-	 * @see LoadableDetachableModel
-	 */
-	private class LoadableDetachableWrapper extends LoadableDetachableModel<T>
-		implements
-			ObjectClassAware<T>,
-			ObjectTypeAware<T>,
-			ChainableModel<T>
-	{
-
-		private static final long serialVersionUID = 1L;
-
-		private transient Type type;
-
-		@Override
-		public void attach()
-		{
-		}
-
-		@Override
-		public void detach()
-		{
-			super.detach();
-
-			type = null;
-
-			TypeSafeModel.this.detach();
-		}
-
-		@Override
-		public Model<?> getChainedModel()
-		{
-			return TypeSafeModel.this;
-		}
-
-		@Override
-		public Class<T> getObjectClass()
-		{
-			Type type = getObjectType();
-			if (type == null)
-			{
-				return null;
-			}
-			return (Class<T>)Reflection.getClass(type);
-		}
-
-		@Override
-		public Type getObjectType()
-		{
-			if (type == null)
-			{
-				type = TypeSafeModel.this.getObjectType();
-			}
-			return type;
-		}
-
-		@Override
-		protected T load()
-		{
-			return TypeSafeModel.this.getObject();
-		}
-
-		@Override
-		public void setChainedModel(Model<?> model)
-		{
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void setObject(T object)
-		{
-			super.setObject(object);
-
-			TypeSafeModel.this.setObject(object);
-		}
-	}
-
-	/**
-	 * Iterator over the methods on the stack.
-	 */
-	private class MethodIterator
-	{
-
-		/**
-		 * The count of arguments of the current method.
-		 */
-		private int count = 0;
-
-		/**
-		 * The identifier of the current method.
-		 */
-		private Serializable id;
-
-		/**
-		 * The current index in the stack.
-		 */
-		private int index = 0;
-
-		/**
-		 * The current method.
-		 */
-		private Method method;
-
-		/**
-		 * Fill the arguments of the current method in the given array.
-		 *
-		 * @param args
-		 *            arguments to fill
-		 */
-		private void fillArguments(Object[] args)
-		{
-			for (int a = 0; a < count; a++)
-			{
-				Object arg = ((Object[])stack)[index - count + a];
-
-				if (arg instanceof TypeSafeModel<?>)
-				{
-					arg = ((TypeSafeModel<T>)arg).getObject();
-				}
-
-				args[a] = arg;
-			}
-		}
-
-		/**
-		 * Get the result for the current method.
-		 *
-		 * @param target
-		 *            target of method invocation
-		 * @return result
-		 */
-		public Object get(Object target)
-		{
-			Object[] args;
-			if (count == 0)
-			{
-				args = EMPTY_ARGS;
-			}
-			else
-			{
-				args = new Object[count];
-				fillArguments(args);
-			}
-
-			try
-			{
-				if ((target instanceof List) && Reflection.isListIndex(method))
-				{
-					if (((List<?>)target).size() <= (Integer)args[0])
-					{
-						// evaluate invalid index as null as PropertyModel does it
-						return null;
-					}
-				}
-				return method.invoke(target, args);
-			}
-			catch (Exception ex)
-			{
-				throw new RuntimeException(ex);
-			}
-		}
-
-		/**
-		 * Is there a next invocation.
-		 */
-		public boolean hasNext()
-		{
-			if (stack instanceof Object[])
-			{
-				return index < ((Object[])stack).length;
-			}
-			else
-			{
-				return stack != null && index == 0;
-			}
-		}
-
-		/**
-		 * Iterate to the next invocation on the given class.
-		 *
-		 * @param clazz
-		 *            class
-		 */
-		public void next(Class<?> clazz)
-		{
-			if (stack instanceof Object[])
-			{
-				id = (Serializable)((Object[])stack)[index];
-			}
-			else
-			{
-				id = (Serializable)stack;
-			}
-
-			index += 1;
-
-			method = methodResolver.getMethod(clazz, id);
-			count = method.getParameterTypes().length;
-			index += count;
-		}
-
-		/**
-		 * Set a result for the current method.
-		 *
-		 * @param target
-		 *            target of method invocation
-		 * @param result
-		 */
-		public void set(Object target, Object result)
-		{
-			Method setter = methodResolver.getSetter(method);
-
-			Object[] args = new Object[count + 1];
-			fillArguments(args);
-			args[count] = result;
-
-			try
-			{
-				setter.invoke(target, args);
-			}
-			catch (Exception ex)
-			{
-				throw new RuntimeException(ex);
-			}
-		}
-	}
-
 	private static final Object[] EMPTY_ARGS = new Object[0];
-
+	private static final long serialVersionUID = 1L;
 	/**
 	 * The resolver for {@link Method}s.
 	 */
 	public static IMethodResolver methodResolver = new CachingMethodResolver(
 		new DefaultMethodResolver());
+	/**
+	 * Each invoked method's identifier followed by its arguments.
+	 */
+	protected final Object stack;
+	/**
+	 * The target of the evaluation.
+	 */
+	protected final Object target;
 
-	private static final long serialVersionUID = 1L;
+	TypeSafeModel(Object target, Object stack)
+	{
+		this.target = target;
+		this.stack = stack;
+	}
 
 	/**
 	 * Start a lazy evaluation.
@@ -545,22 +312,6 @@ public class TypeSafeModel<T>
 		return path.toString();
 	}
 
-	/**
-	 * Each invoked method's identifier followed by its arguments.
-	 */
-	protected final Object stack;
-
-	/**
-	 * The target of the evaluation.
-	 */
-	protected final Object target;
-
-	TypeSafeModel(Object target, Object stack)
-	{
-		this.target = target;
-		this.stack = stack;
-	}
-
 	@Override
 	public void attach()
 	{
@@ -643,6 +394,55 @@ public class TypeSafeModel<T>
 		}
 
 		return (T)result;
+	}
+
+	/**
+	 * Set the evaluation result.
+	 *
+	 * @param result
+	 *            the evaluation result
+	 * @throws RuntimeException
+	 *             if this model is not bound to a target
+	 */
+	@Override
+	public void setObject(T result)
+	{
+		checkBound();
+
+		Object target = this.target;
+
+		MethodIterator methodIterator = new MethodIterator();
+		if (!methodIterator.hasNext())
+		{
+			if (target instanceof Model)
+			{
+				((Model<T>)target).setObject(result);
+				return;
+			}
+			else
+			{
+				throw new UnsupportedOperationException();
+			}
+		}
+
+		if (target instanceof Model)
+		{
+			target = ((Model<T>)target).getObject();
+		}
+		if (target == null)
+		{
+			throw new RuntimeException("no target");
+		}
+		methodIterator.next(target.getClass());
+
+		while (target != null && methodIterator.hasNext())
+		{
+			target = methodIterator.get(target);
+
+			methodIterator.next(target.getClass());
+		}
+
+		methodIterator.set(target, result);
 	}
 
 	/**
@@ -853,55 +653,6 @@ public class TypeSafeModel<T>
 	}
 
 	/**
-	 * Set the evaluation result.
-	 *
-	 * @param result
-	 *            the evaluation result
-	 * @throws RuntimeException
-	 *             if this model is not bound to a target
-	 */
-	@Override
-	public void setObject(T result)
-	{
-		checkBound();
-
-		Object target = this.target;
-
-		MethodIterator methodIterator = new MethodIterator();
-		if (!methodIterator.hasNext())
-		{
-			if (target instanceof Model)
-			{
-				((Model<T>)target).setObject(result);
-				return;
-			}
-			else
-			{
-				throw new UnsupportedOperationException();
-			}
-		}
-
-		if (target instanceof Model)
-		{
-			target = ((Model<T>)target).getObject();
-		}
-		if (target == null)
-		{
-			throw new RuntimeException("no target");
-		}
-		methodIterator.next(target.getClass());
-
-		while (target != null && methodIterator.hasNext())
-		{
-			target = methodIterator.get(target);
-
-			methodIterator.next(target.getClass());
-		}
-
-		methodIterator.set(target, result);
-	}
-
-	/**
 	 * String representation of the evaluation.
 	 *
 	 * @see #getPath()
@@ -921,5 +672,250 @@ public class TypeSafeModel<T>
 		}
 
 		return "";
+	}
+
+	/**
+	 * An evaluation which is bound to a target.
+	 */
+	private static class BoundEvaluation<R> extends Evaluation<R>
+	{
+
+		public final Object target;
+
+		public BoundEvaluation(Type type, Object target)
+		{
+			super(type);
+
+			this.target = target;
+		}
+	}
+
+	/**
+	 * A wrapper to make a lazy model also loadable detachable.
+	 *
+	 * @see LoadableDetachableModel
+	 */
+	private class LoadableDetachableWrapper extends LoadableDetachableModel<T>
+		implements
+			ObjectClassAware<T>,
+			ObjectTypeAware<T>,
+			ChainableModel<T>
+	{
+
+		private static final long serialVersionUID = 1L;
+
+		private transient Type type;
+
+		@Override
+		public void attach()
+		{
+		}
+
+		@Override
+		public void detach()
+		{
+			super.detach();
+
+			type = null;
+
+			TypeSafeModel.this.detach();
+		}
+
+		@Override
+		public Model<?> getChainedModel()
+		{
+			return TypeSafeModel.this;
+		}
+
+		@Override
+		public void setChainedModel(Model<?> model)
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Class<T> getObjectClass()
+		{
+			Type type = getObjectType();
+			if (type == null)
+			{
+				return null;
+			}
+			return (Class<T>)Reflection.getClass(type);
+		}
+
+		@Override
+		public Type getObjectType()
+		{
+			if (type == null)
+			{
+				type = TypeSafeModel.this.getObjectType();
+			}
+			return type;
+		}
+
+		@Override
+		protected T load()
+		{
+			return TypeSafeModel.this.getObject();
+		}
+
+		@Override
+		public void setObject(T object)
+		{
+			super.setObject(object);
+
+			TypeSafeModel.this.setObject(object);
+		}
+	}
+
+	/**
+	 * Iterator over the methods on the stack.
+	 */
+	private class MethodIterator
+	{
+
+		/**
+		 * The count of arguments of the current method.
+		 */
+		private int count = 0;
+
+		/**
+		 * The identifier of the current method.
+		 */
+		private Serializable id;
+
+		/**
+		 * The current index in the stack.
+		 */
+		private int index = 0;
+
+		/**
+		 * The current method.
+		 */
+		private Method method;
+
+		/**
+		 * Fill the arguments of the current method in the given array.
+		 *
+		 * @param args
+		 *            arguments to fill
+		 */
+		private void fillArguments(Object[] args)
+		{
+			for (int a = 0; a < count; a++)
+			{
+				Object arg = ((Object[])stack)[index - count + a];
+
+				if (arg instanceof TypeSafeModel<?>)
+				{
+					arg = ((TypeSafeModel<T>)arg).getObject();
+				}
+
+				args[a] = arg;
+			}
+		}
+
+		/**
+		 * Get the result for the current method.
+		 *
+		 * @param target
+		 *            target of method invocation
+		 * @return result
+		 */
+		public Object get(Object target)
+		{
+			Object[] args;
+			if (count == 0)
+			{
+				args = EMPTY_ARGS;
+			}
+			else
+			{
+				args = new Object[count];
+				fillArguments(args);
+			}
+
+			try
+			{
+				if ((target instanceof List) && Reflection.isListIndex(method))
+				{
+					if (((List<?>)target).size() <= (Integer)args[0])
+					{
+						// evaluate invalid index as null as PropertyModel does it
+						return null;
+					}
+				}
+				return method.invoke(target, args);
+			}
+			catch (Exception ex)
+			{
+				throw new RuntimeException(ex);
+			}
+		}
+
+		/**
+		 * Is there a next invocation.
+		 */
+		public boolean hasNext()
+		{
+			if (stack instanceof Object[])
+			{
+				return index < ((Object[])stack).length;
+			}
+			else
+			{
+				return stack != null && index == 0;
+			}
+		}
+
+		/**
+		 * Iterate to the next invocation on the given class.
+		 *
+		 * @param clazz
+		 *            class
+		 */
+		public void next(Class<?> clazz)
+		{
+			if (stack instanceof Object[])
+			{
+				id = (Serializable)((Object[])stack)[index];
+			}
+			else
+			{
+				id = (Serializable)stack;
+			}
+
+			index += 1;
+
+			method = methodResolver.getMethod(clazz, id);
+			count = method.getParameterTypes().length;
+			index += count;
+		}
+
+		/**
+		 * Set a result for the current method.
+		 *
+		 * @param target
+		 *            target of method invocation
+		 * @param result
+		 */
+		public void set(Object target, Object result)
+		{
+			Method setter = methodResolver.getSetter(method);
+
+			Object[] args = new Object[count + 1];
+			fillArguments(args);
+			args[count] = result;
+
+			try
+			{
+				setter.invoke(target, args);
+			}
+			catch (Exception ex)
+			{
+				throw new RuntimeException(ex);
+			}
+		}
 	}
 }

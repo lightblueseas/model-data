@@ -26,52 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CachingProxyFactory implements IProxyFactory
 {
 
-	private class ApplicationScope implements IProxyFactory
-	{
-
-		private final Map<Class<?>, Class<?>> proxyClasses = new ConcurrentHashMap<>();
-
-		@Override
-		public Class<?> createClass(Class<?> clazz)
-		{
-			Class<?> proxyClazz = proxyClasses.get(clazz);
-			if (proxyClazz == null)
-			{
-				proxyClazz = factory.createClass(clazz);
-				if (proxyClazz == null)
-				{
-					proxyClazz = NOT_PROXYABLE.class;
-				}
-				proxyClasses.put(clazz, proxyClazz);
-			}
-
-			if (proxyClazz == NOT_PROXYABLE.class)
-			{
-				proxyClazz = null;
-			}
-
-			return proxyClazz;
-		}
-
-		@Override
-		public Object createInstance(final Class<?> proxyClass, final Callback callback)
-		{
-			return factory.createInstance(proxyClass, callback);
-		}
-
-		@Override
-		public Callback getCallback(Object proxy)
-		{
-			return factory.getCallback(proxy);
-		}
-	}
-
-	private class NOT_PROXYABLE
-	{
-	}
-
 	private final IProxyFactory factory;
-
 	private final ConcurrentHashMap<Object, IProxyFactory> scopes = new ConcurrentHashMap<>(2);
 
 	public CachingProxyFactory(IProxyFactory factory)
@@ -119,5 +74,49 @@ public class CachingProxyFactory implements IProxyFactory
 		}
 
 		return result;
+	}
+
+	private class ApplicationScope implements IProxyFactory
+	{
+
+		private final Map<Class<?>, Class<?>> proxyClasses = new ConcurrentHashMap<>();
+
+		@Override
+		public Class<?> createClass(Class<?> clazz)
+		{
+			Class<?> proxyClazz = proxyClasses.get(clazz);
+			if (proxyClazz == null)
+			{
+				proxyClazz = factory.createClass(clazz);
+				if (proxyClazz == null)
+				{
+					proxyClazz = NOT_PROXYABLE.class;
+				}
+				proxyClasses.put(clazz, proxyClazz);
+			}
+
+			if (proxyClazz == NOT_PROXYABLE.class)
+			{
+				proxyClazz = null;
+			}
+
+			return proxyClazz;
+		}
+
+		@Override
+		public Object createInstance(final Class<?> proxyClass, final Callback callback)
+		{
+			return factory.createInstance(proxyClass, callback);
+		}
+
+		@Override
+		public Callback getCallback(Object proxy)
+		{
+			return factory.getCallback(proxy);
+		}
+	}
+
+	private class NOT_PROXYABLE
+	{
 	}
 }

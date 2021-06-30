@@ -15,14 +15,17 @@
  */
 package io.github.astrapi69.model.reflect;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.TypeVariable;
 import java.util.HashMap;
 
-import io.github.astrapi69.model.reflect.Reflection;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * Test for {@link Reflection}.
@@ -31,45 +34,6 @@ import static org.testng.Assert.*;
  */
 public class ReflectionTest
 {
-
-	public static class Foo extends HashMap<String, Integer>
-	{
-		private static final long serialVersionUID = 1L;
-
-		public String getnonProperty()
-		{
-			return null;
-		}
-
-		public void getNonProperty()
-		{
-		}
-
-		public String getNonProperty(String arg)
-		{
-			return null;
-		}
-
-		public String getProperty()
-		{
-			return null;
-		}
-
-		public String isNonProperty()
-		{
-			return null;
-		}
-
-		public boolean isProperty()
-		{
-			return true;
-		}
-
-		public String nonProperty()
-		{
-			return null;
-		}
-	}
 
 	@Test
 	public void classForType() throws Exception
@@ -115,5 +79,44 @@ public class ReflectionTest
 		assertEquals(Integer.class,
 			Reflection.variableType((ParameterizedType)Foo.class.getGenericSuperclass(),
 				(TypeVariable<?>)method.getGenericParameterTypes()[1]));
+	}
+
+	public static class Foo extends HashMap<String, Integer>
+	{
+		private static final long serialVersionUID = 1L;
+
+		public String getnonProperty()
+		{
+			return null;
+		}
+
+		public void getNonProperty()
+		{
+		}
+
+		public String getNonProperty(String arg)
+		{
+			return null;
+		}
+
+		public String getProperty()
+		{
+			return null;
+		}
+
+		public String isNonProperty()
+		{
+			return null;
+		}
+
+		public boolean isProperty()
+		{
+			return true;
+		}
+
+		public String nonProperty()
+		{
+			return null;
+		}
 	}
 }

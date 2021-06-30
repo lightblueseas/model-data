@@ -21,14 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import lombok.extern.java.Log;
 import io.github.astrapi69.model.reflect.IProxyFactory.Callback;
 import io.github.astrapi69.model.util.Objects;
-import lombok.extern.java.Log;
 
 /**
  * An evaluation of method invocations.
  *
- * @param R
+ * @param <R>
  *            result type
  *
  * @author svenmeier
@@ -50,6 +50,22 @@ public class Evaluation<R> implements Callback
 	 * The factory for proxies.
 	 */
 	public static IProxyFactory proxyFactory = new CachingProxyFactory(new DefaultProxyFactory());
+	/**
+	 * Each invoked method followed by its arguments.
+	 */
+	public final List<Object> stack = new ArrayList<>();
+	private Type type;
+
+	/**
+	 * Evaluation of method invocations on the given type.
+	 *
+	 * @param type
+	 *            starting type
+	 */
+	public Evaluation(Type type)
+	{
+		this.type = type;
+	}
 
 	/**
 	 * Reverse operation of {@link #proxy()}, i.e. get the evaluation from an evaluation result.
@@ -89,24 +105,6 @@ public class Evaluation<R> implements Callback
 	public static <T> T of(Class<T> type)
 	{
 		return (T)new Evaluation(type).proxy();
-	}
-
-	/**
-	 * Each invoked method followed by its arguments.
-	 */
-	public final List<Object> stack = new ArrayList<>();
-
-	private Type type;
-
-	/**
-	 * Evaluation of method invocations on the given type.
-	 *
-	 * @param type
-	 *            starting type
-	 */
-	public Evaluation(Type type)
-	{
-		this.type = type;
 	}
 
 	/**

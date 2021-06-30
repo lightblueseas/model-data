@@ -20,9 +20,6 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 import java.util.List;
 
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
-
 import net.sf.cglib.core.DefaultNamingPolicy;
 import net.sf.cglib.core.NamingPolicy;
 import net.sf.cglib.proxy.Enhancer;
@@ -30,30 +27,15 @@ import net.sf.cglib.proxy.Factory;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
+
 /**
  * Default factory of proxies, utilizing {@code cglib} for dynamic class creation and
  * {@code objenesis} for constructor-less instance creation.
  */
 public final class DefaultProxyFactory implements IProxyFactory
 {
-
-	private final class MethodInterceptorImplementation implements MethodInterceptor
-	{
-
-		public final Callback callback;
-
-		private MethodInterceptorImplementation(Callback callback)
-		{
-			this.callback = callback;
-		}
-
-		@Override
-		public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy)
-			throws Throwable
-		{
-			return callback.on(obj, method, args);
-		}
-	}
 
 	private final NamingPolicy NAMING_POLICY = new DefaultNamingPolicy()
 	{
@@ -63,7 +45,6 @@ public final class DefaultProxyFactory implements IProxyFactory
 			return "LAZY";
 		};
 	};
-
 	private final Objenesis objenesis = new ObjenesisStd();
 
 	@Override
@@ -137,6 +118,24 @@ public final class DefaultProxyFactory implements IProxyFactory
 			return interceptor.callback;
 		}
 		return null;
+	}
+
+	private final class MethodInterceptorImplementation implements MethodInterceptor
+	{
+
+		public final Callback callback;
+
+		private MethodInterceptorImplementation(Callback callback)
+		{
+			this.callback = callback;
+		}
+
+		@Override
+		public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy)
+			throws Throwable
+		{
+			return callback.on(obj, method, args);
+		}
 	}
 
 }

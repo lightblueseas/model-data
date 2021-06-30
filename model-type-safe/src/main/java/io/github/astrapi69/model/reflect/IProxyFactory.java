@@ -24,14 +24,6 @@ public interface IProxyFactory
 {
 
 	/**
-	 * Callback to a method invocation on a proxy.
-	 */
-	public static interface Callback
-	{
-		public Object on(Object obj, Method method, Object[] args) throws Throwable;
-	}
-
-	/**
 	 * Create a proxy class for the given class.
 	 *
 	 * @param clazz
@@ -59,4 +51,12 @@ public interface IProxyFactory
 	 * @return callback or {@code null} if not a proxy
 	 */
 	public Callback getCallback(Object proxy);
+
+	/**
+	 * Callback to a method invocation on a proxy.
+	 */
+	public static interface Callback
+	{
+		public Object on(Object obj, Method method, Object[] args) throws Throwable;
+	}
 }
