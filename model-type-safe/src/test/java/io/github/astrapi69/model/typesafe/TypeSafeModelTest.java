@@ -279,8 +279,8 @@ public class TypeSafeModelTest
 	}
 
 	/**
-	 * A {@link io.github.astrapi69.model.api.ObjectClassAware} doesn't provide generic information, thus the type of the
-	 * model result is {@code List<Object>} only.
+	 * A {@link io.github.astrapi69.model.api.ObjectClassAware} doesn't provide generic information,
+	 * thus the type of the model result is {@code List<Object>} only.
 	 */
 	@Test
 	public void getEntryFromGenericListInObjectClassAwareModelFails()
