@@ -17,6 +17,7 @@ package io.github.astrapi69.model;
 
 import static org.testng.AssertJUnit.assertEquals;
 
+import io.github.astrapi69.test.objects.enums.Gender;
 import org.testng.annotations.Test;
 
 import io.github.astrapi69.model.api.Model;
@@ -42,7 +43,9 @@ public class PropertyModelTest
 	@Test
 	public void testSetInnerProperty()
 	{
-		final Employee employee = Employee.builder().person(Person.builder().build()).build();
+		final Employee employee = Employee.builder().person(Person.builder()
+			.name("bar")
+			.build()).build();
 		PropertyModel<String> model = new PropertyModel<>(employee, "person.name");
 		model.setObject("foo");
 		assertEquals(employee.getPerson().getName(), model.getObject());
@@ -51,6 +54,28 @@ public class PropertyModelTest
 		model = new PropertyModel<>(employeeModel, "person.name");
 		model.setObject("foo");
 		assertEquals(employee.getPerson().getName(), model.getObject());
+
+		employee.getPerson().setName("bar");
+		assertEquals(employee.getPerson().getName(), model.getObject());
+	}
+
+
+	@Test
+	public void testPropertyModel()
+	{
+		final Employee employeeJoe = Employee.builder().person(Person.builder()
+			.name("Joe")
+			.gender(Gender.MALE)
+			.build()).build();
+
+		PropertyModel<Gender> modelJoe = new PropertyModel<Gender>(employeeJoe, "person.gender");
+		modelJoe.setObject(Gender.MALE);
+		assertEquals(employeeJoe.getPerson().getGender(), modelJoe.getObject());
+
+		PropertyModel<Boolean> modelJoeMarried = PropertyModel.of(employeeJoe, "person.married");
+		modelJoeMarried.setObject(true);
+		assertEquals(employeeJoe.getPerson().getMarried(), modelJoeMarried.getObject());
+
 	}
 
 }
