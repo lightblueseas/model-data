@@ -19,6 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.testng.AssertJUnit.assertEquals;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -55,6 +56,9 @@ public class LambdaModelTest
 		final Model<String> personNameModel = LambdaModel.<String> of(() -> person.getName(),
 			(name) -> person.setName(name));
 		check(personNameModel);
+		person.setName("foo");
+		String object = personNameModel.getObject();
+		assertThat(personNameModel.getObject(), is("foo"));
 	}
 
 	@Test
@@ -103,5 +107,37 @@ public class LambdaModelTest
 
 		final Model<String> personNameModel = LambdaModel.of(target, Person::getName);
 		check(personNameModel);
+	}
+
+
+	/**
+	 * Test method for {@link SimpleLambdaModel#getObject()} and
+	 * {@link SimpleLambdaModel#setObject(Object)}
+	 */
+	@Test
+	public void testLambdas()
+	{
+		String actual;
+		String expected;
+		String currentValue;
+		Person person;
+		Model<String> personNameModel;
+		// initialize test objects
+		person = new Person();
+		personNameModel = LambdaModel.of(() -> person.getName(), (name) -> person.setName(name));
+		// new scenario
+		// set value over the bean and check model
+		currentValue = "foo";
+		person.setName(currentValue);
+		actual = personNameModel.getObject();
+		expected = currentValue;
+		assertEquals(actual, expected);
+		// new scenario
+		// set value over the model and check bean
+		currentValue = "bar";
+		personNameModel.setObject(currentValue);
+		actual = person.getName();
+		expected = currentValue;
+		assertEquals(actual, expected);
 	}
 }

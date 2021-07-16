@@ -17,12 +17,12 @@ package io.github.astrapi69.model;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-import io.github.astrapi69.test.objects.enums.Gender;
 import org.testng.annotations.Test;
 
 import io.github.astrapi69.model.api.Model;
 import io.github.astrapi69.test.objects.Employee;
 import io.github.astrapi69.test.objects.Person;
+import io.github.astrapi69.test.objects.enums.Gender;
 
 public class PropertyModelTest
 {
@@ -43,9 +43,8 @@ public class PropertyModelTest
 	@Test
 	public void testSetInnerProperty()
 	{
-		final Employee employee = Employee.builder().person(Person.builder()
-			.name("bar")
-			.build()).build();
+		final Employee employee = Employee.builder().person(Person.builder().name("bar").build())
+			.build();
 		PropertyModel<String> model = new PropertyModel<>(employee, "person.name");
 		model.setObject("foo");
 		assertEquals(employee.getPerson().getName(), model.getObject());
@@ -63,10 +62,8 @@ public class PropertyModelTest
 	@Test
 	public void testPropertyModel()
 	{
-		final Employee employeeJoe = Employee.builder().person(Person.builder()
-			.name("Joe")
-			.gender(Gender.MALE)
-			.build()).build();
+		final Employee employeeJoe = Employee.builder()
+			.person(Person.builder().name("Joe").gender(Gender.MALE).build()).build();
 
 		PropertyModel<Gender> modelJoe = new PropertyModel<Gender>(employeeJoe, "person.gender");
 		modelJoe.setObject(Gender.MALE);
