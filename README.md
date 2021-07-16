@@ -48,7 +48,7 @@ You can first define the version properties:
 	<properties>
 		...
 		<!-- MODEL-DATA version -->
-		<model-data.version>1.9</model-data.version>
+		<model-data.version>1.10</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		<model-type-safe.version>${model-data.version}</model-type-safe.version>
@@ -101,9 +101,9 @@ your project `build.gradle` if you want to import the core functionality of mode
 ```
 define version in file gradle.properties
 
-modelApiVersion=1.9
-modelObjectVersion=1.9
-modelTypeSafeVersion=1.9
+modelApiVersion=1.10
+modelObjectVersion=1.10
+modelTypeSafeVersion=1.10
 ```
 
 or in build.gradle ext area
@@ -111,9 +111,9 @@ or in build.gradle ext area
 ```
 ext {
 			...
-    modelApiVersion = "1.9"
-    modelObjectVersion = "1.9"
-    modelTypeSafeVersion = "1.9"
+    modelApiVersion = "1.10"
+    modelObjectVersion = "1.10"
+    modelTypeSafeVersion = "1.10"
 			...
 }
 ```
