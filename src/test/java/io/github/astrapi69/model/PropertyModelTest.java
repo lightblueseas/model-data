@@ -48,8 +48,7 @@ public class PropertyModelTest
 		PropertyModel<String> model;
 		Employee employee;
 		// new scenario with object
-		employee = Employee.builder().person(Person.builder().name("bar").build())
-			.build();
+		employee = Employee.builder().person(Person.builder().name("bar").build()).build();
 		// create PropertyModel
 		model = new PropertyModel<>(employee, "person.name");
 		// and set value persons name from employee over the model

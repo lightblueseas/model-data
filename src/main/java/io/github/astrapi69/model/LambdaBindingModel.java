@@ -21,9 +21,8 @@ import io.github.astrapi69.model.api.SerializableFunction;
 
 /**
  * <code>LambdaBindingModel</code> is a basic implementation of an <code>Model</code> that can bind
- * two model object together. It uses a
- * serializable {@link java.util.function.Supplier} to get the object and
- * {@link java.util.function.Consumer} to set them.
+ * two model object together. It uses a serializable {@link java.util.function.Supplier} to get the
+ * object and {@link java.util.function.Consumer} to set them.
  *
  * @param <T>
  *            The type of the Model Object
@@ -40,9 +39,12 @@ public abstract class LambdaBindingModel<T> implements Model<T>
 	}
 
 	/**
-	 * Create a {@link LambdaBindingModel} for a given source and target, that will be always up to date
+	 * Create a {@link LambdaBindingModel} for a given source and target, that will be always up to
+	 * date
 	 *
-	 * <br> <br>Usage:
+	 * <br>
+	 * <br>
+	 * Usage:
 	 *
 	 * <pre>
 	 * {@code
@@ -68,11 +70,8 @@ public abstract class LambdaBindingModel<T> implements Model<T>
 	 *
 	 * @return model
 	 */
-	public static <X, T> Model<T> of(
-		final Model<X> source,
-		final Model<X> target,
-		final SerializableFunction<X, T> getter,
-		final SerializableBiConsumer<X, T> setter)
+	public static <X, T> Model<T> of(final Model<X> source, final Model<X> target,
+		final SerializableFunction<X, T> getter, final SerializableBiConsumer<X, T> setter)
 	{
 		return new LambdaBindingModel<T>()
 		{
@@ -121,10 +120,12 @@ public abstract class LambdaBindingModel<T> implements Model<T>
 	}
 
 	/**
-	 * Create a {@link LambdaBindingModel} for a given source and target model, that will be always up to date
-	 *  for the given property
+	 * Create a {@link LambdaBindingModel} for a given source and target model, that will be always
+	 * up to date for the given property
 	 *
-	 * <br> <br>Usage:
+	 * <br>
+	 * <br>
+	 * Usage:
 	 *
 	 * <pre>
 	 * {@code
@@ -155,11 +156,8 @@ public abstract class LambdaBindingModel<T> implements Model<T>
 	 *
 	 * @return model
 	 */
-	public static <X, Y, T> Model<T> of(
-		final Model<X> source,
-		final Model<Y> target,
-		final SerializableFunction<X, T> getter,
-		final SerializableBiConsumer<X, T> setter,
+	public static <X, Y, T> Model<T> of(final Model<X> source, final Model<Y> target,
+		final SerializableFunction<X, T> getter, final SerializableBiConsumer<X, T> setter,
 		final SerializableBiConsumer<Y, T> targetSetter)
 	{
 		return new LambdaBindingModel<T>()
