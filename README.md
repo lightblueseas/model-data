@@ -22,26 +22,40 @@ The source code comes under the liberal Apache License V2.0, making model-data g
 
 ## Maven Central
 
-model-api [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-api)
-
-model-object [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-object/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-object)
-
-model-type-safe [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-type-safe/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-type-safe)
+model-data [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-data/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-data)
 
 ## javadoc
 
-model-api [![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/model-api.svg)](http://www.javadoc.io/doc/io.github.astrapi69/model-api)
+model-data [![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/model-data.svg)](http://www.javadoc.io/doc/io.github.astrapi69/model-data)
 
-model-object [![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/model-object.svg)](http://www.javadoc.io/doc/io.github.astrapi69/model-object)
+## gradle dependency
 
-model-type-safe [![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/model-type-safe.svg)](http://www.javadoc.io/doc/io.github.astrapi69/model-type-safe)
+You can first define the version in the ext section and add than the following gradle dependency to
+your project `build.gradle` if you want to import the core functionality of model-data:
+
+define version in file gradle.properties
+```
+modelDataVersion=1.11
+```
+
+or in build.gradle ext area
+
+```
+    modelDataVersion = "1.11"
+```
+
+and then add the dependency to the dependencies area
+
+```
+    implementation("io.github.astrapi69:model-data:$modelDataVersion")
+```
 
 ## Maven dependency
 
 Maven dependency is now on sonatype.
 Check out [sonatype repository](https://oss.sonatype.org/index.html#nexus-search;quick~model-data) for latest snapshots and releases.
 
-You can add the following maven dependencies to your project `pom.xml` if you want to import the library. 
+You can add the following maven dependencies to your project `pom.xml` if you want to import the library.
 
 You can first define the version properties:
 
@@ -49,86 +63,20 @@ You can first define the version properties:
 		...
 		<!-- MODEL-DATA version -->
 		<model-data.version>1.11</model-data.version>
-		<model-api.version>${model-data.version}</model-api.version>
-		<model-object.version>${model-data.version}</model-object.version>
-		<model-type-safe.version>${model-data.version}</model-type-safe.version>
 		...
 	</properties>
 
-Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of model-api:
+Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of model-data:
 
 		<dependencies>
 			...
 			<dependency>
 				<groupId>io.github.astrapi69</groupId>
-				<artifactId>model-api</artifactId>
-				<version>${model-api.version}</version>
+				<artifactId>model-data</artifactId>
+				<version>${model-data.version}</version>
 			</dependency>
 			...			
 		</dependencies>
-
-
-Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of model-object:
-
-		<dependencies>
-			...
-			<dependency>
-				<groupId>io.github.astrapi69</groupId>
-				<artifactId>model-object</artifactId>
-				<version>${model-object.version}</version>
-			</dependency>
-			...			
-		</dependencies>
-
-
-Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of model-type-safe:
-
-		<dependencies>
-			...
-			<dependency>
-				<groupId>io.github.astrapi69</groupId>
-				<artifactId>model-type-safe</artifactId>
-				<version>${model-type-safe.version}</version>
-			</dependency>
-			...			
-		</dependencies>
-
-## gradle dependency
-
-You can first define the version in the ext section and add than the following gradle dependency to
-your project `build.gradle` if you want to import the core functionality of model-data:
-
-```
-define version in file gradle.properties
-
-modelApiVersion=1.11
-modelObjectVersion=1.11
-modelTypeSafeVersion=1.11
-```
-
-or in build.gradle ext area
-
-```
-ext {
-			...
-    modelApiVersion = "1.11"
-    modelObjectVersion = "1.11"
-    modelTypeSafeVersion = "1.11"
-			...
-}
-```
-
-and then add the dependency to the dependencies area
-
-```
-dependencies {
-			...
-    implementation("io.github.astrapi69:model-api:$modelApiVersion")
-    implementation("io.github.astrapi69:model-object:$modelObjectVersion")
-    implementation("io.github.astrapi69:model-type-safe:$modelTypeSafeVersion")
-			...
-}
-```
 
 ## Want to Help and improve it? ###
 
