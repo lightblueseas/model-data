@@ -139,11 +139,16 @@ public abstract class LambdaBindingModel<T> implements Model<T>
 	 * @param target
 	 *            the target
 	 * @param getter
-	 *            used to get a value
+	 *            used to get the source value
 	 * @param setter
-	 *            used to set a value
+	 *            used to set the source value
+	 * @param targetSetter
+	 *            used to set the target value
 	 *
 	 * @param <X>
+	 *            source model object type
+	 *
+	 * @param <Y>
 	 *            target model object type
 	 * @param <T>
 	 *            model object type
