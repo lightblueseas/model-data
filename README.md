@@ -48,7 +48,7 @@ You can first define the version properties:
 	<properties>
 		...
 		<!-- MODEL-DATA version -->
-		<model-data.version>1.10</model-data.version>
+		<model-data.version>1.11</model-data.version>
 		<model-api.version>${model-data.version}</model-api.version>
 		<model-object.version>${model-data.version}</model-object.version>
 		<model-type-safe.version>${model-data.version}</model-type-safe.version>
@@ -101,9 +101,9 @@ your project `build.gradle` if you want to import the core functionality of mode
 ```
 define version in file gradle.properties
 
-modelApiVersion=1.10
-modelObjectVersion=1.10
-modelTypeSafeVersion=1.10
+modelApiVersion=1.11
+modelObjectVersion=1.11
+modelTypeSafeVersion=1.11
 ```
 
 or in build.gradle ext area
@@ -111,9 +111,9 @@ or in build.gradle ext area
 ```
 ext {
 			...
-    modelApiVersion = "1.10"
-    modelObjectVersion = "1.10"
-    modelTypeSafeVersion = "1.10"
+    modelApiVersion = "1.11"
+    modelObjectVersion = "1.11"
+    modelTypeSafeVersion = "1.11"
 			...
 }
 ```
@@ -204,5 +204,5 @@ alt="Donation Monero Wallet" width="250"/>
 or over flattr:
 
 <a href="https://flattr.com/submit/auto?fid=r7vp62&url=https%3A%2F%2Fgithub.com%2Flightblueseas%2Fmodel-data" target="_blank">
-<img src="http://button.flattr.com/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0">
+<img src="http://button.flattr.com/flattr-badge-large.png" alt="Flattr this" title="Flattr this" style="border: none" >
 </a>
