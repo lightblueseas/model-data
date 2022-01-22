@@ -43,12 +43,21 @@ public class PropertyModelTest
 	@Test
 	public void testSetInnerProperty()
 	{
-		final Employee employee = Employee.builder().person(Person.builder().name("bar").build())
+		String actual;
+		String expected;
+		PropertyModel<String> model;
+		Employee employee;
+		// new scenario with object
+		employee = Employee.builder().person(Person.builder().name("bar").build())
 			.build();
-		PropertyModel<String> model = new PropertyModel<>(employee, "person.name");
+		// create PropertyModel
+		model = new PropertyModel<>(employee, "person.name");
+		// and set value persons name from employee over the model
 		model.setObject("foo");
+		// prove it
 		assertEquals(employee.getPerson().getName(), model.getObject());
 
+		// new scenario with model object
 		Model<Employee> employeeModel = BaseModel.of(employee);
 		model = new PropertyModel<>(employeeModel, "person.name");
 		model.setObject("foo");
@@ -60,19 +69,64 @@ public class PropertyModelTest
 
 
 	@Test
-	public void testPropertyModel()
+	public void testPropertyModelSetGender()
 	{
-		final Employee employeeJoe = Employee.builder()
+		Gender actual;
+		Gender expected;
+		Employee employeeJoe;
+		PropertyModel<Gender> modelJoeGender;
+		// new scenario
+		employeeJoe = Employee.builder()
 			.person(Person.builder().name("Joe").gender(Gender.MALE).build()).build();
 
-		PropertyModel<Gender> modelJoe = new PropertyModel<Gender>(employeeJoe, "person.gender");
-		modelJoe.setObject(Gender.MALE);
-		assertEquals(employeeJoe.getPerson().getGender(), modelJoe.getObject());
-
-		PropertyModel<Boolean> modelJoeMarried = PropertyModel.of(employeeJoe, "person.married");
-		modelJoeMarried.setObject(true);
-		assertEquals(employeeJoe.getPerson().getMarried(), modelJoeMarried.getObject());
-
+		modelJoeGender = new PropertyModel<>(employeeJoe, "person.gender");
+		modelJoeGender.setObject(Gender.MALE);
+		expected = employeeJoe.getPerson().getGender();
+		actual = modelJoeGender.getObject();
+		assertEquals(expected, actual);
 	}
 
+	@Test
+	public void testPropertyModelSetMarried()
+	{
+		boolean actual;
+		boolean expected;
+		Employee employeeJoe;
+		PropertyModel<Boolean> modelJoeMarried;
+		// new scenario
+		employeeJoe = Employee.builder()
+			.person(Person.builder().name("Joe").gender(Gender.MALE).build()).build();
+		modelJoeMarried = PropertyModel.of(employeeJoe, "person.married");
+		modelJoeMarried.setObject(true);
+
+		expected = employeeJoe.getPerson().getMarried();
+		actual = modelJoeMarried.getObject();
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testPropertyModelSetOther()
+	{
+		Gender actual;
+		Gender expected;
+		Employee employeeJoe;
+		Employee employeeCeo;
+		PropertyModel<Gender> modelJoeGender;
+		PropertyModel<Gender> modelCeoGender;
+		// new scenario
+		employeeJoe = Employee.builder()
+			.person(Person.builder().name("Joe").gender(Gender.MALE).build()).build();
+
+
+		modelJoeGender = new PropertyModel<>(employeeJoe, "person.gender");
+		modelJoeGender.setObject(Gender.MALE);
+		expected = employeeJoe.getPerson().getGender();
+		actual = modelJoeGender.getObject();
+		assertEquals(expected, actual);
+
+
+		employeeCeo = Employee.builder().person(Person.builder().build()).build();
+		modelCeoGender = new PropertyModel<>(employeeCeo, "person.gender");
+		PropertyModel<Gender> bindModel = new PropertyModel<>(modelJoeGender, "person.gender");
+	}
 }

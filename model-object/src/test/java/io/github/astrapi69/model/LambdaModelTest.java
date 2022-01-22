@@ -21,9 +21,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.testng.AssertJUnit.assertEquals;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
 import org.testng.annotations.Test;
 
 import io.github.astrapi69.model.api.Model;
@@ -36,8 +33,6 @@ import io.github.astrapi69.model.lambda.Person;
 public class LambdaModelTest
 {
 	private void check(final Model<String> personNameModel)
-		throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
-		ClassNotFoundException, InstantiationException, IOException
 	{
 		assertThat(personNameModel.getObject(), is(nullValue()));
 
@@ -49,8 +44,7 @@ public class LambdaModelTest
 	}
 
 	@Test
-	public void explicitLambdas() throws NoSuchMethodException, IllegalAccessException,
-		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
+	public void explicitLambdas()
 	{
 		final Person person = new Person();
 		final Model<String> personNameModel = LambdaModel.<String> of(() -> person.getName(),
@@ -62,8 +56,7 @@ public class LambdaModelTest
 	}
 
 	@Test
-	public void methodReference() throws NoSuchMethodException, IllegalAccessException,
-		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
+	public void methodReference()
 	{
 		final Person person = new Person();
 		final Model<String> personNameModel = LambdaModel.of(person::getName, person::setName);
@@ -77,14 +70,30 @@ public class LambdaModelTest
 	}
 
 	@Test
-	public void targetModel() throws NoSuchMethodException, IllegalAccessException,
-		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
+	public void targetModel()
 	{
-		final Model<Person> target = SerializableModel.of(new Person());
+		String actual;
+		String expected;
+		String currentValue;
+		Person person = new Person();
+		final Model<Person> target = SerializableModel.of(person);
 
 		final Model<String> personNameModel = LambdaModel.of(target, Person::getName,
 			Person::setName);
 		check(personNameModel);
+		// set value over the bean and check model
+		currentValue = "foo";
+		person.setName(currentValue);
+		actual = personNameModel.getObject();
+		expected = currentValue;
+		assertEquals(actual, expected);
+		// new scenario
+		// set value over the model and check bean
+		currentValue = "bar";
+		personNameModel.setObject(currentValue);
+		actual = person.getName();
+		expected = currentValue;
+		assertEquals(actual, expected);
 	}
 
 	@Test
@@ -99,9 +108,20 @@ public class LambdaModelTest
 		assertThat(personNameModel.getObject(), is(nullValue()));
 	}
 
+	@Test
+	public void targetModelPerson()
+	{
+		final Model<Person> target = SerializableModel.of(new Person());
+
+		final Model<String> personNameModel = LambdaModel.of(target, Person::getName,
+			Person::setName);
+
+		personNameModel.setObject("new name");
+		assertThat(personNameModel.getObject(), is("new name"));
+	}
+
 	@Test(expectedExceptions = UnsupportedOperationException.class)
-	public void targetReadOnly() throws NoSuchMethodException, IllegalAccessException,
-		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
+	public void targetReadOnly()
 	{
 		final Model<Person> target = SerializableModel.of(new Person());
 
@@ -125,6 +145,44 @@ public class LambdaModelTest
 		// initialize test objects
 		person = new Person();
 		personNameModel = LambdaModel.of(() -> person.getName(), (name) -> person.setName(name));
+		// new scenario
+		// set value over the bean and check model
+		currentValue = "foo";
+		person.setName(currentValue);
+		actual = personNameModel.getObject();
+		expected = currentValue;
+		assertEquals(actual, expected);
+		// new scenario
+		// set value over the model and check bean
+		currentValue = "bar";
+		personNameModel.setObject(currentValue);
+		actual = person.getName();
+		expected = currentValue;
+		assertEquals(actual, expected);
+	}
+
+
+	/**
+	 * Test method for {@link SimpleLambdaModel#getObject()} and
+	 * {@link SimpleLambdaModel#setObject(Object)}
+	 */
+	@Test
+	public void testLambdasWithLambdas()
+	{
+		String actual;
+		String expected;
+		String currentValue;
+		Person person;
+		Person otherPerson;
+		Model<String> personNameModel;
+		Model<String> otherPersonNameModel;
+		// initialize test objects
+		person = new Person();
+		otherPerson = new Person();
+		personNameModel = LambdaModel.of(person::getName, person::setName);
+		otherPersonNameModel = LambdaModel.of(otherPerson::getName, otherPerson::setName);
+		LambdaModel.of(personNameModel::getObject, otherPersonNameModel::setObject);
+		LambdaModel.of(otherPersonNameModel::getObject, personNameModel::setObject);
 		// new scenario
 		// set value over the bean and check model
 		currentValue = "foo";
