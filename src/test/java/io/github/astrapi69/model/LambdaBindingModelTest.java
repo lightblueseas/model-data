@@ -70,11 +70,17 @@ public class LambdaBindingModelTest
 		companyModel = SerializableModel.of(company);
 
 		Model<String> nameModel = LambdaBindingModel.of(personModel, companyModel, Person::getName,
-			Person::setName, Company::setName);
+			Person::setName, Company::getName, Company::setName);
 		expected = "new name";
 		nameModel.setObject(expected);
 		actual = person.getName();
 		assertEquals(actual, expected);
+		actual = company.getName();
+		assertEquals(actual, expected);
+		expected = "foo";
+		personModel.getObject().setName(expected);
+		// call getObject for update both models
+		nameModel.getObject();
 		actual = company.getName();
 		assertEquals(actual, expected);
 	}
