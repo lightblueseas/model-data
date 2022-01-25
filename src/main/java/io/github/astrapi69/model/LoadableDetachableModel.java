@@ -15,11 +15,11 @@
  */
 package io.github.astrapi69.model;
 
+import io.github.astrapi69.model.api.IModel;
 import lombok.NoArgsConstructor;
-import io.github.astrapi69.model.api.Model;
 
 /**
- * Model that makes working with detachable models a breeze. LoadableDetachableModel holds a
+ * IModel that makes working with detachable models a breeze. LoadableDetachableModel holds a
  * temporary, transient model object, that is set when {@link #getObject()} is called by calling
  * abstract method 'load', and that will be reset/ set to null on {@link #detach()}.
  *
@@ -45,10 +45,10 @@ import io.github.astrapi69.model.api.Model;
  * @author Igor Vaynberg
  *
  * @param <T>
- *            The Model Object type
+ *            The IModel Object type
  */
 @NoArgsConstructor
-public abstract class LoadableDetachableModel<T> implements Model<T>
+public abstract class LoadableDetachableModel<T> implements IModel<T>
 {
 
 	/** The Constant serialVersionUID. */

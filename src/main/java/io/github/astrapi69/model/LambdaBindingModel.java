@@ -15,19 +15,19 @@
  */
 package io.github.astrapi69.model;
 
-import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.IModel;
 import io.github.astrapi69.model.api.SerializableBiConsumer;
 import io.github.astrapi69.model.api.SerializableFunction;
 
 /**
- * <code>LambdaBindingModel</code> is a basic implementation of an <code>Model</code> that can bind
+ * <code>LambdaBindingModel</code> is a basic implementation of an <code>IModel</code> that can bind
  * two model object together. It uses a serializable {@link java.util.function.Supplier} to get the
  * object and {@link java.util.function.Consumer} to set them.
  *
  * @param <T>
- *            The type of the Model Object
+ *            The type of the IModel Object
  */
-public abstract class LambdaBindingModel<T> implements Model<T>
+public abstract class LambdaBindingModel<T> implements IModel<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -70,7 +70,7 @@ public abstract class LambdaBindingModel<T> implements Model<T>
 	 *
 	 * @return model
 	 */
-	public static <X, T> Model<T> of(final Model<X> source, final Model<X> target,
+	public static <X, T> IModel<T> of(final IModel<X> source, final IModel<X> target,
 		final SerializableFunction<X, T> getter, final SerializableBiConsumer<X, T> setter)
 	{
 		return new LambdaBindingModel<T>()
@@ -139,10 +139,12 @@ public abstract class LambdaBindingModel<T> implements Model<T>
 	 *            the source
 	 * @param target
 	 *            the target
-	 * @param getter
+	 * @param sourceGetter
 	 *            used to get the source value
-	 * @param setter
+	 * @param sourceSetter
 	 *            used to set the source value
+	 * @param targetGetter
+	 *            used to get the target value
 	 * @param targetSetter
 	 *            used to set the target value
 	 *
@@ -156,8 +158,8 @@ public abstract class LambdaBindingModel<T> implements Model<T>
 	 *
 	 * @return model
 	 */
-	public static <X, Y, T> Model<T> of(final Model<X> source, final Model<Y> target,
-		final SerializableFunction<X, T> getter, final SerializableBiConsumer<X, T> setter,
+	public static <X, Y, T> IModel<T> of(final IModel<X> source, final IModel<Y> target,
+		final SerializableFunction<X, T> sourceGetter, final SerializableBiConsumer<X, T> sourceSetter,
 		final SerializableFunction<Y, T> targetGetter, final SerializableBiConsumer<Y, T> targetSetter)
 	{
 		return new LambdaBindingModel<T>()
@@ -188,13 +190,13 @@ public abstract class LambdaBindingModel<T> implements Model<T>
 					return null;
 				}
 				if(sourceObject != null && targetObject != null) {
-					T sourceApply = getter.apply(sourceObject);
+					T sourceApply = sourceGetter.apply(sourceObject);
 					T targetApply = targetGetter.apply(targetObject);
 					if(sourceApply != null && !sourceApply.equals(targetApply)) {
 						targetSetter.accept(targetObject, sourceApply);
 					}
 				}
-				return getter.apply(sourceObject);
+				return sourceGetter.apply(sourceObject);
 			}
 
 			@Override
@@ -203,7 +205,7 @@ public abstract class LambdaBindingModel<T> implements Model<T>
 				final X sourceObject = source.getObject();
 				if (sourceObject != null)
 				{
-					setter.accept(sourceObject, t);
+					sourceSetter.accept(sourceObject, t);
 				}
 				final Y targetObject = target.getObject();
 				if (targetObject != null)

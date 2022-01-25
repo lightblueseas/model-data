@@ -21,9 +21,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.testng.AssertJUnit.assertEquals;
 
+import io.github.astrapi69.model.api.IModel;
 import org.testng.annotations.Test;
 
-import io.github.astrapi69.model.api.Model;
 import io.github.astrapi69.model.lambda.Person;
 
 /**
@@ -32,7 +32,7 @@ import io.github.astrapi69.model.lambda.Person;
 @SuppressWarnings("javadoc")
 public class LambdaModelTest
 {
-	private void check(final Model<String> personNameModel)
+	private void check(final IModel<String> personNameModel)
 	{
 		assertThat(personNameModel.getObject(), is(nullValue()));
 
@@ -47,7 +47,7 @@ public class LambdaModelTest
 	public void explicitLambdas()
 	{
 		final Person person = new Person();
-		final Model<String> personNameModel = LambdaModel.<String> of(() -> person.getName(),
+		final IModel<String> personNameModel = LambdaModel.<String> of(() -> person.getName(),
 			(name) -> person.setName(name));
 		check(personNameModel);
 		person.setName("foo");
@@ -59,11 +59,11 @@ public class LambdaModelTest
 	public void methodReference()
 	{
 		final Person person = new Person();
-		final Model<String> personNameModel = LambdaModel.of(person::getName, person::setName);
+		final IModel<String> personNameModel = LambdaModel.of(person::getName, person::setName);
 		check(personNameModel);
 	}
 
-	private void serialize(final Model<String> personNameModel, final String personName)
+	private void serialize(final IModel<String> personNameModel, final String personName)
 	{
 		assertThat(personNameModel, is(instanceOf(LambdaModel.class)));
 		assertThat(personNameModel.getObject(), is(personName));
@@ -76,9 +76,9 @@ public class LambdaModelTest
 		String expected;
 		String currentValue;
 		Person person = new Person();
-		final Model<Person> target = SerializableModel.of(person);
+		final IModel<Person> target = SerializableModel.of(person);
 
-		final Model<String> personNameModel = LambdaModel.of(target, Person::getName,
+		final IModel<String> personNameModel = LambdaModel.of(target, Person::getName,
 			Person::setName);
 		check(personNameModel);
 		// set value over the bean and check model
@@ -99,9 +99,9 @@ public class LambdaModelTest
 	@Test
 	public void targetModelNull()
 	{
-		final Model<Person> target = SerializableModel.of((Person)null);
+		final IModel<Person> target = SerializableModel.of((Person)null);
 
-		final Model<String> personNameModel = LambdaModel.of(target, Person::getName,
+		final IModel<String> personNameModel = LambdaModel.of(target, Person::getName,
 			Person::setName);
 
 		personNameModel.setObject("new name");
@@ -111,9 +111,9 @@ public class LambdaModelTest
 	@Test
 	public void targetModelPerson()
 	{
-		final Model<Person> target = SerializableModel.of(new Person());
+		final IModel<Person> target = SerializableModel.of(new Person());
 
-		final Model<String> personNameModel = LambdaModel.of(target, Person::getName,
+		final IModel<String> personNameModel = LambdaModel.of(target, Person::getName,
 			Person::setName);
 
 		personNameModel.setObject("new name");
@@ -123,9 +123,9 @@ public class LambdaModelTest
 	@Test(expectedExceptions = UnsupportedOperationException.class)
 	public void targetReadOnly()
 	{
-		final Model<Person> target = SerializableModel.of(new Person());
+		final IModel<Person> target = SerializableModel.of(new Person());
 
-		final Model<String> personNameModel = LambdaModel.of(target, Person::getName);
+		final IModel<String> personNameModel = LambdaModel.of(target, Person::getName);
 		check(personNameModel);
 	}
 
@@ -141,7 +141,7 @@ public class LambdaModelTest
 		String expected;
 		String currentValue;
 		Person person;
-		Model<String> personNameModel;
+		IModel<String> personNameModel;
 		// initialize test objects
 		person = new Person();
 		personNameModel = LambdaModel.of(() -> person.getName(), (name) -> person.setName(name));
@@ -174,8 +174,8 @@ public class LambdaModelTest
 		String currentValue;
 		Person person;
 		Person otherPerson;
-		Model<String> personNameModel;
-		Model<String> otherPersonNameModel;
+		IModel<String> personNameModel;
+		IModel<String> otherPersonNameModel;
 		// initialize test objects
 		person = new Person();
 		otherPerson = new Person();

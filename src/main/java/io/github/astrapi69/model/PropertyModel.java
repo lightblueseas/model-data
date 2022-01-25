@@ -65,7 +65,7 @@ package io.github.astrapi69.model;
  * @author Jonathan Locke
  *
  * @param <T>
- *            The Model object type
+ *            The IModel object type
  */
 public class PropertyModel<T> extends AbstractPropertyModel<T>
 {

@@ -17,10 +17,10 @@ package io.github.astrapi69.model;
 
 import java.io.Serializable;
 
+import io.github.astrapi69.model.api.IModel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import io.github.astrapi69.model.api.Model;
 
 /**
  * The class {@link SerializableModel} contains only model object that implements the
@@ -50,14 +50,14 @@ public class SerializableModel<T extends Serializable> extends GenericModel<T>
 	}
 
 	/**
-	 * Factory methods for Model which uses type inference to make code shorter. Equivalent to
+	 * Factory methods for IModel which uses type inference to make code shorter. Equivalent to
 	 * <code>new SerializableModel&lt;TypeOfObject&gt;()</code>.
 	 *
 	 * @param <T>
 	 *            the generic type
-	 * @return Model that contains <code>object</code>
+	 * @return IModel that contains <code>object</code>
 	 */
-	public static <T extends Serializable> Model<T> of()
+	public static <T extends Serializable> IModel<T> of()
 	{
 		return new SerializableModel<>();
 	}
@@ -72,22 +72,22 @@ public class SerializableModel<T extends Serializable> extends GenericModel<T>
 	 * @return <code>model</code>
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Model<T> of(final Model<?> model)
+	public static <T> IModel<T> of(final IModel<?> model)
 	{
-		return (Model<T>)model;
+		return (IModel<T>)model;
 	}
 
 	/**
-	 * Factory methods for Model which uses type inference to make code shorter. Equivalent to
-	 * <code>new Model&lt;TypeOfObject&gt;(object)</code>.
+	 * Factory methods for IModel which uses type inference to make code shorter. Equivalent to
+	 * <code>new IModel&lt;TypeOfObject&gt;(object)</code>.
 	 *
 	 * @param <T>
 	 *            the generic type
 	 * @param object
 	 *            the object
-	 * @return Model that contains <code>object</code>
+	 * @return IModel that contains <code>object</code>
 	 */
-	public static <T extends Serializable> Model<T> of(final T object)
+	public static <T extends Serializable> IModel<T> of(final T object)
 	{
 		return new SerializableModel<>(object);
 	}

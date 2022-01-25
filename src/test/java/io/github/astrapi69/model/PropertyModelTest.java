@@ -19,7 +19,7 @@ import static org.testng.AssertJUnit.assertEquals;
 
 import org.testng.annotations.Test;
 
-import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.IModel;
 import io.github.astrapi69.test.objects.Employee;
 import io.github.astrapi69.test.objects.Person;
 import io.github.astrapi69.test.objects.enums.Gender;
@@ -47,23 +47,34 @@ public class PropertyModelTest
 		String expected;
 		PropertyModel<String> model;
 		Employee employee;
+		String modelObject;
 		// new scenario with object
 		employee = Employee.builder().person(Person.builder().name("bar").build()).build();
 		// create PropertyModel
 		model = new PropertyModel<>(employee, "person.name");
 		// and set value persons name from employee over the model
-		model.setObject("foo");
-		// prove it
-		assertEquals(employee.getPerson().getName(), model.getObject());
+		modelObject = "foo";
+		model.setObject(modelObject);
+		// prove that the name of person from employee is set over the model
+		expected = employee.getPerson().getName();
+		actual = model.getObject();
+		assertEquals(expected, actual);
 
 		// new scenario with model object
-		Model<Employee> employeeModel = BaseModel.of(employee);
+		IModel<Employee> employeeModel = BaseModel.of(employee);
 		model = new PropertyModel<>(employeeModel, "person.name");
-		model.setObject("foo");
-		assertEquals(employee.getPerson().getName(), model.getObject());
-
-		employee.getPerson().setName("bar");
-		assertEquals(employee.getPerson().getName(), model.getObject());
+		model.setObject(modelObject);
+		// prove that the name of person from employee is set over the model
+		expected = employee.getPerson().getName();
+		actual = model.getObject();
+		assertEquals(expected, actual);
+		// now set from the model object the name
+		modelObject = "bar";
+		employee.getPerson().setName(modelObject);
+		// prove that the employee model is set over the model object
+		expected = employee.getPerson().getName();
+		actual = model.getObject();
+		assertEquals(expected, actual);
 	}
 
 

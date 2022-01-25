@@ -19,11 +19,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import lombok.NoArgsConstructor;
-import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.IModel;
 
 
 /**
- * Based on <code>Model</code> but for sets of serializable objects.
+ * Based on <code>IModel</code> but for sets of serializable objects.
  *
  * @author Timo Rantalaiho
  * @param <T>
@@ -53,9 +53,9 @@ public class SetModel<T> extends GenericCollectionModel<Set<T>>
 	 *            model type
 	 * @param set
 	 *            The Set, which may or may not be Serializable
-	 * @return A Model object wrapping the Set
+	 * @return A IModel object wrapping the Set
 	 */
-	public static <C> Model<Set<C>> ofSet(final Set<C> set)
+	public static <C> IModel<Set<C>> ofSet(final Set<C> set)
 	{
 		return new SetModel<>(set);
 	}

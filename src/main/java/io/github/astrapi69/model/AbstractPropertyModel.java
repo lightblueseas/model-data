@@ -20,11 +20,11 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import io.github.astrapi69.model.api.IModel;
+import io.github.astrapi69.model.api.IObjectClassAwareModel;
 import org.apache.commons.lang3.StringUtils;
 
-import io.github.astrapi69.model.api.Model;
-import io.github.astrapi69.model.api.ObjectClassAware;
-import io.github.astrapi69.model.api.PropertyReflectionAwareModel;
+import io.github.astrapi69.model.api.IPropertyReflectionAwareModel;
 import io.github.astrapi69.model.property.PropertyResolver;
 
 /**
@@ -36,9 +36,7 @@ import io.github.astrapi69.model.property.PropertyResolver;
  *            the generic type
  */
 public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
-	implements
-		ObjectClassAware<T>,
-		PropertyReflectionAwareModel<T>
+	implements IObjectClassAwareModel<T>, IPropertyReflectionAwareModel<T>
 {
 
 	/** The Constant serialVersionUID. */
@@ -61,9 +59,9 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 	public final Object getInnermostModelOrObject()
 	{
 		Object object = getTarget();
-		while (object instanceof Model)
+		while (object instanceof IModel)
 		{
-			final Object tmp = ((Model<?>)object).getObject();
+			final Object tmp = ((IModel<?>)object).getObject();
 			if (tmp == object)
 			{
 				break;
@@ -114,9 +112,9 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 		if (StringUtils.isEmpty(expression))
 		{
 			final Object target = getTarget();
-			if (target instanceof Model)
+			if (target instanceof IModel)
 			{
-				((Model<T>)target).setObject(object);
+				((IModel<T>)target).setObject(object);
 			}
 			else
 			{
@@ -157,11 +155,11 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 			}
 		}
 
-		else if (getTarget() instanceof ObjectClassAware)
+		else if (getTarget() instanceof IObjectClassAwareModel)
 		{
 			try
 			{
-				final Class<?> targetClass = ((ObjectClassAware<?>)getTarget()).getObjectClass();
+				final Class<?> targetClass = ((IObjectClassAwareModel<?>)getTarget()).getObjectClass();
 				if (targetClass != null)
 				{
 					final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(expression,

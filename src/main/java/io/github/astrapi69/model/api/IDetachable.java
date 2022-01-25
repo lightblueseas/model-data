@@ -15,29 +15,18 @@
  */
 package io.github.astrapi69.model.api;
 
+import java.io.Serializable;
+
 /**
- * The interface {@link ChainableModel} provides chaining for model objects. The
- * {@link ChainableModel} is also responsible to detach the internal models.
- *
- * @param <T>
- *            the generic type of the model object
+ * The interface {@link IDetachable} provides the ability to detach an object that was previously
+ * attached to a context. This reduces the amount of state required by an object. This makes the
+ * object cheaper to replicate in a clustered environment.
  */
-public interface ChainableModel<T> extends Model<T>
+public interface IDetachable extends Serializable
 {
 
 	/**
-	 * Gets the chained model.
-	 *
-	 * @return the chained model
+	 * Detach an object.
 	 */
-	public Model<?> getChainedModel();
-
-	/**
-	 * Sets the chained model.
-	 *
-	 * @param model
-	 *            the new chained model
-	 */
-	public void setChainedModel(Model<?> model);
-
+	void detach();
 }

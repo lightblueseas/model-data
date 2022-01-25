@@ -20,13 +20,12 @@ import static org.testng.Assert.assertNull;
 
 import java.io.Serializable;
 
+import io.github.astrapi69.model.api.IModel;
 import org.testng.annotations.Test;
-
-import io.github.astrapi69.model.api.Model;
 
 /**
  * <p>
- * If AbstractPropertyModel has an target that implements the ObjectClassAware interface then the
+ * If AbstractPropertyModel has an target that implements the IObjectClassAwareModel interface then the
  * class of that target is used to infer the modeled property type.
  * </p>
  *
@@ -51,10 +50,10 @@ public class AbstractPropertyModelObjectClassTest
 	 *
 	 * @param modelForCustomTypeObject
 	 */
-	private void assertPropertyModelTargetTypeIsInteger(Model<?> modelForCustomTypeObject)
+	private void assertPropertyModelTargetTypeIsInteger(IModel<?> modelForCustomTypeObject)
 	{
 		assertEquals(Integer.class,
-			new PropertyModel<Model<?>>(modelForCustomTypeObject, "someProperty").getObjectClass());
+			new PropertyModel<IModel<?>>(modelForCustomTypeObject, "someProperty").getObjectClass());
 	}
 
 	/**
@@ -66,7 +65,7 @@ public class AbstractPropertyModelObjectClassTest
 	@Test
 	public void testLazyClassResolution()
 	{
-		Model<CustomBean> modelCustomBean = new SerializableModel<>(null);
+		IModel<CustomBean> modelCustomBean = new SerializableModel<>(null);
 		PropertyModel<CustomType> customTypeModel = new PropertyModel<>(modelCustomBean,
 			"customType");
 		PropertyModel<Integer> somePropertyModel = new PropertyModel<>(customTypeModel,

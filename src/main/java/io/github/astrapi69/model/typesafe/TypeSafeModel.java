@@ -25,12 +25,12 @@ import java.util.List;
 
 import io.github.astrapi69.model.LoadableDetachableModel;
 import io.github.astrapi69.model.PropertyModel;
-import io.github.astrapi69.model.api.ChainableModel;
-import io.github.astrapi69.model.api.Detachable;
-import io.github.astrapi69.model.api.Model;
-import io.github.astrapi69.model.api.ObjectClassAware;
+import io.github.astrapi69.model.api.IChainingModel;
+import io.github.astrapi69.model.api.IDetachable;
+import io.github.astrapi69.model.api.IModel;
+import io.github.astrapi69.model.api.IObjectClassAwareModel;
 import io.github.astrapi69.model.api.ObjectTypeAware;
-import io.github.astrapi69.model.api.PropertyReflectionAwareModel;
+import io.github.astrapi69.model.api.IPropertyReflectionAwareModel;
 import io.github.astrapi69.model.reflect.CachingMethodResolver;
 import io.github.astrapi69.model.reflect.DefaultMethodResolver;
 import io.github.astrapi69.model.reflect.Evaluation;
@@ -41,7 +41,7 @@ import io.github.astrapi69.model.reflect.Reflection;
  * A model for lazy evaluations:
  *
  * <pre>
- * Model&lt;String&gt; model = model(from(a).getB().getStrings().get(&quot;key&quot;));
+ * IModel&lt;String&gt; model = model(from(a).getB().getStrings().get(&quot;key&quot;));
  *
  * model.setObject(&quot;value&quot;);
  *
@@ -51,7 +51,7 @@ import io.github.astrapi69.model.reflect.Reflection;
  * Evaluations can be nested too:
  *
  * <pre>
- * Model&lt;C&gt; model = model(from(a).getB().getCs().get(from(d).getIndex()));
+ * IModel&lt;C&gt; model = model(from(a).getB().getCs().get(from(d).getIndex()));
  * </pre>
  *
  * @param <T>
@@ -61,11 +61,8 @@ import io.github.astrapi69.model.reflect.Reflection;
  */
 @SuppressWarnings("unchecked")
 public class TypeSafeModel<T>
-	implements
-		Model<T>,
-		ObjectClassAware<T>,
-		ObjectTypeAware<T>,
-		PropertyReflectionAwareModel<T>
+	implements IModel<T>, IObjectClassAwareModel<T>,
+		ObjectTypeAware<T>, IPropertyReflectionAwareModel<T>
 {
 
 	private static final Object[] EMPTY_ARGS = new Object[0];
@@ -120,7 +117,7 @@ public class TypeSafeModel<T>
 	 *            model holding the target object
 	 * @return a result proxy for further evaluation
 	 */
-	public static <T> T from(Model<T> target)
+	public static <T> T from(IModel<T> target)
 	{
 		if (target == null)
 		{
@@ -149,7 +146,7 @@ public class TypeSafeModel<T>
 	 *            The type parameter for that model.
 	 * @return a result proxy for further evaluation.
 	 */
-	public static <T> T from(Model<T> target, Class<T> type)
+	public static <T> T from(IModel<T> target, Class<T> type)
 	{
 		return (T)new BoundEvaluation<T>(type, target).proxy();
 	}
@@ -179,7 +176,7 @@ public class TypeSafeModel<T>
 	 * @return {@code null} if type cannot be detected
 	 */
 	@SuppressWarnings("rawtypes")
-	private static Type getType(Model<?> model)
+	private static Type getType(IModel<?> model)
 	{
 		Type type = null;
 
@@ -187,9 +184,9 @@ public class TypeSafeModel<T>
 		{
 			type = ((ObjectTypeAware)model).getObjectType();
 		}
-		else if (model instanceof ObjectClassAware)
+		else if (model instanceof IObjectClassAwareModel)
 		{
-			type = ((ObjectClassAware)model).getObjectClass();
+			type = ((IObjectClassAwareModel)model).getObjectClass();
 		}
 
 		if (type == null)
@@ -345,23 +342,23 @@ public class TypeSafeModel<T>
 	@Override
 	public void detach()
 	{
-		if (target instanceof Detachable)
+		if (target instanceof IDetachable)
 		{
-			((Detachable)target).detach();
+			((IDetachable)target).detach();
 		}
 
-		if (stack instanceof Detachable)
+		if (stack instanceof IDetachable)
 		{
-			((Detachable)stack).detach();
+			((IDetachable)stack).detach();
 		}
 
 		if (stack instanceof Object[])
 		{
 			for (Object object : (Object[])stack)
 			{
-				if (object instanceof Detachable)
+				if (object instanceof IDetachable)
 				{
-					((Detachable)object).detach();
+					((IDetachable)object).detach();
 				}
 			}
 		}
@@ -380,9 +377,9 @@ public class TypeSafeModel<T>
 		checkBound();
 
 		Object result = target;
-		if (result instanceof Model)
+		if (result instanceof IModel)
 		{
-			result = ((Model<T>)result).getObject();
+			result = ((IModel<T>)result).getObject();
 		}
 
 		MethodIterator methodIterator = new MethodIterator();
@@ -414,9 +411,9 @@ public class TypeSafeModel<T>
 		MethodIterator methodIterator = new MethodIterator();
 		if (!methodIterator.hasNext())
 		{
-			if (target instanceof Model)
+			if (target instanceof IModel)
 			{
-				((Model<T>)target).setObject(result);
+				((IModel<T>)target).setObject(result);
 				return;
 			}
 			else
@@ -425,9 +422,9 @@ public class TypeSafeModel<T>
 			}
 		}
 
-		if (target instanceof Model)
+		if (target instanceof IModel)
 		{
-			target = ((Model<T>)target).getObject();
+			target = ((IModel<T>)target).getObject();
 		}
 		if (target == null)
 		{
@@ -613,9 +610,9 @@ public class TypeSafeModel<T>
 	{
 		Type type = null;
 
-		if (target instanceof Model)
+		if (target instanceof IModel)
 		{
-			type = getType((Model<?>)target);
+			type = getType((IModel<?>)target);
 
 			if (type instanceof TypeVariable<?>)
 			{
@@ -627,7 +624,7 @@ public class TypeSafeModel<T>
 			 */
 			if (type == null || type instanceof Class)
 			{
-				Object object = ((Model<?>)target).getObject();
+				Object object = ((IModel<?>)target).getObject();
 				if (object != null)
 				{
 					type = object.getClass();
@@ -647,7 +644,7 @@ public class TypeSafeModel<T>
 	 *
 	 * @return model wrapper
 	 */
-	public Model<T> loadableDetachable()
+	public IModel<T> loadableDetachable()
 	{
 		return new LoadableDetachableWrapper();
 	}
@@ -696,10 +693,8 @@ public class TypeSafeModel<T>
 	 * @see LoadableDetachableModel
 	 */
 	private class LoadableDetachableWrapper extends LoadableDetachableModel<T>
-		implements
-			ObjectClassAware<T>,
-			ObjectTypeAware<T>,
-			ChainableModel<T>
+		implements IObjectClassAwareModel<T>,
+			ObjectTypeAware<T>, IChainingModel<T>
 	{
 
 		private static final long serialVersionUID = 1L;
@@ -722,13 +717,13 @@ public class TypeSafeModel<T>
 		}
 
 		@Override
-		public Model<?> getChainedModel()
+		public IModel<?> getChainedModel()
 		{
 			return TypeSafeModel.this;
 		}
 
 		@Override
-		public void setChainedModel(Model<?> model)
+		public void setChainedModel(IModel<?> model)
 		{
 			throw new UnsupportedOperationException();
 		}

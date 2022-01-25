@@ -15,18 +15,19 @@
  */
 package io.github.astrapi69.model.api;
 
-import java.io.Serializable;
-
 /**
- * The interface {@link Detachable} provides the ability to detach an object that was previously
- * attached to a context. This reduces the amount of state required by an object. This makes the
- * object cheaper to replicate in a clustered environment.
+ * The marker interface {@link IWrapModel} represents a model that serves as a decorator for another.
+ *
+ * @param <T>
+ *            the generic type of the model object
  */
-public interface Detachable extends Serializable
+public interface IWrapModel<T> extends IModel<T>
 {
 
 	/**
-	 * Detach an object.
+	 * Gets the wrapped model.
+	 *
+	 * @return the wrapped model
 	 */
-	void detach();
+	IModel<?> getWrappedModel();
 }

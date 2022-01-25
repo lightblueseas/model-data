@@ -16,12 +16,12 @@
 package io.github.astrapi69.model;
 
 import io.github.astrapi69.model.api.Attachable;
-import io.github.astrapi69.model.api.ChainableModel;
-import io.github.astrapi69.model.api.Detachable;
-import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.IChainingModel;
+import io.github.astrapi69.model.api.IDetachable;
+import io.github.astrapi69.model.api.IModel;
 
 /**
- * The class {@link ChainingModel} is the default implementation of {@link ChainableModel}
+ * The class {@link ChainingModel} is the default implementation of {@link IChainingModel}
  * interface.
  *
  * @param <T>
@@ -29,13 +29,13 @@ import io.github.astrapi69.model.api.Model;
  *
  * @see AbstractPropertyModel
  */
-public class ChainingModel<T> implements ChainableModel<T>
+public class ChainingModel<T> implements IChainingModel<T>
 {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Any model object (which may or may not implement Model) */
+	/** Any model object (which may or may not implement IModel) */
 	private Object target;
 
 	/**
@@ -68,9 +68,9 @@ public class ChainingModel<T> implements ChainableModel<T>
 	public void detach()
 	{
 		// Detach nested object if it's a detachable
-		if (target instanceof Detachable)
+		if (target instanceof IDetachable)
 		{
-			((Detachable)target).detach();
+			((IDetachable)target).detach();
 		}
 	}
 
@@ -78,11 +78,11 @@ public class ChainingModel<T> implements ChainableModel<T>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Model<?> getChainedModel()
+	public IModel<?> getChainedModel()
 	{
-		if (target instanceof Model)
+		if (target instanceof IModel)
 		{
-			return (Model<?>)target;
+			return (IModel<?>)target;
 		}
 		return null;
 	}
@@ -91,7 +91,7 @@ public class ChainingModel<T> implements ChainableModel<T>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setChainedModel(final Model<?> model)
+	public void setChainedModel(final IModel<?> model)
 	{
 		target = model;
 	}
@@ -103,9 +103,9 @@ public class ChainingModel<T> implements ChainableModel<T>
 	@SuppressWarnings("unchecked")
 	public T getObject()
 	{
-		if (target instanceof Model)
+		if (target instanceof IModel)
 		{
-			return ((Model<T>)target).getObject();
+			return ((IModel<T>)target).getObject();
 		}
 		return (T)target;
 	}
@@ -117,9 +117,9 @@ public class ChainingModel<T> implements ChainableModel<T>
 	@SuppressWarnings("unchecked")
 	public void setObject(final T object)
 	{
-		if (target instanceof Model)
+		if (target instanceof IModel)
 		{
-			((Model<T>)target).setObject(object);
+			((IModel<T>)target).setObject(object);
 		}
 		else
 		{
@@ -154,7 +154,7 @@ public class ChainingModel<T> implements ChainableModel<T>
 	@Override
 	public String toString()
 	{
-		final StringBuilder sb = new StringBuilder("Model:classname=[");
+		final StringBuilder sb = new StringBuilder("IModel:classname=[");
 		sb.append(getClass().getName()).append(']');
 		sb.append(":nestedModel=[").append(target).append(']');
 		return sb.toString();
