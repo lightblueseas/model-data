@@ -623,6 +623,7 @@ public class TypeSafeModelTest
 		assertEquals("getC(i)", model.getPath());
 
 		assertEquals(a.b.cs.get(0), model.getObject());
+		assertEquals(a.b.cs.get(0), c);
 	}
 
 	@Test

@@ -120,13 +120,10 @@ public class PropertyModelTest
 		Gender actual;
 		Gender expected;
 		Employee employeeJoe;
-		Employee employeeCeo;
 		PropertyModel<Gender> modelJoeGender;
-		PropertyModel<Gender> modelCeoGender;
 		// new scenario
 		employeeJoe = Employee.builder()
 			.person(Person.builder().name("Joe").gender(Gender.MALE).build()).build();
-
 
 		modelJoeGender = new PropertyModel<>(employeeJoe, "person.gender");
 		modelJoeGender.setObject(Gender.MALE);
@@ -134,9 +131,10 @@ public class PropertyModelTest
 		actual = modelJoeGender.getObject();
 		assertEquals(expected, actual);
 
+		employeeJoe.getPerson().setGender(Gender.UNDEFINED);
+		expected = employeeJoe.getPerson().getGender();
+		actual = modelJoeGender.getObject();
+		assertEquals(expected, actual);
 
-		employeeCeo = Employee.builder().person(Person.builder().build()).build();
-		modelCeoGender = new PropertyModel<>(employeeCeo, "person.gender");
-		PropertyModel<Gender> bindModel = new PropertyModel<>(modelJoeGender, "person.gender");
 	}
 }
