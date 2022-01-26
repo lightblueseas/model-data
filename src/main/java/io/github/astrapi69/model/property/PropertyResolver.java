@@ -22,13 +22,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
+import io.github.astrapi69.model.api.IModel;
 import lombok.extern.java.Log;
 
 import org.apache.commons.lang3.StringUtils;
 
 import io.github.astrapi69.model.api.ClassCache;
 import io.github.astrapi69.model.api.GetAndSet;
-import io.github.astrapi69.model.api.Model;
 
 /**
  * This class parses expressions to lookup or set a value on the object that is given. <br>
@@ -45,7 +45,7 @@ import io.github.astrapi69.model.api.Model;
  * <strong>Note that the property resolver by default provides access to private members and
  * methods. If guaranteeing encapsulation of the target objects is a big concern, you should
  * consider using an alternative implementation.</strong> </div> <div> <strong>Note: If a property
- * evaluates to an instance of {@link Model} then the expression should use '.object' to work with
+ * evaluates to an instance of {@link IModel} then the expression should use '.object' to work with
  * its value.</strong> </div>
  *
  * @author jcompagner

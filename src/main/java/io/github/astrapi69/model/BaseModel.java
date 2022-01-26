@@ -16,7 +16,7 @@
 package io.github.astrapi69.model;
 
 import lombok.NoArgsConstructor;
-import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.IModel;
 
 /**
  * The class {@link BaseModel} for simple objects.
@@ -43,14 +43,14 @@ public class BaseModel<T> extends GenericModel<T>
 	}
 
 	/**
-	 * Factory methods for Model which uses type inference to make code shorter. Equivalent to
+	 * Factory methods for IModel which uses type inference to make code shorter. Equivalent to
 	 * <code>new BaseModel&lt;TypeOfObject&gt;()</code>.
 	 *
 	 * @param <T>
 	 *            the generic type
-	 * @return Model that contains <code>object</code>
+	 * @return IModel that contains <code>object</code>
 	 */
-	public static <T> Model<T> of()
+	public static <T> IModel<T> of()
 	{
 		return new BaseModel<>();
 	}
@@ -65,22 +65,22 @@ public class BaseModel<T> extends GenericModel<T>
 	 * @return <code>model</code>
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Model<T> of(final Model<?> model)
+	public static <T> IModel<T> of(final IModel<?> model)
 	{
-		return (Model<T>)model;
+		return (IModel<T>)model;
 	}
 
 	/**
-	 * Factory methods for Model which uses type inference to make code shorter. Equivalent to
+	 * Factory methods for IModel which uses type inference to make code shorter. Equivalent to
 	 * <code>new BaseModel&lt;TypeOfObject&gt;(object)</code>.
 	 *
 	 * @param <T>
 	 *            the generic type
 	 * @param object
 	 *            the object
-	 * @return Model that contains <code>object</code>
+	 * @return IModel that contains <code>object</code>
 	 */
-	public static <T> Model<T> of(final T object)
+	public static <T> IModel<T> of(final T object)
 	{
 		return new BaseModel<>(object);
 	}

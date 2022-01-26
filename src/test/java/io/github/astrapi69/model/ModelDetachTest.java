@@ -18,12 +18,12 @@ package io.github.astrapi69.model;
 
 import static org.testng.AssertJUnit.assertTrue;
 
+import io.github.astrapi69.model.api.IDetachable;
+import io.github.astrapi69.model.api.IModel;
 import org.testng.annotations.Test;
 
-import io.github.astrapi69.model.api.Model;
-
 /**
- * Tests the detach behavior for compatibility with Detachable nested objects, ensuring that the
+ * Tests the detach behavior for compatibility with IDetachable nested objects, ensuring that the
  * detach method is called for those nested objects.
  */
 public class ModelDetachTest
@@ -35,7 +35,7 @@ public class ModelDetachTest
 	public void abstractPropertyModelDetach()
 	{
 		Detachable detachable = new Detachable();
-		Model<?> model = new AbstractPropertyModel<Void>(detachable)
+		IModel<?> model = new AbstractPropertyModel<Void>(detachable)
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -56,12 +56,12 @@ public class ModelDetachTest
 	public void propertyModelDetach()
 	{
 		Detachable detachable = new Detachable();
-		Model<?> model = new PropertyModel<Void>(detachable, "foo");
+		IModel<?> model = new PropertyModel<Void>(detachable, "foo");
 		model.detach();
 		assertTrue(detachable.detached);
 	}
 
-	static class Detachable implements io.github.astrapi69.model.api.Detachable
+	static class Detachable implements IDetachable
 	{
 		private static final long serialVersionUID = 1L;
 

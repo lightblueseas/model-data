@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.NoArgsConstructor;
-import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.IModel;
 
 /**
- * Based on <code>Model</code> but for lists of serializable objects.
+ * Based on <code>IModel</code> but for lists of serializable objects.
  *
  * @author Timo Rantalaiho
  * @param <T>
@@ -54,9 +54,9 @@ public class WildcardListModel<T> extends GenericCollectionModel<List<T>>
 	 *            model type
 	 * @param list
 	 *            The List, which may or may not be Serializable
-	 * @return A Model object wrapping the List
+	 * @return A IModel object wrapping the List
 	 */
-	public static <C> Model<List<C>> of(final List<C> list)
+	public static <C> IModel<List<C>> of(final List<C> list)
 	{
 		return new WildcardListModel<>(list);
 	}

@@ -17,9 +17,9 @@ package io.github.astrapi69.model;
 
 import static org.testng.AssertJUnit.assertEquals;
 
+import io.github.astrapi69.model.api.IModel;
 import org.testng.annotations.Test;
 
-import io.github.astrapi69.model.api.Model;
 import io.github.astrapi69.test.objects.Company;
 import io.github.astrapi69.test.objects.Person;
 import io.github.astrapi69.test.objects.enums.Gender;
@@ -34,8 +34,8 @@ public class LambdaBindingModelTest
 		String expected;
 		Person person;
 		Person otherPerson;
-		Model<Person> personModel;
-		Model<Person> otherPersonModel;
+		IModel<Person> personModel;
+		IModel<Person> otherPersonModel;
 		// new scenario
 		person = Person.builder().name("Joe").gender(Gender.MALE).build();
 		otherPerson = Person.builder().build();
@@ -43,7 +43,7 @@ public class LambdaBindingModelTest
 		personModel = SerializableModel.of(person);
 		otherPersonModel = SerializableModel.of(otherPerson);
 
-		Model<String> nameModel = LambdaBindingModel.of(personModel, otherPersonModel,
+		IModel<String> nameModel = LambdaBindingModel.of(personModel, otherPersonModel,
 			Person::getName, Person::setName);
 		expected = "new name";
 		nameModel.setObject(expected);
@@ -60,8 +60,8 @@ public class LambdaBindingModelTest
 		String expected;
 		Person person;
 		Company company;
-		Model<Person> personModel;
-		Model<Company> companyModel;
+		IModel<Person> personModel;
+		IModel<Company> companyModel;
 		// new scenario
 		person = Person.builder().name("Joe").gender(Gender.MALE).build();
 		company = Company.builder().build();
@@ -69,12 +69,18 @@ public class LambdaBindingModelTest
 		personModel = SerializableModel.of(person);
 		companyModel = SerializableModel.of(company);
 
-		Model<String> nameModel = LambdaBindingModel.of(personModel, companyModel, Person::getName,
-			Person::setName, Company::setName);
+		IModel<String> nameModel = LambdaBindingModel.of(personModel, companyModel, Person::getName,
+			Person::setName, Company::getName, Company::setName);
 		expected = "new name";
 		nameModel.setObject(expected);
 		actual = person.getName();
 		assertEquals(actual, expected);
+		actual = company.getName();
+		assertEquals(actual, expected);
+		expected = "foo";
+		personModel.getObject().setName(expected);
+		// call getObject for update both models
+		nameModel.getObject();
 		actual = company.getName();
 		assertEquals(actual, expected);
 	}

@@ -21,22 +21,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import io.github.astrapi69.model.api.IDetachable;
+import io.github.astrapi69.model.api.IModel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import io.github.astrapi69.model.api.Attachable;
-import io.github.astrapi69.model.api.Detachable;
-import io.github.astrapi69.model.api.Model;
-import io.github.astrapi69.model.api.ObjectClassAware;
+import io.github.astrapi69.model.api.IObjectClassAwareModel;
 import io.github.astrapi69.model.util.MapModel;
 import io.github.astrapi69.model.util.WildcardCollectionModel;
 import io.github.astrapi69.model.util.WildcardListModel;
 import io.github.astrapi69.model.util.WildcardSetModel;
 
 /**
- * The class {@link GenericModel} is the basic implementation of an <code>Model</code>. Decorates a
+ * The class {@link GenericModel} is the basic implementation of an <code>IModel</code>. Decorates a
  * simple object. This class is only for small object, if you want to store large objects consider
  * to use LoadableDetachableModel instead.
  *
@@ -48,7 +48,7 @@ import io.github.astrapi69.model.util.WildcardSetModel;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-public abstract class GenericModel<T> implements Model<T>, ObjectClassAware<T>
+public abstract class GenericModel<T> implements IModel<T>, IObjectClassAwareModel<T>
 {
 
 	/** The Constant serialVersionUID. */
@@ -75,9 +75,9 @@ public abstract class GenericModel<T> implements Model<T>, ObjectClassAware<T>
 	 *            model type
 	 * @param collection
 	 *            The Collection, which may or may not be Serializable
-	 * @return A Model object wrapping the Set
+	 * @return A IModel object wrapping the Set
 	 */
-	public static <C> Model<Collection<C>> ofCollection(final Collection<C> collection)
+	public static <C> IModel<Collection<C>> ofCollection(final Collection<C> collection)
 	{
 		return new WildcardCollectionModel<>(collection);
 	}
@@ -90,9 +90,9 @@ public abstract class GenericModel<T> implements Model<T>, ObjectClassAware<T>
 	 *            model type
 	 * @param list
 	 *            The List, which may or may not be Serializable
-	 * @return A Model object wrapping the List
+	 * @return A IModel object wrapping the List
 	 */
-	public static <C> Model<List<C>> ofList(final List<C> list)
+	public static <C> IModel<List<C>> ofList(final List<C> list)
 	{
 		return WildcardListModel.of(list);
 	}
@@ -107,9 +107,9 @@ public abstract class GenericModel<T> implements Model<T>, ObjectClassAware<T>
 	 *            value type in map
 	 * @param map
 	 *            The Map, which may or may not be Serializable
-	 * @return A Model object wrapping the Map
+	 * @return A IModel object wrapping the Map
 	 */
-	public static <K, V> Model<Map<K, V>> ofMap(final Map<K, V> map)
+	public static <K, V> IModel<Map<K, V>> ofMap(final Map<K, V> map)
 	{
 		return MapModel.ofMap(map);
 	}
@@ -122,9 +122,9 @@ public abstract class GenericModel<T> implements Model<T>, ObjectClassAware<T>
 	 *            model type
 	 * @param set
 	 *            The Set, which may or may not be Serializable
-	 * @return A Model object wrapping the Set
+	 * @return A IModel object wrapping the Set
 	 */
-	public static <C> Model<Set<C>> ofSet(final Set<C> set)
+	public static <C> IModel<Set<C>> ofSet(final Set<C> set)
 	{
 		return WildcardSetModel.ofSet(set);
 	}
@@ -147,9 +147,9 @@ public abstract class GenericModel<T> implements Model<T>, ObjectClassAware<T>
 	@Override
 	public void detach()
 	{
-		if (object instanceof Detachable)
+		if (object instanceof IDetachable)
 		{
-			((Detachable)object).detach();
+			((IDetachable)object).detach();
 		}
 	}
 

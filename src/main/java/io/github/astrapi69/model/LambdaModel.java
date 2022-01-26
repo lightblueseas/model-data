@@ -15,21 +15,21 @@
  */
 package io.github.astrapi69.model;
 
-import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.IModel;
 import io.github.astrapi69.model.api.SerializableBiConsumer;
 import io.github.astrapi69.model.api.SerializableConsumer;
 import io.github.astrapi69.model.api.SerializableFunction;
 import io.github.astrapi69.model.api.SerializableSupplier;
 
 /**
- * <code>LambdaModel</code> is a basic implementation of an <code>Model</code> that uses a
+ * <code>LambdaModel</code> is a basic implementation of an <code>IModel</code> that uses a
  * serializable {@link java.util.function.Supplier} to get the object and
  * {@link java.util.function.Consumer} to set it.
  *
  * @param <T>
- *            The type of the Model Object
+ *            The type of the IModel Object
  */
-public abstract class LambdaModel<T> implements Model<T>
+public abstract class LambdaModel<T> implements IModel<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -62,7 +62,7 @@ public abstract class LambdaModel<T> implements Model<T>
 	 *
 	 * @return model
 	 */
-	public static <X, T> Model<T> of(final Model<X> target, final SerializableFunction<X, T> getter)
+	public static <X, T> IModel<T> of(final IModel<X> target, final SerializableFunction<X, T> getter)
 	{
 
 		return new LambdaModel<T>()
@@ -119,7 +119,7 @@ public abstract class LambdaModel<T> implements Model<T>
 	 *
 	 * @return model
 	 */
-	public static <X, T> Model<T> of(final Model<X> target, final SerializableFunction<X, T> getter,
+	public static <X, T> IModel<T> of(final IModel<X> target, final SerializableFunction<X, T> getter,
 		final SerializableBiConsumer<X, T> setter)
 	{
 		return new LambdaModel<T>()
@@ -179,7 +179,7 @@ public abstract class LambdaModel<T> implements Model<T>
 	 * @param <T>
 	 *            model object type
 	 */
-	public static <T> Model<T> of(final SerializableSupplier<T> getter,
+	public static <T> IModel<T> of(final SerializableSupplier<T> getter,
 		final SerializableConsumer<T> setter)
 	{
 

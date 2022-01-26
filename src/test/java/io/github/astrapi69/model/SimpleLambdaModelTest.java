@@ -19,7 +19,7 @@ import static org.testng.AssertJUnit.assertEquals;
 
 import org.testng.annotations.Test;
 
-import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.IModel;
 import io.github.astrapi69.test.objects.Person;
 
 /**
@@ -38,10 +38,10 @@ public class SimpleLambdaModelTest
 		String expected;
 		String currentValue;
 		Person person;
-		Model<String> personNameModel;
+		IModel<String> personNameModel;
 		// initialize test objects
 		person = new Person();
-		personNameModel = new SimpleLambdaModel<String>(() -> person.getName(),
+		personNameModel = new SimpleLambdaModel<>(() -> person.getName(),
 			(name) -> person.setName(name));
 		// new scenario
 		// set value over the bean and check model

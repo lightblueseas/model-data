@@ -16,18 +16,28 @@
 package io.github.astrapi69.model.api;
 
 /**
- * The marker interface {@link WrapModel} represents a model that serves as a decorator for another.
+ * The interface {@link IChainingModel} provides chaining for model objects. The
+ * {@link IChainingModel} is also responsible to detach the internal models.
  *
  * @param <T>
  *            the generic type of the model object
  */
-public interface WrapModel<T> extends Model<T>
+public interface IChainingModel<T> extends IModel<T>
 {
 
 	/**
-	 * Gets the wrapped model.
+	 * Gets the chained model.
 	 *
-	 * @return the wrapped model
+	 * @return the chained model
 	 */
-	Model<?> getWrappedModel();
+	public IModel<?> getChainedModel();
+
+	/**
+	 * Sets the chained model.
+	 *
+	 * @param model
+	 *            the new chained model
+	 */
+	public void setChainedModel(IModel<?> model);
+
 }

@@ -15,10 +15,10 @@
  */
 package io.github.astrapi69.model;
 
+import io.github.astrapi69.model.api.IModel;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import io.github.astrapi69.model.api.Model;
 import io.github.astrapi69.model.api.SerializableBiConsumer;
 import io.github.astrapi69.model.api.SerializableConsumer;
 import io.github.astrapi69.model.api.SerializableFunction;
@@ -26,7 +26,7 @@ import io.github.astrapi69.model.api.SerializableSupplier;
 
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class SimpleLambdaModel<T> implements Model<T>
+public class SimpleLambdaModel<T> implements IModel<T>
 {
 
 	SerializableSupplier<T> getter;
@@ -50,7 +50,7 @@ public class SimpleLambdaModel<T> implements Model<T>
 	 * @param <T>
 	 *            model object type
 	 */
-	public static <T> Model<T> of(final SerializableSupplier<T> getter,
+	public static <T> IModel<T> of(final SerializableSupplier<T> getter,
 		final SerializableConsumer<T> setter)
 	{
 
@@ -79,7 +79,7 @@ public class SimpleLambdaModel<T> implements Model<T>
 	 *
 	 * @return model
 	 */
-	public static <X, T> Model<T> of(final Model<X> target, final SerializableFunction<X, T> getter)
+	public static <X, T> IModel<T> of(final IModel<X> target, final SerializableFunction<X, T> getter)
 	{
 		return new SimpleLambdaModel<T>(null, null)
 		{
@@ -141,7 +141,7 @@ public class SimpleLambdaModel<T> implements Model<T>
 	 *
 	 * @return model
 	 */
-	public static <X, T> Model<T> of(final Model<X> target, final SerializableFunction<X, T> getter,
+	public static <X, T> IModel<T> of(final IModel<X> target, final SerializableFunction<X, T> getter,
 		final SerializableBiConsumer<X, T> setter)
 	{
 		return new SimpleLambdaModel<T>(null, null)

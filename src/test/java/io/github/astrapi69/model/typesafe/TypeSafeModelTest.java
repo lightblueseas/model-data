@@ -33,13 +33,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.github.astrapi69.model.api.IModel;
+import io.github.astrapi69.model.api.IObjectClassAwareModel;
 import org.testng.annotations.Test;
 
 import io.github.astrapi69.model.BaseModel;
 import io.github.astrapi69.model.LoadableDetachableModel;
 import io.github.astrapi69.model.PropertyModel;
 import io.github.astrapi69.model.SerializableModel;
-import io.github.astrapi69.model.api.Model;
 import io.github.astrapi69.model.reflect.Reflection;
 
 /**
@@ -134,7 +135,7 @@ public class TypeSafeModelTest
 	{
 		final boolean[] detached = { false };
 
-		Model<A> target = new SerializableModel<A>()
+		IModel<A> target = new SerializableModel<A>()
 		{
 			@Override
 			public void detach()
@@ -185,7 +186,7 @@ public class TypeSafeModelTest
 	@Test
 	public void fromTypeErasedModelFails()
 	{
-		class GenericModel<T> implements Model<T>
+		class GenericModel<T> implements IModel<T>
 		{
 			@Override
 			public void attach()
@@ -229,7 +230,7 @@ public class TypeSafeModelTest
 		final A a = new A();
 		a.b = new B();
 
-		Model target = new SerializableModel(a);
+		IModel target = new SerializableModel(a);
 
 		TypeSafeModel<B> model = model(((A)from(target, A.class)).getB());
 
@@ -261,7 +262,7 @@ public class TypeSafeModelTest
 		C c = new C();
 		cs.add(c);
 
-		Model<List<C>> target = new BaseModel<List<C>>()
+		IModel<List<C>> target = new BaseModel<List<C>>()
 		{
 			@Override
 			public List<C> getObject()
@@ -279,7 +280,7 @@ public class TypeSafeModelTest
 	}
 
 	/**
-	 * A {@link io.github.astrapi69.model.api.ObjectClassAware} doesn't provide generic information,
+	 * A {@link IObjectClassAwareModel} doesn't provide generic information,
 	 * thus the type of the model result is {@code List<Object>} only.
 	 */
 	@Test
@@ -555,7 +556,7 @@ public class TypeSafeModelTest
 		C c = new C();
 		a.b.cs.add(c);
 
-		Model<A> target = new SerializableModel<A>()
+		IModel<A> target = new SerializableModel<A>()
 		{
 			@Override
 			public A getObject()
@@ -583,7 +584,7 @@ public class TypeSafeModelTest
 		final A a = new A();
 		a.b = new B();
 
-		Model<A> target = new LoadableDetachableModel<A>()
+		IModel<A> target = new LoadableDetachableModel<A>()
 		{
 			@Override
 			public void attach()
@@ -622,6 +623,7 @@ public class TypeSafeModelTest
 		assertEquals("getC(i)", model.getPath());
 
 		assertEquals(a.b.cs.get(0), model.getObject());
+		assertEquals(a.b.cs.get(0), c);
 	}
 
 	@Test
@@ -744,7 +746,7 @@ public class TypeSafeModelTest
 	@Test
 	public void improveTargetTypeWithTargetObjectClass()
 	{
-		Model<Serializable> target = new SerializableModel<Serializable>()
+		IModel<Serializable> target = new SerializableModel<Serializable>()
 		{
 			@Override
 			public Serializable getObject()
@@ -775,7 +777,7 @@ public class TypeSafeModelTest
 	{
 		final int[] got = new int[1];
 
-		Model<String> string = new SerializableModel<String>()
+		IModel<String> string = new SerializableModel<String>()
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -788,7 +790,7 @@ public class TypeSafeModelTest
 			}
 		};
 
-		Model<String> model = model(from(string)).loadableDetachable();
+		IModel<String> model = model(from(string)).loadableDetachable();
 		model.getObject();
 		model.getObject();
 		assertEquals(1, got[0]);
@@ -898,7 +900,7 @@ public class TypeSafeModelTest
 		final List<C> cs = new ArrayList<>();
 		cs.add(new C());
 
-		Model<List<C>> target = new BaseModel<List<C>>()
+		IModel<List<C>> target = new BaseModel<List<C>>()
 		{
 			@Override
 			public List<C> getObject()
@@ -1049,7 +1051,7 @@ public class TypeSafeModelTest
 	{
 		final A[] as = new A[] { new A() };
 
-		Model<A> target = new SerializableModel<A>()
+		IModel<A> target = new SerializableModel<A>()
 		{
 
 			@Override
@@ -1122,7 +1124,7 @@ public class TypeSafeModelTest
 	@Test
 	public void toStringNeverFails()
 	{
-		Model<B> model = model(from(A.class).getB()).bind(SerializableModel.of((A)null));
+		IModel<B> model = model(from(A.class).getB()).bind(SerializableModel.of((A)null));
 
 		// targetType is unknown, thus #getPath() fails - but #toString()
 		// catches all exceptions anyway

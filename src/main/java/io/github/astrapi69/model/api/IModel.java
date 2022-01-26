@@ -16,18 +16,27 @@
 package io.github.astrapi69.model.api;
 
 /**
- * The interface {@link ObjectClassAware} can resolve the class of the generic type.
+ * A IModel decorates the actual model object that can be used by any other UI-Component. IModel
+ * implementations are used as a facade for the real model so that users have control over the
+ * actual persistence strategy.
  *
  * @param <T>
- *            the generic type
+ *            the generic type of the model object
  */
-public interface ObjectClassAware<T>
+public interface IModel<T> extends Attachable, IDetachable
 {
+	/**
+	 * Gets the model object.
+	 *
+	 * @return The model object
+	 */
+	T getObject();
 
 	/**
-	 * Gets the object class.
+	 * Sets the model object.
 	 *
-	 * @return the object class
+	 * @param object
+	 *            The model object
 	 */
-	Class<T> getObjectClass();
+	void setObject(final T object);
 }

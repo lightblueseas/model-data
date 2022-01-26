@@ -19,10 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lombok.NoArgsConstructor;
-import io.github.astrapi69.model.api.Model;
+import io.github.astrapi69.model.api.IModel;
 
 /**
- * Based on <code>Model</code> but for maps of serializable objects.
+ * Based on <code>IModel</code> but for maps of serializable objects.
  *
  * @author Timo Rantalaiho
  * @param <K>
@@ -58,9 +58,9 @@ public class MapModel<K, V> extends GenericCollectionModel<Map<K, V>>
 	 *            value type in map
 	 * @param map
 	 *            The Map, which may or may not be Serializable
-	 * @return A Model object wrapping the Map
+	 * @return A IModel object wrapping the Map
 	 */
-	public static <K, V> Model<Map<K, V>> ofMap(final Map<K, V> map)
+	public static <K, V> IModel<Map<K, V>> ofMap(final Map<K, V> map)
 	{
 		return new MapModel<>(map);
 	}

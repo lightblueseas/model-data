@@ -57,24 +57,24 @@ public class ModelToStringTest
 	public void propertyModel()
 	{
 		final PropertyModel<Void> emptyModel = new PropertyModel<>("", null);
-		String expected = "Model:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[]:expression=[null]";
+		String expected = "IModel:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[]:expression=[null]";
 		assertEquals(expected, emptyModel.toString());
 
 		final Properties properties = new Properties();
 		properties.put("name", "foo");
 		final PropertyModel<String> stringProperty = new PropertyModel<>(properties, "name");
 
-		expected = "Model:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[{name=foo}]:expression=[name]";
+		expected = "IModel:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[{name=foo}]:expression=[name]";
 		assertEquals(expected, stringProperty.toString());
 
 		stringProperty.getObject();
-		expected = "Model:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[{name=foo}]:expression=[name]";
+		expected = "IModel:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[{name=foo}]:expression=[name]";
 		assertEquals(expected, stringProperty.toString());
 
 		final InnerPOJO innerPOJO = new InnerPOJO();
 		final PropertyModel<?> pojoProperty = new PropertyModel<>(innerPOJO, "pojo");
 
-		expected = "Model:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[pojo]:expression=[pojo]";
+		expected = "IModel:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[pojo]:expression=[pojo]";
 		assertEquals(expected, pojoProperty.toString());
 	}
 

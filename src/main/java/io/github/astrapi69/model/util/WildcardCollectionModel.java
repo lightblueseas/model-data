@@ -18,11 +18,11 @@ package io.github.astrapi69.model.util;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import io.github.astrapi69.model.api.IModel;
 import lombok.NoArgsConstructor;
-import io.github.astrapi69.model.api.Model;
 
 /**
- * Based on <code>Model</code> but for any collections of serializable objects.
+ * Based on <code>IModel</code> but for any collections of serializable objects.
  *
  * @author Timo Rantalaiho
  * @param <T>
@@ -54,9 +54,9 @@ public class WildcardCollectionModel<T> extends GenericCollectionModel<Collectio
 	 *            model type
 	 * @param collection
 	 *            The Collection, which may or may not be Serializable
-	 * @return A Model object wrapping the Set
+	 * @return A IModel object wrapping the Set
 	 */
-	public static <C> Model<Collection<C>> of(final Collection<C> collection)
+	public static <C> IModel<Collection<C>> of(final Collection<C> collection)
 	{
 		return new WildcardCollectionModel<>(collection);
 	}
