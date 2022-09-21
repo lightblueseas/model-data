@@ -61,8 +61,11 @@ import io.github.astrapi69.model.reflect.Reflection;
  */
 @SuppressWarnings("unchecked")
 public class TypeSafeModel<T>
-	implements IModel<T>, IObjectClassAwareModel<T>,
-		ObjectTypeAware<T>, IPropertyReflectionAwareModel<T>
+	implements
+		IModel<T>,
+		IObjectClassAwareModel<T>,
+		ObjectTypeAware<T>,
+		IPropertyReflectionAwareModel<T>
 {
 
 	private static final Object[] EMPTY_ARGS = new Object[0];
@@ -693,8 +696,10 @@ public class TypeSafeModel<T>
 	 * @see LoadableDetachableModel
 	 */
 	private class LoadableDetachableWrapper extends LoadableDetachableModel<T>
-		implements IObjectClassAwareModel<T>,
-			ObjectTypeAware<T>, IChainingModel<T>
+		implements
+			IObjectClassAwareModel<T>,
+			ObjectTypeAware<T>,
+			IChainingModel<T>
 	{
 
 		private static final long serialVersionUID = 1L;

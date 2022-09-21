@@ -16,7 +16,8 @@
 package io.github.astrapi69.model.api;
 
 /**
- * The marker interface {@link IWrapModel} represents a model that serves as a decorator for another.
+ * The marker interface {@link IWrapModel} represents a model that serves as a decorator for
+ * another.
  *
  * @param <T>
  *            the generic type of the model object

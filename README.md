@@ -1,7 +1,7 @@
 # Overview
 
-The model-data project provides classes for modeling objects and model binding. 
-The model-data project is ispired from model pattern of the [wicket project](https://wicket.apache.org/) and most classes have been forked and modified. 
+The model-data project provides classes for modeling objects and model binding.
+The model-data project is ispired from model pattern of the [wicket project](https://wicket.apache.org/) and most classes have been forked and modified.
 
 Lombok is used for not generating boilerplate source code.
 
@@ -17,7 +17,7 @@ Lombok is used for not generating boilerplate source code.
 
 The source code comes under the liberal Apache License V2.0, making model-data great for all types of applications.
 
-# Build Status 
+# Build Status
 [![Build Status](https://api.travis-ci.com/lightblueseas/model-data.svg?branch=master)](https://travis-ci.com/github/lightblueseas/model-data)
 
 ## Maven Central
@@ -35,13 +35,13 @@ your project `build.gradle` if you want to import the core functionality of mode
 
 define version in file gradle.properties
 ```
-modelDataVersion=1.12
+modelDataVersion=2
 ```
 
 or in build.gradle ext area
 
 ```
-    modelDataVersion = "1.12"
+    modelDataVersion = "2"
 ```
 
 and then add the dependency to the dependencies area
@@ -59,24 +59,24 @@ You can add the following maven dependencies to your project `pom.xml` if you wa
 
 You can first define the version properties:
 
-	<properties>
-		...
-		<!-- MODEL-DATA version -->
-		<model-data.version>1.12</model-data.version>
-		...
-	</properties>
+    <properties>
+        ...
+        <!-- MODEL-DATA version -->
+        <model-data.version>2</model-data.version>
+        ...
+    </properties>
 
 Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of model-data:
 
-		<dependencies>
-			...
-			<dependency>
-				<groupId>io.github.astrapi69</groupId>
-				<artifactId>model-data</artifactId>
-				<version>${model-data.version}</version>
-			</dependency>
-			...			
-		</dependencies>
+        <dependencies>
+            ...
+            <dependency>
+                <groupId>io.github.astrapi69</groupId>
+                <artifactId>model-data</artifactId>
+                <version>${model-data.version}</version>
+            </dependency>
+            ...
+        </dependencies>
 
 ## Want to Help and improve it? ###
 

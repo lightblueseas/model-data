@@ -79,7 +79,8 @@ public class SimpleLambdaModel<T> implements IModel<T>
 	 *
 	 * @return model
 	 */
-	public static <X, T> IModel<T> of(final IModel<X> target, final SerializableFunction<X, T> getter)
+	public static <X, T> IModel<T> of(final IModel<X> target,
+		final SerializableFunction<X, T> getter)
 	{
 		return new SimpleLambdaModel<T>(null, null)
 		{
@@ -141,8 +142,8 @@ public class SimpleLambdaModel<T> implements IModel<T>
 	 *
 	 * @return model
 	 */
-	public static <X, T> IModel<T> of(final IModel<X> target, final SerializableFunction<X, T> getter,
-		final SerializableBiConsumer<X, T> setter)
+	public static <X, T> IModel<T> of(final IModel<X> target,
+		final SerializableFunction<X, T> getter, final SerializableBiConsumer<X, T> setter)
 	{
 		return new SimpleLambdaModel<T>(null, null)
 		{

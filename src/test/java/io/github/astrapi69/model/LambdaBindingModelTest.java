@@ -20,9 +20,9 @@ import static org.testng.AssertJUnit.assertEquals;
 import io.github.astrapi69.model.api.IModel;
 import org.testng.annotations.Test;
 
-import io.github.astrapi69.test.objects.Company;
-import io.github.astrapi69.test.objects.Person;
-import io.github.astrapi69.test.objects.enums.Gender;
+import io.github.astrapi69.test.object.Company;
+import io.github.astrapi69.test.object.Person;
+import io.github.astrapi69.test.object.enumtype.Gender;
 
 public class LambdaBindingModelTest
 {

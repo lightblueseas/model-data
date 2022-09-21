@@ -36,7 +36,9 @@ import io.github.astrapi69.model.property.PropertyResolver;
  *            the generic type
  */
 public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
-	implements IObjectClassAwareModel<T>, IPropertyReflectionAwareModel<T>
+	implements
+		IObjectClassAwareModel<T>,
+		IPropertyReflectionAwareModel<T>
 {
 
 	/** The Constant serialVersionUID. */
@@ -159,7 +161,8 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 		{
 			try
 			{
-				final Class<?> targetClass = ((IObjectClassAwareModel<?>)getTarget()).getObjectClass();
+				final Class<?> targetClass = ((IObjectClassAwareModel<?>)getTarget())
+					.getObjectClass();
 				if (targetClass != null)
 				{
 					final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(expression,

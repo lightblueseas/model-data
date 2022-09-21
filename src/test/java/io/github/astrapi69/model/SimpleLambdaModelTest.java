@@ -20,7 +20,7 @@ import static org.testng.AssertJUnit.assertEquals;
 import org.testng.annotations.Test;
 
 import io.github.astrapi69.model.api.IModel;
-import io.github.astrapi69.test.objects.Person;
+import io.github.astrapi69.test.object.Person;
 
 /**
  * The unit test class for the class {@link SimpleLambdaModel}
