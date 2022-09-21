@@ -19,8 +19,8 @@ import static org.testng.Assert.assertEquals;
 
 import org.testng.annotations.Test;
 
-import io.github.astrapi69.test.objects.Employee;
-import io.github.astrapi69.test.objects.Person;
+import io.github.astrapi69.test.object.Employee;
+import io.github.astrapi69.test.object.Person;
 
 public class GenericModelTest
 {

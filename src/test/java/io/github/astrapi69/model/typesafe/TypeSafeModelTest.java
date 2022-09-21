@@ -280,8 +280,8 @@ public class TypeSafeModelTest
 	}
 
 	/**
-	 * A {@link IObjectClassAwareModel} doesn't provide generic information,
-	 * thus the type of the model result is {@code List<Object>} only.
+	 * A {@link IObjectClassAwareModel} doesn't provide generic information, thus the type of the
+	 * model result is {@code List<Object>} only.
 	 */
 	@Test
 	public void getEntryFromGenericListInObjectClassAwareModelFails()

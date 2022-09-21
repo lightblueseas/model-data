@@ -159,8 +159,10 @@ public abstract class LambdaBindingModel<T> implements IModel<T>
 	 * @return model
 	 */
 	public static <X, Y, T> IModel<T> of(final IModel<X> source, final IModel<Y> target,
-		final SerializableFunction<X, T> sourceGetter, final SerializableBiConsumer<X, T> sourceSetter,
-		final SerializableFunction<Y, T> targetGetter, final SerializableBiConsumer<Y, T> targetSetter)
+		final SerializableFunction<X, T> sourceGetter,
+		final SerializableBiConsumer<X, T> sourceSetter,
+		final SerializableFunction<Y, T> targetGetter,
+		final SerializableBiConsumer<Y, T> targetSetter)
 	{
 		return new LambdaBindingModel<T>()
 		{
@@ -189,10 +191,12 @@ public abstract class LambdaBindingModel<T> implements IModel<T>
 				{
 					return null;
 				}
-				if(sourceObject != null && targetObject != null) {
+				if (sourceObject != null && targetObject != null)
+				{
 					T sourceApply = sourceGetter.apply(sourceObject);
 					T targetApply = targetGetter.apply(targetObject);
-					if(sourceApply != null && !sourceApply.equals(targetApply)) {
+					if (sourceApply != null && !sourceApply.equals(targetApply))
+					{
 						targetSetter.accept(targetObject, sourceApply);
 					}
 				}

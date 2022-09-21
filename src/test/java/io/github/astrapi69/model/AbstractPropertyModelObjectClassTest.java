@@ -25,8 +25,8 @@ import org.testng.annotations.Test;
 
 /**
  * <p>
- * If AbstractPropertyModel has an target that implements the IObjectClassAwareModel interface then the
- * class of that target is used to infer the modeled property type.
+ * If AbstractPropertyModel has an target that implements the IObjectClassAwareModel interface then
+ * the class of that target is used to infer the modeled property type.
  * </p>
  *
  * @see <a href="https://issues.apache.org/jira/browse/WICKET-2937">WICKET-2937</a>
@@ -53,7 +53,8 @@ public class AbstractPropertyModelObjectClassTest
 	private void assertPropertyModelTargetTypeIsInteger(IModel<?> modelForCustomTypeObject)
 	{
 		assertEquals(Integer.class,
-			new PropertyModel<IModel<?>>(modelForCustomTypeObject, "someProperty").getObjectClass());
+			new PropertyModel<IModel<?>>(modelForCustomTypeObject, "someProperty")
+				.getObjectClass());
 	}
 
 	/**
