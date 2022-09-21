@@ -35,13 +35,13 @@ your project `build.gradle` if you want to import the core functionality of mode
 
 define version in file gradle.properties
 ```
-modelDataVersion=1.12
+modelDataVersion=2
 ```
 
 or in build.gradle ext area
 
 ```
-    modelDataVersion = "1.12"
+    modelDataVersion = "2"
 ```
 
 and then add the dependency to the dependencies area
@@ -62,7 +62,7 @@ You can first define the version properties:
     <properties>
         ...
         <!-- MODEL-DATA version -->
-        <model-data.version>1.12</model-data.version>
+        <model-data.version>2</model-data.version>
         ...
     </properties>
 
