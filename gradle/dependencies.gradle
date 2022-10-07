@@ -1,0 +1,10 @@
+dependencies {
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
+    implementation("org.objenesis:objenesis:$objenesisVersion")
+    testImplementation("org.hamcrest:hamcrest-all:$hamcrestAllVersion")
+    testImplementation("io.github.astrapi69:test-object:$testObjectVersion")
+    testImplementation("io.github.astrapi69:jobj-clone:$jobjCloneVersion")
+    testImplementation("org.testng:testng:$testngVersion")
+}
