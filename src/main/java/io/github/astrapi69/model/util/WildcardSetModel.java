@@ -15,11 +15,12 @@
  */
 package io.github.astrapi69.model.util;
 
+import java.io.Serial;
 import java.util.HashSet;
 import java.util.Set;
 
-import lombok.NoArgsConstructor;
 import io.github.astrapi69.model.api.IModel;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -34,6 +35,7 @@ public class WildcardSetModel<T> extends GenericCollectionModel<Set<T>>
 {
 
 	/** The Constant serialVersionUID. */
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

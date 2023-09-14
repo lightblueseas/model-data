@@ -15,11 +15,12 @@
  */
 package io.github.astrapi69.model.util;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.NoArgsConstructor;
 import io.github.astrapi69.model.api.IModel;
+import lombok.NoArgsConstructor;
 
 /**
  * Based on <code>IModel</code> but for maps of serializable objects.
@@ -35,6 +36,7 @@ public class MapModel<K, V> extends GenericCollectionModel<Map<K, V>>
 {
 
 	/** The Constant serialVersionUID. */
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

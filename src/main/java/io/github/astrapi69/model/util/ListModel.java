@@ -15,11 +15,12 @@
  */
 package io.github.astrapi69.model.util;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.NoArgsConstructor;
 import io.github.astrapi69.model.api.IModel;
+import lombok.NoArgsConstructor;
 
 /**
  * Based on <code>IModel</code> but for lists of serializable objects.
@@ -31,6 +32,7 @@ import io.github.astrapi69.model.api.IModel;
 @NoArgsConstructor
 public class ListModel<T> extends GenericCollectionModel<List<T>>
 {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

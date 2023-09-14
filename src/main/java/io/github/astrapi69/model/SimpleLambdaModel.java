@@ -15,14 +15,16 @@
  */
 package io.github.astrapi69.model;
 
+import java.io.Serial;
+
 import io.github.astrapi69.model.api.IModel;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import io.github.astrapi69.model.api.SerializableBiConsumer;
 import io.github.astrapi69.model.api.SerializableConsumer;
 import io.github.astrapi69.model.api.SerializableFunction;
 import io.github.astrapi69.model.api.SerializableSupplier;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -54,7 +56,7 @@ public class SimpleLambdaModel<T> implements IModel<T>
 		final SerializableConsumer<T> setter)
 	{
 
-		return new SimpleLambdaModel<T>(getter, setter);
+		return new SimpleLambdaModel<>(getter, setter);
 	}
 
 	/**
@@ -82,8 +84,9 @@ public class SimpleLambdaModel<T> implements IModel<T>
 	public static <X, T> IModel<T> of(final IModel<X> target,
 		final SerializableFunction<X, T> getter)
 	{
-		return new SimpleLambdaModel<T>(null, null)
+		return new SimpleLambdaModel<>(null, null)
 		{
+			@Serial
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -145,8 +148,9 @@ public class SimpleLambdaModel<T> implements IModel<T>
 	public static <X, T> IModel<T> of(final IModel<X> target,
 		final SerializableFunction<X, T> getter, final SerializableBiConsumer<X, T> setter)
 	{
-		return new SimpleLambdaModel<T>(null, null)
+		return new SimpleLambdaModel<>(null, null)
 		{
+			@Serial
 			private static final long serialVersionUID = 1L;
 
 			@Override

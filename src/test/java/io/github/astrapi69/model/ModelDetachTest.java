@@ -18,9 +18,12 @@ package io.github.astrapi69.model;
 
 import static org.testng.AssertJUnit.assertTrue;
 
+import java.io.Serial;
+
+import org.testng.annotations.Test;
+
 import io.github.astrapi69.model.api.IDetachable;
 import io.github.astrapi69.model.api.IModel;
-import org.testng.annotations.Test;
 
 /**
  * Tests the detach behavior for compatibility with IDetachable nested objects, ensuring that the
@@ -37,6 +40,7 @@ public class ModelDetachTest
 		Detachable detachable = new Detachable();
 		IModel<?> model = new AbstractPropertyModel<Void>(detachable)
 		{
+			@Serial
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -63,6 +67,7 @@ public class ModelDetachTest
 
 	static class Detachable implements IDetachable
 	{
+		@Serial
 		private static final long serialVersionUID = 1L;
 
 		private boolean detached = false;
