@@ -19,4 +19,10 @@ module model.data
 	requires org.apache.commons.lang3;
 	requires java.desktop;
 	requires org.objenesis;
+
+	exports io.github.astrapi69.model;
+	exports io.github.astrapi69.model.api;
+	exports io.github.astrapi69.model.property;
+	exports io.github.astrapi69.model.reflect;
+	exports io.github.astrapi69.model.util;
 }
