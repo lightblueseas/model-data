@@ -18,10 +18,12 @@ package io.github.astrapi69.model;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 
-import io.github.astrapi69.model.api.IModel;
 import org.testng.annotations.Test;
+
+import io.github.astrapi69.model.api.IModel;
 
 /**
  * <p>
@@ -49,6 +51,7 @@ public class AbstractPropertyModelObjectClassTest
 	 * type.
 	 *
 	 * @param modelForCustomTypeObject
+	 *            the model for the custom type object
 	 */
 	private void assertPropertyModelTargetTypeIsInteger(IModel<?> modelForCustomTypeObject)
 	{
@@ -87,6 +90,7 @@ public class AbstractPropertyModelObjectClassTest
 
 	private static class CustomBean implements Serializable
 	{
+		@Serial
 		private static final long serialVersionUID = 1L;
 		private CustomType customType;
 
@@ -105,6 +109,7 @@ public class AbstractPropertyModelObjectClassTest
 
 	private static class CustomType implements Serializable
 	{
+		@Serial
 		private static final long serialVersionUID = 1L;
 		private Integer someProperty;
 

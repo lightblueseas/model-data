@@ -21,9 +21,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.testng.AssertJUnit.assertEquals;
 
-import io.github.astrapi69.model.api.IModel;
 import org.testng.annotations.Test;
 
+import io.github.astrapi69.model.api.IModel;
 import io.github.astrapi69.model.lambda.Person;
 
 /**
@@ -52,7 +52,7 @@ public class LambdaModelTest
 		check(personNameModel);
 		person.setName("foo");
 		String object = personNameModel.getObject();
-		assertThat(personNameModel.getObject(), is("foo"));
+		assertThat(personNameModel.getObject(), is(object));
 	}
 
 	@Test

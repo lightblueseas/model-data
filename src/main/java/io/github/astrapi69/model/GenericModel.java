@@ -15,25 +15,26 @@
  */
 package io.github.astrapi69.model;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import io.github.astrapi69.model.api.Attachable;
 import io.github.astrapi69.model.api.IDetachable;
 import io.github.astrapi69.model.api.IModel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import io.github.astrapi69.model.api.Attachable;
 import io.github.astrapi69.model.api.IObjectClassAwareModel;
 import io.github.astrapi69.model.util.MapModel;
 import io.github.astrapi69.model.util.WildcardCollectionModel;
 import io.github.astrapi69.model.util.WildcardListModel;
 import io.github.astrapi69.model.util.WildcardSetModel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * The class {@link GenericModel} is the basic implementation of an <code>IModel</code>. Decorates a
@@ -52,6 +53,7 @@ public abstract class GenericModel<T> implements IModel<T>, IObjectClassAwareMod
 {
 
 	/** The Constant serialVersionUID. */
+	@Serial
 	private static final long serialVersionUID = 1L;
 	/** Backing object. */
 	private T object;

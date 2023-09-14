@@ -22,13 +22,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
-import io.github.astrapi69.model.api.IModel;
-import lombok.extern.java.Log;
-
 import org.apache.commons.lang3.StringUtils;
 
 import io.github.astrapi69.model.api.ClassCache;
 import io.github.astrapi69.model.api.GetAndSet;
+import io.github.astrapi69.model.api.IModel;
+import lombok.extern.java.Log;
 
 /**
  * This class parses expressions to lookup or set a value on the object that is given. <br>
@@ -81,8 +80,12 @@ public final class PropertyResolver
 	}
 
 	/**
+	 * Find the field from the given expression as string
+	 * 
 	 * @param clz
+	 *            the class
 	 * @param expression
+	 *            the expression
 	 * @return introspected field
 	 */
 	private static Field findField(final Class<?> clz, final String expression)
@@ -114,11 +117,15 @@ public final class PropertyResolver
 	}
 
 	/**
+	 * Find the getter method from the given class and the given expression
+	 * 
 	 * @param clz
+	 *            the class
 	 * @param expression
+	 *            the expression
 	 * @return The method for the expression null if not found
 	 */
-	private final static Method findGetter(final Class<?> clz, final String expression)
+	private static Method findGetter(final Class<?> clz, final String expression)
 	{
 		final String name = Character.toUpperCase(expression.charAt(0)) + expression.substring(1);
 		Method method = null;
@@ -143,7 +150,7 @@ public final class PropertyResolver
 		return method;
 	}
 
-	private final static Method findMethod(final Class<?> clz, String expression)
+	private static Method findMethod(final Class<?> clz, String expression)
 	{
 		if (expression.endsWith("()"))
 		{
@@ -178,7 +185,7 @@ public final class PropertyResolver
 		return result;
 	}
 
-	private final static GetAndSet getGetAndSetter(String exp, final Class<?> clz)
+	private static GetAndSet getGetAndSetter(String exp, final Class<?> clz)
 	{
 		final ClassCache classesToGetAndSetters = getClassesToGetAndSetters();
 		Map<String, GetAndSet> getAndSetters = classesToGetAndSetters.get(clz);
@@ -329,9 +336,12 @@ public final class PropertyResolver
 	}
 
 	/**
-	 *
+	 * Gets the next index of the dot
+	 * 
 	 * @param expression
+	 *            the expression
 	 * @param start
+	 *            the index to start
 	 * @return next dot index
 	 */
 	private static int getNextDotIndex(final String expression, final int start)
@@ -380,9 +390,13 @@ public final class PropertyResolver
 	 * expression, only knowing the target class
 	 *
 	 * @param expression
+	 *            the expression
 	 * @param object
+	 *            the object
 	 * @param tryToCreateNull
+	 *            the int flag that indicates if a new value should be set or to resolve the class
 	 * @param clz
+	 *            the class
 	 * @return {@link ObjectAndGetSetter}
 	 */
 	private static ObjectAndGetSetter getObjectAndGetSetter(final String expression,
@@ -409,7 +423,7 @@ public final class PropertyResolver
 				break;
 			}
 
-			GetAndSet getAndSetter = null;
+			GetAndSet getAndSetter;
 			try
 			{
 				getAndSetter = getGetAndSetter(exp, clz);
@@ -511,7 +525,7 @@ public final class PropertyResolver
 	 * @throws RuntimeException
 	 *             if the cannot be resolved
 	 */
-	public final static Class<?> getPropertyClass(final String expression, final Object object)
+	public static Class<?> getPropertyClass(final String expression, final Object object)
 	{
 		final ObjectAndGetSetter setter = getObjectAndGetSetter(expression, object, RESOLVE_CLASS);
 		if (setter == null)
@@ -533,7 +547,7 @@ public final class PropertyResolver
 	 * @throws RuntimeException
 	 *             if there is no such field
 	 */
-	public final static Field getPropertyField(final String expression, final Object object)
+	public static Field getPropertyField(final String expression, final Object object)
 	{
 		final ObjectAndGetSetter setter = getObjectAndGetSetter(expression, object, RESOLVE_CLASS);
 		if (setter == null)
@@ -555,7 +569,7 @@ public final class PropertyResolver
 	 * @throws RuntimeException
 	 *             if there is no getter method
 	 */
-	public final static Method getPropertyGetter(final String expression, final Object object)
+	public static Method getPropertyGetter(final String expression, final Object object)
 	{
 		final ObjectAndGetSetter setter = getObjectAndGetSetter(expression, object, RESOLVE_CLASS);
 		if (setter == null)
@@ -578,7 +592,7 @@ public final class PropertyResolver
 	 * @throws RuntimeException
 	 *             if there is no setter method
 	 */
-	public final static Method getPropertySetter(final String expression, final Object object)
+	public static Method getPropertySetter(final String expression, final Object object)
 	{
 		final ObjectAndGetSetter setter = getObjectAndGetSetter(expression, object, RESOLVE_CLASS);
 		if (setter == null)
@@ -599,7 +613,7 @@ public final class PropertyResolver
 	 *            The object which is evaluated.
 	 * @return The value that is evaluated. Null something in the expression evaluated to null.
 	 */
-	public final static Object getValue(final String expression, final Object object)
+	public static Object getValue(final String expression, final Object object)
 	{
 		if (expression == null || expression.equals("") || object == null)
 		{
@@ -755,8 +769,7 @@ public final class PropertyResolver
 	 *             is thrown if expression is empty or the object is null or the setter could not be
 	 *             found
 	 */
-	public final static void setValue(final String expression, final Object object,
-		final Object value)
+	public static void setValue(final String expression, final Object object, final Object value)
 	{
 		if (StringUtils.isEmpty(expression))
 		{

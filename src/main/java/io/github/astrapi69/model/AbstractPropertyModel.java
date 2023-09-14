@@ -17,13 +17,14 @@ package io.github.astrapi69.model;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
+import java.io.Serial;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import io.github.astrapi69.model.api.IModel;
-import io.github.astrapi69.model.api.IObjectClassAwareModel;
 import org.apache.commons.lang3.StringUtils;
 
+import io.github.astrapi69.model.api.IModel;
+import io.github.astrapi69.model.api.IObjectClassAwareModel;
 import io.github.astrapi69.model.api.IPropertyReflectionAwareModel;
 import io.github.astrapi69.model.property.PropertyResolver;
 
@@ -42,6 +43,7 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 {
 
 	/** The Constant serialVersionUID. */
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -182,7 +184,7 @@ public abstract class AbstractPropertyModel<T> extends ChainingModel<T>
 	@SuppressWarnings("unchecked")
 	private T getProperty(final String expression, final Object target)
 	{
-		T property = null;
+		T property;
 		property = (T)PropertyResolver.getValue(expression, target);
 		return property;
 	}

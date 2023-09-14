@@ -15,12 +15,13 @@
  */
 package io.github.astrapi69.model.util;
 
+import java.io.Serial;
 import java.io.Serializable;
 
+import io.github.astrapi69.model.GenericModel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import io.github.astrapi69.model.GenericModel;
 
 /**
  * The class {@link GenericCollectionModel} is the base class for wild card collections that
@@ -36,6 +37,7 @@ public abstract class GenericCollectionModel<T> extends GenericModel<T>
 {
 
 	/** The Constant serialVersionUID. */
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

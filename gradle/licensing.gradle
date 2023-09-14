@@ -13,6 +13,7 @@ license {
               "**/*.xsd",
               "**/*.dtd",
               "**/*.html",
+              "**/package-info.java",
               "**/*.jsp",
               "**/*.jpa",
               "**/*.sql",
