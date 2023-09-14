@@ -50,7 +50,8 @@ public class AbstractPropertyModelObjectClassTest
 	 * Just asserting that the the property expression for the somePropety is aware of this property
 	 * type.
 	 *
-	 * @param modelForCustomTypeObject the model for the custom type object
+	 * @param modelForCustomTypeObject
+	 *            the model for the custom type object
 	 */
 	private void assertPropertyModelTargetTypeIsInteger(IModel<?> modelForCustomTypeObject)
 	{
