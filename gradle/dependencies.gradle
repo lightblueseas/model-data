@@ -3,6 +3,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
     implementation("org.objenesis:objenesis:$objenesisVersion")
+    implementation("org.danekja:jdk-serializable-functional:$jdkSerializableFunctionalVersion")
     testImplementation("org.hamcrest:hamcrest-all:$hamcrestAllVersion")
     testImplementation("io.github.astrapi69:test-object:$testObjectVersion")
     testImplementation("io.github.astrapi69:jobj-clone:$jobjCloneVersion")

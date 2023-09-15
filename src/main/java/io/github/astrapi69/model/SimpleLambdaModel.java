@@ -17,11 +17,12 @@ package io.github.astrapi69.model;
 
 import java.io.Serial;
 
+import org.danekja.java.util.function.serializable.SerializableBiConsumer;
+import org.danekja.java.util.function.serializable.SerializableConsumer;
+import org.danekja.java.util.function.serializable.SerializableFunction;
+import org.danekja.java.util.function.serializable.SerializableSupplier;
+
 import io.github.astrapi69.model.api.IModel;
-import io.github.astrapi69.model.api.SerializableBiConsumer;
-import io.github.astrapi69.model.api.SerializableConsumer;
-import io.github.astrapi69.model.api.SerializableFunction;
-import io.github.astrapi69.model.api.SerializableSupplier;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

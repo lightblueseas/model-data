@@ -19,6 +19,7 @@ module model.data
 	requires org.apache.commons.lang3;
 	requires java.desktop;
 	requires org.objenesis;
+	requires org.danekja.jdk.serializable.functional;
 
 	exports io.github.astrapi69.model;
 	exports io.github.astrapi69.model.api;

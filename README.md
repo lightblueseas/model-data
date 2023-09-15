@@ -1,9 +1,10 @@
 # Overview
 
-The model-data project provides classes for modeling objects and model binding.
-The model-data project is ispired from model pattern of the [wicket project](https://wicket.apache.org/) and most classes have been forked and modified.
-
-Lombok is used for not generating boilerplate source code.
+The model-data module library provides classes for modeling objects and model binding. The model-data project is
+inspired from the model of the [wicket project](https://wicket.apache.org/) and most classes have been forked and modified. But wicket does not
+provide the model as a module library, instead it is embedded in the core module. So the model-data module library is
+indented to be used also in other ui projects that need the binding functionality without importing the whole
+wicket-core module library.
 
 > Please support this project by simply putting a Github <!-- Place this tag where you want the button to render. -->
 <a class="github-button" href="https://github.com/lightblueseas/model-data" data-icon="octicon-star" aria-label="Star lightblueseas/model-data on GitHub">Star ⭐</a>
@@ -12,6 +13,10 @@ Lombok is used for not generating boilerplate source code.
 >
 > If you love this project [![donation](https://img.shields.io/badge/donate-❤-ff2244.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GVBTWLRAZ7HB8)
 
+
+## Component Model
+
+Starting with version 3.1, the library is also a Java module.
 
 ## License
 

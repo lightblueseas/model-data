@@ -16,7 +16,9 @@
 package io.github.astrapi69.model;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
+import io.github.astrapi69.model.api.IModel;
 import org.testng.annotations.Test;
 
 import io.github.astrapi69.test.object.Employee;
@@ -35,6 +37,33 @@ public class GenericModelTest
 		String expected = employee.getPerson().getName();
 		String actual = model.getObject();
 		assertEquals(expected, actual);
+	}
+
+	@Test
+	void filterMatch()
+	{
+		Person person;
+		person = new Person();
+		String name = "Anton";
+		person.setName(name);
+
+		IModel<Person> nameModel = BaseModel.of(person).filter((p) -> p.getName().equals(name));
+
+		assertEquals(person, nameModel.getObject());
+	}
+
+	@Test
+	void filterNoMatch()
+	{
+		Person person;
+		person = new Person();
+		String name = "Anton";
+		String otherName = "Paul";
+		person.setName(name);
+
+		IModel<Person> nameModel = BaseModel.of(person).filter((p) -> p.getName().equals(otherName));
+
+		assertNull(nameModel.getObject());
 	}
 
 }

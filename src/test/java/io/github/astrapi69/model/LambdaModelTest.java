@@ -144,7 +144,8 @@ public class LambdaModelTest
 		IModel<String> personNameModel;
 		// initialize test objects
 		person = new Person();
-		personNameModel = LambdaModel.of(() -> person.getName(), (name) -> person.setName(name));
+		// personNameModel = LambdaModel.of(() -> person.getName(), (name) -> person.setName(name));
+		personNameModel = LambdaModel.of(person::getName, person::setName);
 		// new scenario
 		// set value over the bean and check model
 		currentValue = "foo";

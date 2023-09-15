@@ -15,9 +15,10 @@
  */
 package io.github.astrapi69.model;
 
+import org.danekja.java.util.function.serializable.SerializableBiConsumer;
+import org.danekja.java.util.function.serializable.SerializableFunction;
+
 import io.github.astrapi69.model.api.IModel;
-import io.github.astrapi69.model.api.SerializableBiConsumer;
-import io.github.astrapi69.model.api.SerializableFunction;
 
 /**
  * <code>LambdaBindingModel</code> is a basic implementation of an <code>IModel</code> that can bind
