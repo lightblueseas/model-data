@@ -32,7 +32,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class SerializableModel<T extends Serializable> extends GenericModel<T>
+public class SerializableModel<T extends Serializable> extends Model<T>
 {
 
 	/** The Constant serialVersionUID. */
@@ -47,19 +47,6 @@ public class SerializableModel<T extends Serializable> extends GenericModel<T>
 	public SerializableModel(T object)
 	{
 		super(object);
-	}
-
-	/**
-	 * Factory methods for IModel which uses type inference to make code shorter. Equivalent to
-	 * <code>new SerializableModel&lt;TypeOfObject&gt;()</code>.
-	 *
-	 * @param <T>
-	 *            the generic type
-	 * @return IModel that contains <code>object</code>
-	 */
-	public static <T extends Serializable> IModel<T> of()
-	{
-		return new SerializableModel<>();
 	}
 
 	/**

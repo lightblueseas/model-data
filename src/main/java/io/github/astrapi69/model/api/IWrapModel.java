@@ -31,4 +31,26 @@ public interface IWrapModel<T> extends IModel<T>
 	 * @return the wrapped model
 	 */
 	IModel<?> getWrappedModel();
+
+	/**
+	 * Calls getWrappedModel().detach();
+	 *
+	 * @see IDetachable#detach()
+	 */
+	@Override
+	default void detach()
+	{
+		getWrappedModel().detach();
+	}
+
+	@Override
+	default void setObject(T object)
+	{
+	}
+
+	@Override
+	default T getObject()
+	{
+		return null;
+	}
 }

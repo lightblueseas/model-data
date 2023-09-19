@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
  *            the generic type of the model object
  */
 @NoArgsConstructor
-public class BaseModel<T> extends GenericModel<T>
+public class BaseModel<T> extends Model<T>
 {
 
 	/** The Constant serialVersionUID. */

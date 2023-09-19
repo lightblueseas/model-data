@@ -18,13 +18,13 @@ package io.github.astrapi69.model;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 
-import io.github.astrapi69.model.api.IModel;
 import org.testng.annotations.Test;
 
+import io.github.astrapi69.model.api.IModel;
 import io.github.astrapi69.test.object.Employee;
 import io.github.astrapi69.test.object.Person;
 
-public class GenericModelTest
+public class ModelTest
 {
 
 	@Test
@@ -61,7 +61,8 @@ public class GenericModelTest
 		String otherName = "Paul";
 		person.setName(name);
 
-		IModel<Person> nameModel = BaseModel.of(person).filter((p) -> p.getName().equals(otherName));
+		IModel<Person> nameModel = BaseModel.of(person)
+			.filter((p) -> p.getName().equals(otherName));
 
 		assertNull(nameModel.getObject());
 	}

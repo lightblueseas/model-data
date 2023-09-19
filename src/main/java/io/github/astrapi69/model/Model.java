@@ -37,7 +37,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The class {@link GenericModel} is the basic implementation of an <code>IModel</code>. Decorates a
+ * The class {@link Model} is the basic implementation of an <code>IModel</code>. Decorates a
  * simple object. This class is only for small object, if you want to store large objects consider
  * to use LoadableDetachableModel instead.
  *
@@ -49,7 +49,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-public abstract class GenericModel<T> implements IModel<T>, IObjectClassAwareModel<T>
+public class Model<T> implements IModel<T>, IObjectClassAwareModel<T>
 {
 
 	/** The Constant serialVersionUID. */
@@ -59,12 +59,12 @@ public abstract class GenericModel<T> implements IModel<T>, IObjectClassAwareMod
 	private T object;
 
 	/**
-	 * Instantiates a new {@link GenericModel}.
+	 * Instantiates a new {@link Model}.
 	 *
 	 * @param object
 	 *            the object
 	 */
-	public GenericModel(T object)
+	public Model(T object)
 	{
 		setObject(object);
 	}
@@ -129,6 +129,49 @@ public abstract class GenericModel<T> implements IModel<T>, IObjectClassAwareMod
 	public static <C> IModel<Set<C>> ofSet(final Set<C> set)
 	{
 		return WildcardSetModel.ofSet(set);
+	}
+
+	/**
+	 * Factory methods for IModel which uses type inference to make code shorter. Equivalent to
+	 * <code>new BaseModel&lt;TypeOfObject&gt;()</code>.
+	 *
+	 * @param <T>
+	 *            the generic type
+	 * @return IModel that contains <code>object</code>
+	 */
+	public static <T> IModel<T> of()
+	{
+		return new Model<>();
+	}
+
+	/**
+	 * Supresses generics warning when converting model types.
+	 *
+	 * @param <T>
+	 *            the generic type
+	 * @param model
+	 *            the model
+	 * @return <code>model</code>
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> IModel<T> of(final IModel<?> model)
+	{
+		return (IModel<T>)model;
+	}
+
+	/**
+	 * Factory methods for IModel which uses type inference to make code shorter. Equivalent to
+	 * <code>new BaseModel&lt;TypeOfObject&gt;(object)</code>.
+	 *
+	 * @param <T>
+	 *            the generic type
+	 * @param object
+	 *            the object
+	 * @return IModel that contains <code>object</code>
+	 */
+	public static <T> IModel<T> of(final T object)
+	{
+		return new Model<>(object);
 	}
 
 	/**
