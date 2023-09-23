@@ -37,9 +37,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The class {@link Model} is the basic implementation of an <code>IModel</code>. Decorates a
- * simple object. This class is only for small object, if you want to store large objects consider
- * to use LoadableDetachableModel instead.
+ * The class {@link Model} is the basic implementation of an <code>IModel</code>. Decorates a simple
+ * object. This class is only for small object, if you want to store large objects consider to use
+ * LoadableDetachableModel instead.
  *
  * @param <T>
  *            the generic type of the model object
