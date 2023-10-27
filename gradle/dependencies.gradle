@@ -5,6 +5,5 @@ dependencies {
     implementation("org.danekja:jdk-serializable-functional:$jdkSerializableFunctionalVersion")
     testImplementation("org.hamcrest:hamcrest-all:$hamcrestAllVersion")
     testImplementation("io.github.astrapi69:test-object:$testObjectVersion")
-    testImplementation("io.github.astrapi69:jobj-clone:$jobjCloneVersion")
     testImplementation("org.testng:testng:$testngVersion")
 }
