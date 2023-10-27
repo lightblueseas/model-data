@@ -13,12 +13,11 @@
  */
 module model.data
 {
-	requires java.base;
-	requires java.logging;
 	requires lombok;
-	requires org.apache.commons.lang3;
+	requires java.base;
 	requires java.desktop;
-	requires org.objenesis;
+	requires java.logging;
+	requires org.apache.commons.lang3;
 	requires org.danekja.jdk.serializable.functional;
 
 	exports io.github.astrapi69.model;

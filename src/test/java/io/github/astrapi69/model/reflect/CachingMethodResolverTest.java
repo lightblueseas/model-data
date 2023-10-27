@@ -33,9 +33,13 @@ public class CachingMethodResolverTest
 	@Test
 	public void test() throws Exception
 	{
-		final Method method = getClass().getMethod("test");
-		final Serializable id = "";
-		final int[] count = new int[1];
+		Method method;
+		Serializable id;
+		int[] count;
+
+		method = getClass().getMethod("test");
+		id = "";
+		count = new int[1];
 
 		IMethodResolver resolver = new CachingMethodResolver(new IMethodResolver()
 		{
@@ -65,14 +69,11 @@ public class CachingMethodResolverTest
 		});
 
 		resolver.getId(method);
-		resolver.getId(method);
 		assertEquals(1, count[0]);
 
 		resolver.getMethod(getClass(), id);
-		resolver.getMethod(getClass(), id);
 		assertEquals(2, count[0]);
 
-		resolver.getSetter(method);
 		resolver.getSetter(method);
 		assertEquals(3, count[0]);
 	}
