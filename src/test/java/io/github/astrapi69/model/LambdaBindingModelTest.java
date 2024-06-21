@@ -22,7 +22,7 @@ import org.testng.annotations.Test;
 import io.github.astrapi69.model.api.IModel;
 import io.github.astrapi69.test.object.Company;
 import io.github.astrapi69.test.object.Person;
-import io.github.astrapi69.test.object.enumtype.Gender;
+import io.github.astrapi69.test.object.enumeration.Gender;
 
 public class LambdaBindingModelTest
 {
