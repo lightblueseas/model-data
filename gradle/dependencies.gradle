@@ -1,9 +1,13 @@
 dependencies {
-    compileOnly("org.projectlombok:lombok:$lombokVersion")
-    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
-    implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
-    implementation("org.danekja:jdk-serializable-functional:$jdkSerializableFunctionalVersion")
-    testImplementation("org.hamcrest:hamcrest-all:$hamcrestAllVersion")
-    testImplementation("io.github.astrapi69:test-object:$testObjectVersion")
-    testImplementation("org.testng:testng:$testngVersion")
+
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+    testCompileOnly libs.lombok
+    testAnnotationProcessor libs.lombok
+
+    implementation libs.commons.lang3
+    implementation libs.jdk.serializable.functional
+
+    // Note: use of bundles...
+    testImplementation libs.bundles.unit.testing
 }
