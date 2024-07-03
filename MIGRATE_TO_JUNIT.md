@@ -111,7 +111,7 @@ From
 ```java
 import org.testng.annotations.BeforeMethod;
 @BeforeMethod
-public void setUp() throws Exception
+public void setUp()
 {
 }
 
@@ -120,7 +120,7 @@ to
 ```java
 import org.junit.jupiter.api.BeforeEach;
 @BeforeEach
-public void setUp() throws Exception
+public void setUp()
 {
 }
 ```
@@ -130,7 +130,7 @@ And From
 ```java
 import org.testng.annotations.AfterMethod;
 @AfterMethod
-public void tearDown() throws Exception
+public void tearDown()
 {
 }
 
@@ -139,9 +139,44 @@ to
 ```java
 import org.junit.jupiter.api.AfterEach;
 @AfterEach
-public void tearDown() throws Exception
+public void tearDown()
 {
 }
 ```
 
+# Replace TestNG enabled and disabled Test method
+
+From
+
+```java
+@Test(enabled = true)
+public void test()
+{
+}
+
+```
+to
+```java
+@Test
+public void test()
+{
+}
+```
+
+And from:
+
+```java
+@Test(enabled = false)
+public void test()
+{
+}
+
+```
+to
+```java
+@Test
+public void test()
+{
+}
+```
 
