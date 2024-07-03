@@ -86,7 +86,7 @@ public void targetReadOnly()
    });
 }
 ```
-after that you can replace all assertEquals from
+after that you can replace all assertEquals 
 From
 ```java
 @Test
@@ -104,3 +104,44 @@ public void testMethod()
    assertEquals(expected, actual);
 }
 ```
+
+# Replace TestNG BeforeMethod and AfterMethod 
+
+From
+```java
+import org.testng.annotations.BeforeMethod;
+@BeforeMethod
+public void setUp() throws Exception
+{
+}
+
+```
+to
+```java
+import org.junit.jupiter.api.BeforeEach;
+@BeforeEach
+public void setUp() throws Exception
+{
+}
+```
+
+And From
+
+```java
+import org.testng.annotations.AfterMethod;
+@AfterMethod
+public void tearDown() throws Exception
+{
+}
+
+```
+to
+```java
+import org.junit.jupiter.api.AfterEach;
+@AfterEach
+public void tearDown() throws Exception
+{
+}
+```
+
+
