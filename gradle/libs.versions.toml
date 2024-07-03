@@ -13,8 +13,10 @@ test-object-version = "8.2"
 junit-jupiter-params-version = "5.11.0-M2"
 junit-jupiter-version = "5.11.0-M2"
 junit-platform-launcher-version = "1.11.0-M2"
+randomizer-version = "10.2"
 
 [libraries]
+randomizer = { module = "io.github.astrapi69:randomizer", version.ref = "randomizer-version" }
 commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang3-version" }
 hamcrest-all = { module = "org.hamcrest:hamcrest-all", version.ref = "hamcrest-all-version" }
 jdk-serializable-functional = { module = "org.danekja:jdk-serializable-functional", version.ref = "jdk-serializable-functional-version" }
@@ -26,6 +28,7 @@ junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher
 
 [bundles]
 unit-testing = [
+    "randomizer",
     "hamcrest-all",
     "test-object",
     "junit-jupiter",
