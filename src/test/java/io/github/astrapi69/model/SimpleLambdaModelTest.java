@@ -49,13 +49,13 @@ public class SimpleLambdaModelTest
 		person.setName(currentValue);
 		actual = personNameModel.getObject();
 		expected = currentValue;
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 		// new scenario
 		// set value over the model and check bean
 		currentValue = "bar";
 		personNameModel.setObject(currentValue);
 		actual = person.getName();
 		expected = currentValue;
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 	}
 }
