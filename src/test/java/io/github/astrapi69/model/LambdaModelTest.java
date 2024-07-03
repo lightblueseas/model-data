@@ -19,9 +19,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.testng.AssertJUnit.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import io.github.astrapi69.model.api.IModel;
 import io.github.astrapi69.model.lambda.Person;
@@ -120,13 +121,14 @@ public class LambdaModelTest
 		assertThat(personNameModel.getObject(), is("new name"));
 	}
 
-	@Test(expectedExceptions = UnsupportedOperationException.class)
+	@Test
 	public void targetReadOnly()
 	{
-		final IModel<Person> target = SerializableModel.of(new Person());
-
-		final IModel<String> personNameModel = LambdaModel.of(target, Person::getName);
-		check(personNameModel);
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> { // ...
+			final IModel<Person> target = SerializableModel.of(new Person());
+			final IModel<String> personNameModel = LambdaModel.of(target, Person::getName);
+			check(personNameModel);
+		});
 	}
 
 

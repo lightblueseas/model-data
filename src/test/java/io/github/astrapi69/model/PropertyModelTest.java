@@ -15,9 +15,10 @@
  */
 package io.github.astrapi69.model;
 
-import static org.testng.AssertJUnit.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import io.github.astrapi69.model.api.IModel;
 import io.github.astrapi69.test.object.Employee;
@@ -32,12 +33,15 @@ public class PropertyModelTest
 	 * abstract class type. This should end in an exception because Wicket can't decide what to
 	 * instantiate on behalf of the program.
 	 */
-	@Test(expectedExceptions = RuntimeException.class)
+	@Test
 	public void setWithNullPathAbstract()
 	{
-		final Person person = new Person();
-		final PropertyModel<String> model = new PropertyModel<>(person, "abstractAddress.street");
-		model.setObject("foo");
+		Assertions.assertThrows(RuntimeException.class, () -> {
+			final Person person = new Person();
+			final PropertyModel<String> model = new PropertyModel<>(person,
+				"abstractAddress.street");
+			model.setObject("foo");
+		});
 	}
 
 	@Test

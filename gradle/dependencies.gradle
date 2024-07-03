@@ -7,7 +7,7 @@ dependencies {
 
     implementation libs.commons.lang3
     implementation libs.jdk.serializable.functional
-
     // Note: use of bundles...
     testImplementation libs.bundles.unit.testing
+    testRuntimeOnly libs.junit.platform.launcher
 }

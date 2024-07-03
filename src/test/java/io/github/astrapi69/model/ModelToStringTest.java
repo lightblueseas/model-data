@@ -15,12 +15,12 @@
  */
 package io.github.astrapi69.model;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Properties;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 
 /**
@@ -36,18 +36,21 @@ public class ModelToStringTest
 	{
 		String actual;
 		String expected;
-		final LoadableDetachableModel<String> model = new MyLoadableDetachableModel();
+		LoadableDetachableModel<String> model;
+		model = new MyLoadableDetachableModel();
 		actual = model.toString();
-		assertTrue(model.toString().contains(":attached=false"));
-		assertTrue(model.toString().contains(":tempModelObject=[null]"));
+		assertTrue(actual.contains(":attached=false"));
+		assertTrue(actual.contains(":tempModelObject=[null]"));
 
 		model.getObject();
-		assertTrue(model.toString().contains(":attached=true"));
-		assertTrue(model.toString().contains(":tempModelObject=[foo]"));
+		actual = model.toString();
+		assertTrue(actual.contains(":attached=true"));
+		assertTrue(actual.contains(":tempModelObject=[foo]"));
 
 		model.detach();
-		assertTrue(model.toString().contains(":attached=false"));
-		assertTrue(model.toString().contains(":tempModelObject=[null]"));
+		actual = model.toString();
+		assertTrue(actual.contains(":attached=false"));
+		assertTrue(actual.contains(":tempModelObject=[null]"));
 	}
 
 	/**
@@ -56,23 +59,34 @@ public class ModelToStringTest
 	@Test
 	public void propertyModel()
 	{
-		final PropertyModel<Void> emptyModel = new PropertyModel<>("", null);
-		String expected = "IModel:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[]:expression=[null]";
-		assertEquals(expected, emptyModel.toString());
+		String actual;
+		String expected;
+		PropertyModel<Void> emptyModel;
+		PropertyModel<String> stringProperty;
+		Properties properties;
 
-		final Properties properties = new Properties();
+		emptyModel = new PropertyModel<>("", null);
+		actual = emptyModel.toString();
+		expected = "IModel:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[]:expression=[null]";
+		assertEquals(expected, actual);
+
+		properties = new Properties();
 		properties.put("name", "foo");
-		final PropertyModel<String> stringProperty = new PropertyModel<>(properties, "name");
-
+		stringProperty = new PropertyModel<>(properties, "name");
+		actual = stringProperty.toString();
 		expected = "IModel:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[{name=foo}]:expression=[name]";
-		assertEquals(expected, stringProperty.toString());
+		assertEquals(expected, actual);
 
 		stringProperty.getObject();
+		actual = stringProperty.toString();
 		expected = "IModel:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[{name=foo}]:expression=[name]";
-		assertEquals(expected, stringProperty.toString());
+		assertEquals(expected, actual);
 
-		final InnerPOJO innerPOJO = new InnerPOJO();
-		final PropertyModel<?> pojoProperty = new PropertyModel<>(innerPOJO, "pojo");
+		InnerPOJO innerPOJO;
+		PropertyModel<?> pojoProperty;
+
+		innerPOJO = new InnerPOJO();
+		pojoProperty = new PropertyModel<>(innerPOJO, "pojo");
 
 		expected = "IModel:classname=[io.github.astrapi69.model.PropertyModel]:nestedModel=[pojo]:expression=[pojo]";
 		assertEquals(expected, pojoProperty.toString());

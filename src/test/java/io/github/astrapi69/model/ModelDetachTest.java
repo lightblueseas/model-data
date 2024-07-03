@@ -16,11 +16,11 @@
 package io.github.astrapi69.model;
 
 
-import static org.testng.AssertJUnit.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.Serial;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import io.github.astrapi69.model.api.IDetachable;
 import io.github.astrapi69.model.api.IModel;

@@ -15,10 +15,10 @@
  */
 package io.github.astrapi69.model;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import io.github.astrapi69.model.api.IModel;
 import io.github.astrapi69.test.object.Employee;
