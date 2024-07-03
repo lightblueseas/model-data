@@ -48,9 +48,9 @@ public class LambdaBindingModelTest
 		expected = "new name";
 		nameModel.setObject(expected);
 		actual = person.getName();
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 		actual = otherPerson.getName();
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 	}
 
 	@Test
@@ -74,15 +74,15 @@ public class LambdaBindingModelTest
 		expected = "new name";
 		nameModel.setObject(expected);
 		actual = person.getName();
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 		actual = company.getName();
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 		expected = "foo";
 		personModel.getObject().setName(expected);
 		// call getObject for update both models
 		nameModel.getObject();
 		actual = company.getName();
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 	}
 
 }
