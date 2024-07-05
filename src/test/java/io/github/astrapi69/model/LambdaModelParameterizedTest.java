@@ -15,20 +15,11 @@
  */
 package io.github.astrapi69.model;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import io.github.astrapi69.model.api.IModel;
-import io.github.astrapi69.random.object.RandomObjectFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.FieldSource;
 
