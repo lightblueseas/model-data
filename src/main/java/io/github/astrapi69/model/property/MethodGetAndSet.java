@@ -157,7 +157,7 @@ final class MethodGetAndSet extends AbstractGetAndSet
 		Object value = null;
 		try
 		{
-			value = clz.newInstance();
+			value = clz.getDeclaredConstructor().newInstance();
 			setMethod.invoke(object, value);
 		}
 		catch (Exception e)

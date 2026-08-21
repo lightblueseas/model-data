@@ -61,7 +61,7 @@ public final class ArrayGetSet extends AbstractGetAndSet
 		Object value = null;
 		try
 		{
-			value = clzComponentType.newInstance();
+			value = clzComponentType.getDeclaredConstructor().newInstance();
 			Array.set(object, index, value);
 		}
 		catch (Exception e)

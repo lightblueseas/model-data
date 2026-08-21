@@ -103,7 +103,7 @@ public final class ArrayPropertyGetSet extends AbstractGetAndSet
 		Object value = null;
 		try
 		{
-			value = clz.newInstance();
+			value = clz.getDeclaredConstructor().newInstance();
 			setMethod.invoke(object, index, value);
 		}
 		catch (Exception e)

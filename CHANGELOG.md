@@ -14,8 +14,17 @@ ADDED:
 - new gradle plugin org.gradle.toolchains.foojay-resolver-convention in version 1.0.0 for automatic JDK provisioning
 - new apply-gradle-files mechanism with gradle/gradle-files.list
 
+ADDED (API):
+
+- new default method IModel#as(Class) adopted from the current Apache Wicket IModel
+- new static factory method LoadableDetachableModel#of(SerializableSupplier)
+- new comprehensive unit tests for all IModel default methods and the LoadableDetachableModel factory
+
 CHANGED:
 
+- replaced the deprecated Class#newInstance calls in the property package with getDeclaredConstructor().newInstance()
+- fixed the argument checks in the IModel default methods; Objects.nonNull never threw, replaced with Objects.requireNonNull
+- README: replaced the dead travis-ci and maven-badges.herokuapp.com badges with the github-actions badge and the shields.io maven-central badge, updated the sonatype links to the Central Portal
 - update gradle to new version 9.7.0
 - update of gradle plugin io.freefair.lombok to new version 9.5.0
 - update of gradle plugin com.diffplug.spotless to new version 8.10.0

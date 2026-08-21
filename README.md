@@ -23,15 +23,15 @@ Starting with version 3.1, the library is also a Java module.
 The source code comes under the liberal Apache License V2.0, making model-data great for all types of applications.
 
 # Build Status
-[![Build Status](https://api.travis-ci.com/lightblueseas/model-data.svg?branch=master)](https://travis-ci.com/github/lightblueseas/model-data)
+[![Java CI with Gradle](https://github.com/lightblueseas/model-data/actions/workflows/gradle.yml/badge.svg)](https://github.com/lightblueseas/model-data/actions/workflows/gradle.yml)
 
 ## Maven Central
 
-model-data [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-data/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/model-data)
+model-data [![Maven Central](https://img.shields.io/maven-central/v/io.github.astrapi69/model-data)](https://central.sonatype.com/artifact/io.github.astrapi69/model-data)
 
 ## javadoc
 
-model-data [![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/model-data.svg)](http://www.javadoc.io/doc/io.github.astrapi69/model-data)
+model-data [![Javadocs](https://www.javadoc.io/badge/io.github.astrapi69/model-data.svg)](https://www.javadoc.io/doc/io.github.astrapi69/model-data)
 
 ## gradle dependency
 
@@ -57,8 +57,8 @@ and then add the dependency to the dependencies area
 
 ## Maven dependency
 
-Maven dependency is now on sonatype.
-Check out [sonatype repository](https://oss.sonatype.org/index.html#nexus-search;quick~model-data) for latest snapshots and releases.
+Maven dependency is now on Maven Central.
+Check out the [Central Portal](https://central.sonatype.com/artifact/io.github.astrapi69/model-data) for the latest releases.
 
 You can add the following maven dependencies to your project `pom.xml` if you want to import the library.
 

@@ -81,7 +81,7 @@ public class FieldGetAndSetter extends AbstractGetAndSet
 		Object value = null;
 		try
 		{
-			value = clz.newInstance();
+			value = clz.getDeclaredConstructor().newInstance();
 			field.set(object, value);
 		}
 		catch (final Exception e)
