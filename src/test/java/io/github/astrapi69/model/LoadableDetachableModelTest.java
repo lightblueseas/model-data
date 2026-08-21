@@ -13,8 +13,9 @@
  */
 package io.github.astrapi69.model;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayInputStream;
@@ -74,18 +75,18 @@ public class LoadableDetachableModelTest
 
 		ExceptionalLoad ldm = new ExceptionalLoad();
 
-		assertThat(ldm.isAttached(), is(false));
+		assertFalse(ldm.isAttached());
 		try
 		{
-			assertThat(ldm.getObject(), is(1));
+			assertEquals(1, ldm.getObject());
 			fail("shouldn't get here");
 		}
 		catch (RuntimeException e)
 		{
 		}
 		ldm.detach();
-		assertThat(ldm.isAttached(), is(false));
-		assertThat(ldm.detachCalled, is(true));
+		assertFalse(ldm.isAttached());
+		assertTrue(ldm.detachCalled);
 	}
 
 	@Test
@@ -113,8 +114,8 @@ public class LoadableDetachableModelTest
 		AttachingLoadableModel m = new AttachingLoadableModel();
 		m.getObject();
 
-		assertThat(m.isAttached(), is(true));
-		assertThat(m.attachCalled, is(true));
+		assertTrue(m.isAttached());
+		assertTrue(m.attachCalled);
 	}
 
 	/**
@@ -140,9 +141,9 @@ public class LoadableDetachableModelTest
 
 		RecursiveLoad ldm = new RecursiveLoad();
 
-		assertThat(ldm.isAttached(), is(false));
-		assertThat(ldm.getObject(), is(1));
-		assertThat(ldm.isAttached(), is(true));
+		assertFalse(ldm.isAttached());
+		assertEquals(1, ldm.getObject());
+		assertTrue(ldm.isAttached());
 	}
 
 	/**
@@ -154,18 +155,18 @@ public class LoadableDetachableModelTest
 	public void serializationDeserializationRetainsInternalState() throws Exception
 	{
 		SerializedLoad ldm = new SerializedLoad();
-		assertThat(ldm.getObject(), is(1));
+		assertEquals(1, ldm.getObject());
 		ldm.detach();
 
 		byte[] serialized = serialize(ldm);
 
 		LoadableDetachableModel<Integer> deserialized = deserialize(serialized);
 
-		assertThat(deserialized.isAttached(), is(false));
-		assertThat(deserialized.getObject(), is(2));
-		assertThat(deserialized.isAttached(), is(true));
+		assertFalse(deserialized.isAttached());
+		assertEquals(2, deserialized.getObject());
+		assertTrue(deserialized.isAttached());
 		deserialized.detach();
-		assertThat(deserialized.isAttached(), is(false));
+		assertFalse(deserialized.isAttached());
 	}
 
 	/** Deserialization helper */

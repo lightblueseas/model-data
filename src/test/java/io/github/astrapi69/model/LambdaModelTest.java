@@ -13,11 +13,9 @@
  */
 package io.github.astrapi69.model;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,11 +31,11 @@ public class LambdaModelTest
 {
 	private void check(final IModel<String> personNameModel)
 	{
-		assertThat(personNameModel.getObject(), is(nullValue()));
+		assertNull(personNameModel.getObject());
 
 		final String personName = "new name";
 		personNameModel.setObject(personName);
-		assertThat(personNameModel.getObject(), is(personName));
+		assertEquals(personName, personNameModel.getObject());
 
 		serialize(personNameModel, personName);
 	}
@@ -51,7 +49,7 @@ public class LambdaModelTest
 		check(personNameModel);
 		person.setName("foo");
 		String object = personNameModel.getObject();
-		assertThat(personNameModel.getObject(), is(object));
+		assertEquals(object, personNameModel.getObject());
 	}
 
 	@Test
@@ -64,8 +62,8 @@ public class LambdaModelTest
 
 	private void serialize(final IModel<String> personNameModel, final String personName)
 	{
-		assertThat(personNameModel, is(instanceOf(LambdaModel.class)));
-		assertThat(personNameModel.getObject(), is(personName));
+		assertInstanceOf(LambdaModel.class, personNameModel);
+		assertEquals(personName, personNameModel.getObject());
 	}
 
 	@Test
@@ -104,7 +102,7 @@ public class LambdaModelTest
 			Person::setName);
 
 		personNameModel.setObject("new name");
-		assertThat(personNameModel.getObject(), is(nullValue()));
+		assertNull(personNameModel.getObject());
 	}
 
 	@Test
@@ -116,7 +114,7 @@ public class LambdaModelTest
 			Person::setName);
 
 		personNameModel.setObject("new name");
-		assertThat(personNameModel.getObject(), is("new name"));
+		assertEquals("new name", personNameModel.getObject());
 	}
 
 	@Test

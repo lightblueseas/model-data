@@ -4,30 +4,51 @@ gradle-plugin-lombok-version = "9.5.0"
 gradle-plugin-spotless-version = "8.10.0"
 gradle-plugin-version-catalog-update-version = "1.1.1"
 gradle-plugin-versions-version = "0.61.0"
-hamcrest-all-version = "1.3"
 jdk-serializable-functional-version = "1.9.0"
-junit-jupiter-params-version = "6.1.3"
 junit-jupiter-version = "6.1.3"
+junit-platform-launcher-version = "6.1.3"
 lombok-version = "1.18.46"
 randomizer-version = "10.3"
 test-object-version = "9"
 
 [libraries]
 commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang3-version" }
-hamcrest-all = { module = "org.hamcrest:hamcrest-all", version.ref = "hamcrest-all-version" }
 jdk-serializable-functional = { module = "org.danekja:jdk-serializable-functional", version.ref = "jdk-serializable-functional-version" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter-version" }
-junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit-jupiter-params-version" }
-junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform-launcher-version" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok-version" }
 randomizer = { module = "io.github.astrapi69:randomizer", version.ref = "randomizer-version" }
 test-object = { module = "io.github.astrapi69:test-object", version.ref = "test-object-version" }
 
 [bundles]
+# Dependencies for the annotation processor used during the compilation process
+annotation-processor = [
+    "lombok",
+]
+# Dependencies required only at compile-time and not included in the final artifact
+compile-only = [
+    "lombok",
+]
+# The core dependencies
+core-dependencies = [
+    "commons-lang3",
+    "jdk-serializable-functional",
+]
+# Annotation processor dependencies used specifically for test classes
+test-annotation-processor = [
+    "lombok",
+]
+# Dependencies required only at test compile-time and not included in test runtime
+test-compile-only = [
+    "lombok",
+]
+# Dependencies required only at test runtime, such as test execution platforms
+test-runtime-only = [
+    "junit-platform-launcher",
+]
+# Dependencies required for unit testing
 unit-testing = [
-    "hamcrest-all",
     "junit-jupiter",
-    "junit-jupiter-params",
     "randomizer",
     "test-object",
 ]
