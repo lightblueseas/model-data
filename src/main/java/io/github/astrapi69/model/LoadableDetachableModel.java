@@ -13,6 +13,10 @@
  */
 package io.github.astrapi69.model;
 
+import java.util.Objects;
+
+import org.danekja.java.util.function.serializable.SerializableSupplier;
+
 import io.github.astrapi69.model.api.IModel;
 import lombok.NoArgsConstructor;
 
@@ -69,6 +73,31 @@ public abstract class LoadableDetachableModel<T> implements IModel<T>
 	{
 		this.transientModelObject = object;
 		attached = true;
+	}
+
+	/**
+	 * Factory method that creates a new instance from the given {@link SerializableSupplier} that
+	 * loads the model object
+	 *
+	 * @param <T>
+	 *            The IModel Object type
+	 * @param getter
+	 *            the supplier that loads the model object
+	 * @return the new created {@link LoadableDetachableModel} instance
+	 */
+	public static <T> LoadableDetachableModel<T> of(final SerializableSupplier<T> getter)
+	{
+		Objects.requireNonNull(getter);
+		return new LoadableDetachableModel<T>()
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected T load()
+			{
+				return getter.get();
+			}
+		};
 	}
 
 	/**

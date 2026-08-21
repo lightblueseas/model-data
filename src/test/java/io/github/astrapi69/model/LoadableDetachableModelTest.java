@@ -15,6 +15,7 @@ package io.github.astrapi69.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -25,6 +26,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import org.danekja.java.util.function.serializable.SerializableSupplier;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -180,6 +182,66 @@ public class LoadableDetachableModelTest
 			stream = baos.toByteArray();
 		}
 		return stream;
+	}
+
+	/**
+	 * Tests the factory method {@link LoadableDetachableModel#of(SerializableSupplier)}: the
+	 * supplier is called lazily, the loaded object is cached until detach and reloaded afterwards.
+	 */
+	@Test
+	public void factoryMethodOfLoadsLazilyAndCachesUntilDetach()
+	{
+		final int[] loadCount = { 0 };
+		LoadableDetachableModel<Integer> ldm = LoadableDetachableModel.of(() -> ++loadCount[0]);
+
+		assertFalse(ldm.isAttached());
+		assertEquals(0, loadCount[0]);
+
+		assertEquals(1, ldm.getObject());
+		assertTrue(ldm.isAttached());
+		// the loaded object is cached, so no further load happens
+		assertEquals(1, ldm.getObject());
+		assertEquals(1, loadCount[0]);
+
+		ldm.detach();
+		assertFalse(ldm.isAttached());
+		// after detach the object is loaded again
+		assertEquals(2, ldm.getObject());
+		assertEquals(2, loadCount[0]);
+	}
+
+	/**
+	 * Tests the factory method {@link LoadableDetachableModel#of(SerializableSupplier)} with a null
+	 * supplier
+	 */
+	@Test
+	public void factoryMethodOfWithNullSupplierThrows()
+	{
+		assertThrows(NullPointerException.class, () -> LoadableDetachableModel.of(null));
+	}
+
+	/**
+	 * Tests that the constructor with an object starts in attached state and loads only after
+	 * detach
+	 */
+	@Test
+	public void constructorWithObjectStartsAttached()
+	{
+		LoadableDetachableModel<Integer> ldm = new LoadableDetachableModel<Integer>(5)
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected Integer load()
+			{
+				return 6;
+			}
+		};
+
+		assertTrue(ldm.isAttached());
+		assertEquals(5, ldm.getObject());
+		ldm.detach();
+		assertEquals(6, ldm.getObject());
 	}
 
 	private static class SerializedLoad extends LoadableDetachableModel<Integer>

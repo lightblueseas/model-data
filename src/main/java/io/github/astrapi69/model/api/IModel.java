@@ -15,13 +15,11 @@ package io.github.astrapi69.model.api;
 
 import java.util.Objects;
 
-import org.danekja.java.util.function.serializable.SerializableBiConsumer;
 import org.danekja.java.util.function.serializable.SerializableBiFunction;
 import org.danekja.java.util.function.serializable.SerializableFunction;
 import org.danekja.java.util.function.serializable.SerializablePredicate;
 import org.danekja.java.util.function.serializable.SerializableSupplier;
 
-import io.github.astrapi69.model.LambdaModel;
 
 /**
  * A {@link IModel} decorates the actual model object that can be used by any other UI-Component.
@@ -82,7 +80,7 @@ public interface IModel<T> extends Attachable, IDetachable
 	 */
 	default IModel<T> filter(SerializablePredicate<? super T> predicate)
 	{
-		Objects.nonNull(predicate);
+		Objects.requireNonNull(predicate);
 		return new IModel<T>()
 		{
 			@Override
@@ -119,7 +117,7 @@ public interface IModel<T> extends Attachable, IDetachable
 	 */
 	default <R> IModel<R> map(SerializableFunction<? super T, R> mapper)
 	{
-		Objects.nonNull(mapper);
+		Objects.requireNonNull(mapper);
 		return new IModel<R>()
 		{
 			@Override
@@ -161,8 +159,8 @@ public interface IModel<T> extends Attachable, IDetachable
 	default <R, U> IModel<R> combineWith(IModel<U> other,
 		SerializableBiFunction<? super T, ? super U, R> combiner)
 	{
-		Objects.nonNull(combiner);
-		Objects.nonNull(other);
+		Objects.requireNonNull(combiner);
+		Objects.requireNonNull(other);
 		return new IModel<R>()
 		{
 			@Override
@@ -200,9 +198,25 @@ public interface IModel<T> extends Attachable, IDetachable
 	 * @return a new IModel
 	 * @see LambdaModel#of(IModel, SerializableFunction, SerializableBiConsumer)
 	 */
+	/**
+	 * Returns a IModel, returning the contained object typed as {@code R} if it is an instance of
+	 * that type, otherwise {@code null}.
+	 *
+	 * @param <R>
+	 *            the type the contained object should be an instance of
+	 * @param clazz
+	 *            the {@code Class} the contained object should be an instance of
+	 * @return a new IModel
+	 */
+	default <R extends T> IModel<R> as(Class<R> clazz)
+	{
+		Objects.requireNonNull(clazz);
+		return filter(clazz::isInstance).map(clazz::cast);
+	}
+
 	default <R> IModel<R> flatMap(SerializableFunction<? super T, IModel<R>> mapper)
 	{
-		Objects.nonNull(mapper);
+		Objects.requireNonNull(mapper);
 		return new IModel<R>()
 		{
 			private static final long serialVersionUID = 1L;
@@ -316,7 +330,7 @@ public interface IModel<T> extends Attachable, IDetachable
 	 */
 	default IModel<T> orElseGet(SerializableSupplier<? extends T> other)
 	{
-		Objects.nonNull(other);
+		Objects.requireNonNull(other);
 		return new IModel<T>()
 		{
 			@Override
