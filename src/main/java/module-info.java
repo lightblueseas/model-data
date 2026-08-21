@@ -13,8 +13,7 @@
  */
 module model.data
 {
-	requires lombok;
-	requires java.base;
+	requires static lombok;
 	requires java.desktop;
 	requires java.logging;
 	requires org.apache.commons.lang3;
