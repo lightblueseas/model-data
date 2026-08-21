@@ -87,3 +87,26 @@ signing {
         sign publishing.publications.mavenJava
     }
 }
+
+// Verifies that dependencies whose types appear in public api signatures are
+// published with compile scope, so consumers can compile against this artifact.
+// Guards against the regression of 3.2, where jdk-serializable-functional was
+// published with runtime scope and consumers could not compile LambdaModel.of(...)
+def verifyPomScopes = tasks.register('verifyPomScopes') {
+    dependsOn tasks.named('generatePomFileForMavenJavaPublication')
+    def pomFile = layout.buildDirectory.file('publications/mavenJava/pom-default.xml')
+    inputs.file(pomFile)
+    doLast {
+        def pom = new groovy.xml.XmlSlurper().parse(pomFile.get().asFile)
+        def apiArtifacts = ['jdk-serializable-functional']
+        apiArtifacts.each { artifactId ->
+            def dependency = pom.dependencies.dependency.find { it.artifactId.text() == artifactId }
+            def scope = dependency == null ? 'missing' : dependency.scope.text()
+            if (scope != 'compile') {
+                throw new GradleException("$artifactId must be published with compile scope " +
+                    "(api dependency), but was '$scope'")
+            }
+        }
+    }
+}
+check.dependsOn verifyPomScopes
