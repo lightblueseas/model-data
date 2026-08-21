@@ -3,7 +3,12 @@ dependencies {
     annotationProcessor libs.bundles.annotation.processor
     compileOnly libs.bundles.compile.only
 
-    implementation libs.bundles.core.dependencies
+    // the serializable functional interfaces are part of the public api
+    // (method signatures of IModel, LambdaModel etc.), so consumers need
+    // them on their compile classpath
+    api libs.jdk.serializable.functional
+
+    implementation libs.commons.lang3
 
     testAnnotationProcessor libs.bundles.test.annotation.processor
     testCompileOnly libs.bundles.test.compile.only

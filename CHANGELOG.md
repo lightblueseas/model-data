@@ -4,6 +4,10 @@
 Version 3.3-SNAPSHOT
 -------------
 
+CHANGED:
+
+- jdk-serializable-functional is now an api dependency (compile scope in the pom) instead of implementation (runtime scope), because its serializable functional interfaces appear in the public method signatures of IModel and LambdaModel; consumers could not compile against 3.2 without declaring it themselves
+
 Version 3.2
 -------------
 

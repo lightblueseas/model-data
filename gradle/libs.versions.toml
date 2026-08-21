@@ -29,11 +29,6 @@ annotation-processor = [
 compile-only = [
     "lombok",
 ]
-# The core dependencies
-core-dependencies = [
-    "commons-lang3",
-    "jdk-serializable-functional",
-]
 # Annotation processor dependencies used specifically for test classes
 test-annotation-processor = [
     "lombok",
