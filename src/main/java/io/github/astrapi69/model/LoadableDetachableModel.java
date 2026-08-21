@@ -18,7 +18,6 @@ import java.util.Objects;
 import org.danekja.java.util.function.serializable.SerializableSupplier;
 
 import io.github.astrapi69.model.api.IModel;
-import lombok.NoArgsConstructor;
 
 /**
  * IModel that makes working with detachable models a breeze. LoadableDetachableModel holds a
@@ -49,9 +48,15 @@ import lombok.NoArgsConstructor;
  * @param <T>
  *            The IModel Object type
  */
-@NoArgsConstructor
 public abstract class LoadableDetachableModel<T> implements IModel<T>
 {
+
+	/**
+	 * Default constructor
+	 */
+	public LoadableDetachableModel()
+	{
+	}
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

@@ -18,7 +18,6 @@ import java.io.Serializable;
 
 import io.github.astrapi69.model.GenericModel;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -30,9 +29,15 @@ import lombok.ToString;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@NoArgsConstructor
 public abstract class GenericCollectionModel<T> extends GenericModel<T>
 {
+
+	/**
+	 * Default constructor
+	 */
+	public GenericCollectionModel()
+	{
+	}
 
 	/** The Constant serialVersionUID. */
 	@Serial

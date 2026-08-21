@@ -30,11 +30,23 @@ public class CachingMethodResolver implements IMethodResolver
 	private final IMethodResolver resolver;
 	private final ConcurrentHashMap<Object, IMethodResolver> scopes = new ConcurrentHashMap<>(2);
 
+	/**
+	 * Constructor with the {@link IMethodResolver} to delegate to
+	 *
+	 * @param resolver
+	 *            the resolver to delegate to
+	 */
 	public CachingMethodResolver(IMethodResolver resolver)
 	{
 		this.resolver = resolver;
 	}
 
+	/**
+	 * Destroys the cache scope of the given application object
+	 *
+	 * @param application
+	 *            the application object of the scope to remove
+	 */
 	public void destroy(Object application)
 	{
 		scopes.remove(application);

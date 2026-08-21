@@ -27,6 +27,12 @@ public class CachingProxyFactory implements IProxyFactory
 	private final IProxyFactory factory;
 	private final ConcurrentHashMap<Object, IProxyFactory> scopes = new ConcurrentHashMap<>(2);
 
+	/**
+	 * Constructor with the {@link IProxyFactory} to delegate to
+	 *
+	 * @param factory
+	 *            the factory to delegate to
+	 */
 	public CachingProxyFactory(IProxyFactory factory)
 	{
 		this.factory = factory;
@@ -44,6 +50,12 @@ public class CachingProxyFactory implements IProxyFactory
 		return getFactory().createInstance(proxyClass, callback);
 	}
 
+	/**
+	 * Destroys the cache scope of the given application object
+	 *
+	 * @param application
+	 *            the application object of the scope to remove
+	 */
 	public void destroy(Object application)
 	{
 		scopes.remove(application);

@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import io.github.astrapi69.model.api.IModel;
-import lombok.NoArgsConstructor;
 
 
 /**
@@ -28,9 +27,16 @@ import lombok.NoArgsConstructor;
  * @param <T>
  *            type of object inside collection
  */
-@NoArgsConstructor
 public class CollectionModel<T> extends GenericCollectionModel<Collection<T>>
 {
+
+	/**
+	 * Default constructor
+	 */
+	public CollectionModel()
+	{
+	}
+
 	@Serial
 	private static final long serialVersionUID = 1L;
 

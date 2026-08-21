@@ -188,17 +188,6 @@ public interface IModel<T> extends Attachable, IDetachable
 	}
 
 	/**
-	 * Returns a IModel applying the given IModel-bearing mapper to the contained object, if it is
-	 * not {@code null}.
-	 *
-	 * @param <R>
-	 *            the new type of the contained object
-	 * @param mapper
-	 *            a mapper, to be applied to the contained object
-	 * @return a new IModel
-	 * @see LambdaModel#of(IModel, SerializableFunction, SerializableBiConsumer)
-	 */
-	/**
 	 * Returns a IModel, returning the contained object typed as {@code R} if it is an instance of
 	 * that type, otherwise {@code null}.
 	 *
@@ -214,6 +203,18 @@ public interface IModel<T> extends Attachable, IDetachable
 		return filter(clazz::isInstance).map(clazz::cast);
 	}
 
+	/**
+	 * Returns a IModel applying the given IModel-bearing mapper to the contained object, if it is
+	 * not {@code null}.
+	 *
+	 * @param <R>
+	 *            the new type of the contained object
+	 * @param mapper
+	 *            a mapper, to be applied to the contained object
+	 * @return a new IModel
+	 * @see io.github.astrapi69.model.LambdaModel#of(IModel, SerializableFunction,
+	 *      org.danekja.java.util.function.serializable.SerializableBiConsumer)
+	 */
 	default <R> IModel<R> flatMap(SerializableFunction<? super T, IModel<R>> mapper)
 	{
 		Objects.requireNonNull(mapper);
@@ -287,8 +288,6 @@ public interface IModel<T> extends Attachable, IDetachable
 	 * <li>in the middle of the application logic:
 	 * {@code ... = someModel.orElse(default).getModelObject();}</li>
 	 * </ul>
-	 *
-	 * </p>
 	 *
 	 * @param other
 	 *            a default value
@@ -382,7 +381,9 @@ public interface IModel<T> extends Attachable, IDetachable
 	 * Suppresses generics warning when casting model types.
 	 *
 	 * @param <T>
+	 *            the generic type of the model object
 	 * @param model
+	 *            the model to cast
 	 * @return cast <code>model</code>
 	 */
 	@SuppressWarnings("unchecked")

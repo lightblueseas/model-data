@@ -17,7 +17,6 @@ import java.io.Serializable;
 
 import io.github.astrapi69.model.api.IModel;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -29,9 +28,15 @@ import lombok.ToString;
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 public class SerializableModel<T extends Serializable> extends GenericModel<T>
 {
+
+	/**
+	 * Default constructor
+	 */
+	public SerializableModel()
+	{
+	}
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

@@ -19,6 +19,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import io.github.astrapi69.model.api.ClassCache;
 import io.github.astrapi69.model.api.GetAndSet;
 
+/**
+ * Default {@link ClassCache} implementation backed by a {@link ConcurrentHashMap}
+ */
 public class DefaultClassCache implements ClassCache
 {
 	private final ConcurrentHashMap<Class<?>, Map<String, GetAndSet>> map = new ConcurrentHashMap<>(

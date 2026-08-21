@@ -30,7 +30,6 @@ import io.github.astrapi69.model.util.WildcardListModel;
 import io.github.astrapi69.model.util.WildcardSetModel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -46,9 +45,15 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-@NoArgsConstructor
 public abstract class GenericModel<T> implements IModel<T>, IObjectClassAwareModel<T>
 {
+
+	/**
+	 * Default constructor
+	 */
+	public GenericModel()
+	{
+	}
 
 	/** The Constant serialVersionUID. */
 	@Serial

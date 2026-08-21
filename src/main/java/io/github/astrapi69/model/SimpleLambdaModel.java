@@ -22,16 +22,31 @@ import org.danekja.java.util.function.serializable.SerializableSupplier;
 
 import io.github.astrapi69.model.api.IModel;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class SimpleLambdaModel<T> implements IModel<T>
 {
 
+	/** The supplier that gets the model object */
 	SerializableSupplier<T> getter;
+	/** The consumer that sets the model object */
 	SerializableConsumer<T> setter;
+
+	/**
+	 * Constructor with the getter and setter for the model object
+	 *
+	 * @param getter
+	 *            used to get value
+	 * @param setter
+	 *            used to set value
+	 */
+	public SimpleLambdaModel(final SerializableSupplier<T> getter,
+		final SerializableConsumer<T> setter)
+	{
+		this.getter = getter;
+		this.setter = setter;
+	}
 
 	/**
 	 * Create a {@link LambdaModel}. Usage:

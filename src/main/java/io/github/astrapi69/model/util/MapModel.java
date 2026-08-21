@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.github.astrapi69.model.api.IModel;
-import lombok.NoArgsConstructor;
 
 /**
  * Based on <code>IModel</code> but for maps of serializable objects.
@@ -29,9 +28,15 @@ import lombok.NoArgsConstructor;
  * @param <V>
  *            map's value type
  */
-@NoArgsConstructor
 public class MapModel<K, V> extends GenericCollectionModel<Map<K, V>>
 {
+
+	/**
+	 * Default constructor
+	 */
+	public MapModel()
+	{
+	}
 
 	/** The Constant serialVersionUID. */
 	@Serial

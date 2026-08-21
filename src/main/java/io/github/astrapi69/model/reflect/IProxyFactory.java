@@ -55,6 +55,19 @@ public interface IProxyFactory
 	 */
 	public static interface Callback
 	{
+		/**
+		 * Invoked when a method is called on a proxy
+		 *
+		 * @param obj
+		 *            the proxy instance the method was called on
+		 * @param method
+		 *            the called method
+		 * @param args
+		 *            the method arguments
+		 * @return the result of the invocation
+		 * @throws Throwable
+		 *             if the invocation fails
+		 */
 		public Object on(Object obj, Method method, Object[] args) throws Throwable;
 	}
 }

@@ -18,10 +18,17 @@ import java.lang.reflect.Method;
 
 import io.github.astrapi69.model.api.GetAndSet;
 
+/**
+ * Abstract base class for {@link GetAndSet} implementations that provides the common method name
+ * prefixes for resolving getter and setter methods
+ */
 public abstract class AbstractGetAndSet implements GetAndSet
 {
+	/** The prefix for getter methods */
 	protected static final String GET = "get";
+	/** The prefix for boolean getter methods */
 	protected static final String IS = "is";
+	/** The prefix for setter methods */
 	protected static final String SET = "set";
 
 	/**

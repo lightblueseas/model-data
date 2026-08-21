@@ -15,6 +15,10 @@ package io.github.astrapi69.model.property;
 
 import java.util.List;
 
+/**
+ * {@link AbstractGetAndSet} implementation that gets and sets the element of a {@link List} at a
+ * given index
+ */
 public final class ListGetSet extends AbstractGetAndSet
 {
 	final private int index;

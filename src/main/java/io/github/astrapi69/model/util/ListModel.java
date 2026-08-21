@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.astrapi69.model.api.IModel;
-import lombok.NoArgsConstructor;
 
 /**
  * Based on <code>IModel</code> but for lists of serializable objects.
@@ -27,9 +26,16 @@ import lombok.NoArgsConstructor;
  * @param <T>
  *            type of object inside list
  */
-@NoArgsConstructor
 public class ListModel<T> extends GenericCollectionModel<List<T>>
 {
+
+	/**
+	 * Default constructor
+	 */
+	public ListModel()
+	{
+	}
+
 	@Serial
 	private static final long serialVersionUID = 1L;
 

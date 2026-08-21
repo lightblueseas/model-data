@@ -15,6 +15,9 @@ package io.github.astrapi69.model.property;
 
 import java.lang.reflect.Array;
 
+/**
+ * {@link AbstractGetAndSet} implementation that resolves the length of an array
+ */
 public final class ArrayLengthGetSet extends AbstractGetAndSet
 {
 	ArrayLengthGetSet()

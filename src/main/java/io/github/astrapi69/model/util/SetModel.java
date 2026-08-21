@@ -18,7 +18,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import io.github.astrapi69.model.api.IModel;
-import lombok.NoArgsConstructor;
 
 
 /**
@@ -28,9 +27,16 @@ import lombok.NoArgsConstructor;
  * @param <T>
  *            type of object inside set
  */
-@NoArgsConstructor
 public class SetModel<T> extends GenericCollectionModel<Set<T>>
 {
+
+	/**
+	 * Default constructor
+	 */
+	public SetModel()
+	{
+	}
+
 	@Serial
 	private static final long serialVersionUID = 1L;
 

@@ -18,6 +18,10 @@ import java.lang.reflect.Method;
 
 import io.github.astrapi69.model.api.GetAndSet;
 
+/**
+ * Holds an object together with the {@link GetAndSet} that can read and write the property value on
+ * it
+ */
 public final class ObjectAndGetSetter
 {
 	private final GetAndSet getAndSetter;

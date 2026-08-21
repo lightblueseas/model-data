@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import io.github.astrapi69.model.api.IModel;
-import lombok.NoArgsConstructor;
 
 /**
  * Based on <code>IModel</code> but for any collections of serializable objects.
@@ -26,9 +25,15 @@ import lombok.NoArgsConstructor;
  * @param <T>
  *            type of object inside collection
  */
-@NoArgsConstructor
 public class WildcardCollectionModel<T> extends GenericCollectionModel<Collection<T>>
 {
+
+	/**
+	 * Default constructor
+	 */
+	public WildcardCollectionModel()
+	{
+	}
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

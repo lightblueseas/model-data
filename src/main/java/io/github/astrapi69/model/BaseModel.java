@@ -16,7 +16,6 @@ package io.github.astrapi69.model;
 import java.io.Serial;
 
 import io.github.astrapi69.model.api.IModel;
-import lombok.NoArgsConstructor;
 
 /**
  * The class {@link BaseModel} for simple objects.
@@ -24,9 +23,15 @@ import lombok.NoArgsConstructor;
  * @param <T>
  *            the generic type of the model object
  */
-@NoArgsConstructor
 public class BaseModel<T> extends GenericModel<T>
 {
+
+	/**
+	 * Default constructor
+	 */
+	public BaseModel()
+	{
+	}
 
 	/** The Constant serialVersionUID. */
 	@Serial

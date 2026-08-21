@@ -15,6 +15,10 @@ package io.github.astrapi69.model.property;
 
 import java.util.Map;
 
+/**
+ * {@link AbstractGetAndSet} implementation that gets and sets the value of a {@link Map} for a
+ * given key
+ */
 public final class MapGetSet extends AbstractGetAndSet
 {
 	private final String key;
