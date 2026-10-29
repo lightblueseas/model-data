@@ -3,6 +3,8 @@
 # Required repository secrets:
 #   CENTRAL_USERNAME / CENTRAL_PASSWORD - Central Portal user token
 #   GPG_PRIVATE_KEY / GPG_PASSPHRASE    - ascii-armored signing key and its passphrase
+#   GPG_KEY_ID (optional)               - the signing subkey's last 8 hex digits, when GPG_PRIVATE_KEY
+#                                         holds that subkey alone (lethenon#154, #155)
 
 name: Publish to Maven Central
 
@@ -35,3 +37,4 @@ jobs:
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
