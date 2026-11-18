@@ -52,6 +52,11 @@ CHANGED:
 - module-info: lombok is now a static (compile-time only) requirement and the redundant java.base requirement was removed
 - enabled the gradle configuration cache
 
+KNOWN ISSUES:
+
+- binary break from 3.1, named afterwards: 3.2 removed the four interfaces SerializableSupplier, SerializableConsumer, SerializableFunction and SerializableBiConsumer of the package io.github.astrapi69.model.api, and changed the eight factory methods LambdaModel#of (three), LambdaBindingModel#of (two) and SimpleLambdaModel#of (three) and the constructor SimpleLambdaModel(SerializableSupplier, SerializableConsumer) to the interfaces of the same names in org.danekja.java.util.function.serializable (jdk-serializable-functional). A class compiled against 3.1 that uses one of them fails at run time with NoSuchMethodError or NoClassDefFoundError; import the org.danekja.java.util.function.serializable types instead and recompile against 3.2.1 or later, whose pom brings jdk-serializable-functional at compile scope (see 3.2.1)
+- this breaks the published jars of swing-tree-component 3 and 3.1: their NodePanel calls LambdaModel#of with the old types. Use model-data 3.2 or later only with swing-tree-component 3.2 or later. On develop no repository of the family uses the removed types (measured 2026-11-18)
+
 Version 3.1
 -------------
 
